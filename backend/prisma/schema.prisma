@@ -1,0 +1,434 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─────────────────────────────────────────────
+// ENUMS
+// ─────────────────────────────────────────────
+
+enum PharmacyStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum OrderStatus {
+  PENDING
+  SHIPPED
+  RECEIVED
+  CANCELLED
+}
+
+enum DrugCategory {
+  ANTIBIOTIC
+  ANALGESIC
+  ANTIDIABETIC
+  CARDIOVASCULAR
+  VITAMIN
+  RESPIRATORY
+  ANTIFUNGAL
+  ANTIVIRAL
+  ANTIHISTAMINE
+  GASTROINTESTINAL
+  PSYCHIATRIC
+  OTHER
+}
+
+enum DosageForm {
+  TABLET
+  CAPSULE
+  SYRUP
+  INJECTION
+  CREAM
+  INHALER
+  DROPS
+}
+
+enum InventoryStatus {
+  IN_STOCK
+  LOW_STOCK
+  OUT_OF_STOCK
+  EXPIRED
+}
+
+enum InteractionSeverity {
+  SAFE
+  MODERATE
+  DANGEROUS
+}
+
+// ─────────────────────────────────────────────
+// PHARMACY
+// ─────────────────────────────────────────────
+
+model Pharmacy {
+  id            String         @id @default(uuid())
+  name          String
+  licenseNumber String         @unique
+  address       String
+  phone         String
+  status        PharmacyStatus @default(ACTIVE)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  // Relations
+  users          User[]
+  inventoryItems InventoryItem[]
+  supplierOrders SupplierOrder[]
+  dispensingLogs DispensingLog[]
+  patients       Patient[]
+  aiChatSessions AiChatSession[]
+
+  @@map("pharmacies")
+}
+
+// ─────────────────────────────────────────────
+// USER
+// ─────────────────────────────────────────────
+
+model User {
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  password   String
+  role       String   @default("PHARMACIST")
+  image      String?
+  phone      String?
+  banned     Boolean  @default(false)
+  banReason  String?
+  banExpires DateTime?
+  emailVerified DateTime?
+  pharmacyId String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relations
+  pharmacy       Pharmacy?       @relation(fields: [pharmacyId], references: [id])
+  dispensingLogs DispensingLog[]
+  reviews        DrugReview[]
+  aiChatSessions AiChatSession[]
+  blogPosts      BlogPost[]
+  contactMessages ContactMessage[]
+  sessions       Session[]
+  accounts       Account[]
+
+  @@map("users")
+}
+
+// ─────────────────────────────────────────────
+// DRUG (Master Catalogue — managed by Admin)
+// ─────────────────────────────────────────────
+
+model Drug {
+  id               String       @id @default(uuid())
+  name             String
+  genericName      String
+  category         DrugCategory
+  dosageForm       DosageForm
+  description      String       @db.Text
+  uses             String[]
+  commonDosage     String?
+  sideEffects      String[]
+  contraindications String[]
+  storage          String?
+  manufacturer     String?
+  imageUrl         String?
+  isActive         Boolean      @default(true)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  // Relations
+  inventoryItems InventoryItem[]
+  orderLineItems OrderLineItem[]
+  dispensingLogs DispensingLog[]
+  reviews        DrugReview[]
+  interactions   DrugInteractionCheck[]
+
+  @@map("drugs")
+}
+
+// ─────────────────────────────────────────────
+// INVENTORY ITEM (Per Pharmacy Stock)
+// ─────────────────────────────────────────────
+
+model InventoryItem {
+  id           String          @id @default(uuid())
+  pharmacyId   String
+  drugId       String
+  quantity     Int             @default(0)
+  unitPrice    Decimal         @db.Decimal(10, 2)
+  expiryDate   DateTime
+  batchNumber  String?
+  reorderLevel Int             @default(10)
+  supplierName String?
+  status       InventoryStatus @default(IN_STOCK)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  // Relations
+  pharmacy       Pharmacy        @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
+  drug           Drug            @relation(fields: [drugId], references: [id])
+  dispensingLogs DispensingLog[]
+
+  @@unique([pharmacyId, drugId, batchNumber])
+  @@map("inventory_items")
+}
+
+// ─────────────────────────────────────────────
+// SUPPLIER ORDER
+// ─────────────────────────────────────────────
+
+model SupplierOrder {
+  id               String      @id @default(uuid())
+  pharmacyId       String
+  supplierName     String
+  status           OrderStatus @default(PENDING)
+  totalAmount      Decimal     @db.Decimal(10, 2) @default(0)
+  expectedDelivery DateTime?
+  receivedAt       DateTime?
+  notes            String?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  // Relations
+  pharmacy  Pharmacy        @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
+  lineItems OrderLineItem[]
+
+  @@map("supplier_orders")
+}
+
+model OrderLineItem {
+  id        String   @id @default(uuid())
+  orderId   String
+  drugId    String
+  quantity  Int
+  unitPrice Decimal  @db.Decimal(10, 2)
+  createdAt DateTime @default(now())
+
+  // Relations
+  order SupplierOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  drug  Drug          @relation(fields: [drugId], references: [id])
+
+  @@map("order_line_items")
+}
+
+// ─────────────────────────────────────────────
+// DISPENSING LOG (Sales / Dispensing Record)
+// ─────────────────────────────────────────────
+
+model DispensingLog {
+  id              String   @id @default(uuid())
+  pharmacyId      String
+  inventoryItemId String
+  drugId          String
+  pharmacistId    String
+  patientName     String?
+  quantityDispensed Int
+  dispensedAt     DateTime @default(now())
+  createdAt       DateTime @default(now())
+
+  // Relations
+  pharmacy      Pharmacy      @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
+  inventoryItem InventoryItem @relation(fields: [inventoryItemId], references: [id])
+  drug          Drug          @relation(fields: [drugId], references: [id])
+  pharmacist    User          @relation(fields: [pharmacistId], references: [id])
+
+  @@map("dispensing_logs")
+}
+
+// ─────────────────────────────────────────────
+// PATIENT & DRUG INTERACTION RECORDS
+// ─────────────────────────────────────────────
+
+model Patient {
+  id          String   @id @default(uuid())
+  pharmacyId  String
+  name        String
+  phone       String?
+  medications String[]
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  pharmacy             Pharmacy               @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
+  interactionChecks    DrugInteractionCheck[]
+
+  @@map("patients")
+}
+
+model DrugInteractionCheck {
+  id           String              @id @default(uuid())
+  patientId    String?
+  pharmacyId   String?
+  drugsChecked String[]
+  overallRisk  InteractionSeverity
+  resultJson   Json
+  createdAt    DateTime            @default(now())
+
+  // Relations
+  patient Patient? @relation(fields: [patientId], references: [id])
+  drugs   Drug[]
+
+  @@map("drug_interaction_checks")
+}
+
+// ─────────────────────────────────────────────
+// DRUG REVIEWS (Pharmacist clinical notes)
+// ─────────────────────────────────────────────
+
+model DrugReview {
+  id          String   @id @default(uuid())
+  drugId      String
+  pharmacistId String
+  rating      Int      // 1–5
+  comment     String   @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  drug       Drug @relation(fields: [drugId], references: [id], onDelete: Cascade)
+  pharmacist User @relation(fields: [pharmacistId], references: [id])
+
+  @@unique([drugId, pharmacistId])
+  @@map("drug_reviews")
+}
+
+// ─────────────────────────────────────────────
+// AI CHAT SESSIONS
+// ─────────────────────────────────────────────
+
+model AiChatSession {
+  id         String   @id @default(uuid())
+  pharmacyId String
+  userId     String
+  title      String   @default("New Chat")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relations
+  pharmacy Pharmacy       @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
+  user     User           @relation(fields: [userId], references: [id])
+  messages AiChatMessage[]
+
+  @@map("ai_chat_sessions")
+}
+
+model AiChatMessage {
+  id        String   @id @default(uuid())
+  sessionId String
+  role      String   // "user" | "assistant"
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+
+  // Relations
+  session AiChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@map("ai_chat_messages")
+}
+
+// ─────────────────────────────────────────────
+// BLOG
+// ─────────────────────────────────────────────
+
+model BlogPost {
+  id          String   @id @default(uuid())
+  authorId    String
+  title       String
+  slug        String   @unique
+  excerpt     String
+  content     String   @db.Text
+  coverImage  String?
+  category    String?
+  tags        String[]
+  isPublished Boolean  @default(false)
+  views       Int      @default(0)
+  readTime    Int      @default(5)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  author User @relation(fields: [authorId], references: [id])
+
+  @@map("blog_posts")
+}
+
+// ─────────────────────────────────────────────
+// CONTACT MESSAGES
+// ─────────────────────────────────────────────
+
+model ContactMessage {
+  id        String   @id @default(uuid())
+  userId    String?
+  name      String
+  email     String
+  subject   String
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  // Relations
+  user User? @relation(fields: [userId], references: [id])
+
+  @@map("contact_messages")
+}
+
+// ─────────────────────────────────────────────
+// NEWSLETTER
+// ─────────────────────────────────────────────
+
+model NewsletterSubscriber {
+  id          String   @id @default(uuid())
+  email       String   @unique
+  subscribedAt DateTime @default(now())
+
+  @@map("newsletter_subscribers")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model Account {
+  id                    String    @id @default(uuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("accounts")
+}
+
+model Verification {
+  id         String    @id @default(uuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@map("verifications")
+}
