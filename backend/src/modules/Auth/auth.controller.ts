@@ -1,13 +1,49 @@
 import { Request, Response } from 'express';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
+import {
+  registerPharmacistValidationSchema,
+  loginValidationSchema,
+} from './auth.validation';
+import { registerPharmacistIntoDB, loginUser } from './auth.service';
 
 const authController = {
-  register: catchAsync(async (_req: Request, res: Response) => {
+  registerPharmacist: catchAsync(async (req: Request, res: Response) => {
+    const validated = registerPharmacistValidationSchema.parse(req.body);
+    const result = await registerPharmacistIntoDB(validated);
+
+    if (result.setCookieHeader) {
+      res.setHeader('Set-Cookie', result.setCookieHeader);
+    }
+
     sendResponse(res, {
       statusCode: 201,
       success: true,
-      message: 'Registration handled by Better Auth',
+      message: 'Pharmacist registered successfully',
+      data: {
+        user: result.user,
+        pharmacy: result.pharmacy,
+        token: result.token,
+      },
+    });
+  }),
+
+  proxyLogin: catchAsync(async (req: Request, res: Response) => {
+    const validated = loginValidationSchema.parse(req.body);
+    const result = await loginUser(validated);
+
+    if (result.setCookieHeader) {
+      res.setHeader('Set-Cookie', result.setCookieHeader);
+    }
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: 'Login successful',
+      data: {
+        user: result.user,
+        session: result.session,
+      },
     });
   }),
 

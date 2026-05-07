@@ -1,7 +1,8 @@
+// src/lib/auth.ts
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { admin } from 'better-auth/plugins';
-import { env } from '../config';
+import { env } from '../config';  // Assuming your Prisma client is exported here
 import { prisma } from './prisma';
 
 export const auth = betterAuth({
@@ -21,10 +22,16 @@ export const auth = betterAuth({
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     },
   },
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60, // 5 minutes caching per PRD best practices
+    },
+  },
   plugins: [
     admin({
       defaultRole: 'PHARMACIST',
-      adminRoles: ['ADMIN'],
+      adminRole: 'ADMIN', 
     }),
   ],
 });
