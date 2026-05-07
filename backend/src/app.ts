@@ -25,14 +25,14 @@ app.use(express.urlencoded({ extended: true }));
 // Rate limiting
 app.use(globalRateLimiter);
 
-// Health check
-app.get('/', (req: Request, res: Response) => {
-  res.status(200).json({ success: true, message: 'MediFlow API is running!' });
-});
 
 // API routes
 app.use('/api/v1', router);
 
+// Health check
+app.get('/', (req: Request, res: Response) => {
+  res.status(200).json({ success: true, message: 'MediFlow API is running!' });
+});
 // Not found handler
 app.use(notFound);
 

@@ -2,7 +2,7 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { admin } from 'better-auth/plugins';
-import { env } from '../config';  // Assuming your Prisma client is exported here
+import { env } from '../config';  
 import { prisma } from './prisma';
 
 export const auth = betterAuth({
@@ -20,6 +20,20 @@ export const auth = betterAuth({
     google: {
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
+    },
+  },
+  databaseHooks: {
+    user: {
+      create: {
+        before: async (user) => {
+          return {
+            data: {
+              ...user,
+              emailVerified: true,
+            },
+          };
+        },
+      },
     },
   },
   session: {

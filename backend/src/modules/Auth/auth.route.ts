@@ -8,6 +8,6 @@ const router = Router();
 router.post('/register', authController.registerPharmacist);
 router.post('/login', authController.proxyLogin);
 router.get('/me', verifyAuth(), authController.getMe);
-router.all('/*', auth.handler as any);
+router.use(auth.handler);
 
 export const authRoutes = router;
