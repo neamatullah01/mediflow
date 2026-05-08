@@ -5,7 +5,7 @@ import {
   registerPharmacistValidationSchema,
   loginValidationSchema,
 } from './auth.validation';
-import { registerPharmacistIntoDB, loginUser } from './auth.service';
+import { registerPharmacistIntoDB, loginUser, logoutUser, refreshSession } from './auth.service';
 
 const authController = {
   registerPharmacist: catchAsync(async (req: Request, res: Response) => {
@@ -53,6 +53,39 @@ const authController = {
       success: true,
       message: 'User retrieved successfully',
       data: (req as any).user,
+    });
+  }),
+
+  logout: catchAsync(async (req: Request, res: Response) => {
+    const result = await logoutUser(req);
+
+    if (result.setCookieHeader) {
+      res.setHeader('Set-Cookie', result.setCookieHeader);
+    }
+
+    res.clearCookie('better-auth.session_token');
+    res.clearCookie('better-auth.session_token.0');
+    res.clearCookie('better-auth.session_token.1');
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: 'Logged out successfully',
+      data: null,
+    });
+  }),
+
+  refreshToken: catchAsync(async (req: Request, res: Response) => {
+    const result = await refreshSession(req);
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: 'Session refreshed successfully',
+      data: {
+        user: result.user,
+        session: result.session,
+      },
     });
   }),
 };

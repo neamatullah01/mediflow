@@ -1,6 +1,7 @@
 import { prisma } from '../../lib/prisma';
 import AppError from '../../errors/AppError';
 import { Role } from '../../middlewares/auth.middleware';
+import { getSkip, calculateTotalPages } from '../../utils/pagination';
 import type { UpdateUserPayload, BanUserPayload } from './user.validation';
 
 interface PaginationQuery {
@@ -14,7 +15,7 @@ interface PaginationQuery {
 const getAllUsers = async (query: PaginationQuery) => {
   const page = query.page || 1;
   const limit = query.limit || 10;
-  const skip = (page - 1) * limit;
+  const skip = getSkip(page, limit);
 
   const where: any = {};
   if (query.search) {
@@ -44,7 +45,7 @@ const getAllUsers = async (query: PaginationQuery) => {
       page,
       limit,
       total,
-      totalPages: Math.ceil(total / limit),
+      totalPages: calculateTotalPages(total, limit),
     },
   };
 };

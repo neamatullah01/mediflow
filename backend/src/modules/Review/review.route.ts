@@ -4,8 +4,7 @@ import verifyAuth, { Role } from '../../middlewares/auth.middleware';
 
 const router = Router();
 
-router.get('/:id/reviews', reviewController.getReviews);
-router.post('/:id/reviews', verifyAuth(Role.PHARMACIST, Role.ADMIN), reviewController.createReview);
+// DELETE /api/v1/reviews/:id  — owner or admin can delete their review
 router.delete('/:id', verifyAuth(Role.PHARMACIST, Role.ADMIN), reviewController.deleteReview);
 
 export const reviewRoutes = router;

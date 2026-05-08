@@ -7,6 +7,8 @@ const router = Router();
 
 router.post('/register', authController.registerPharmacist);
 router.post('/login', authController.proxyLogin);
+router.post('/logout', verifyAuth(), authController.logout);
+router.post('/refresh-token', authController.refreshToken);
 router.get('/me', verifyAuth(), authController.getMe);
 router.use(auth.handler);
 

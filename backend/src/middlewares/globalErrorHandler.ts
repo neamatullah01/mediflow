@@ -1,5 +1,8 @@
 import { ErrorRequestHandler } from 'express';
 import AppError from '../errors/AppError';
+import handleZodError from '../errors/handleZodError';
+import handlePrismaError from '../errors/handlePrismaError';
+import handlePrismaValidationError from '../errors/handlePrismaValidationError';
 import { env } from '../config';
 
 const globalErrorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
@@ -12,28 +15,25 @@ const globalErrorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
     message = err.message;
     errorSources = [{ path: '', message: err.message }];
   } else if (err.name === 'ZodError') {
-    statusCode = 400;
-    message = 'Validation failed';
-    errorSources = err.issues?.map((issue: { path: (string | number)[]; message: string }) => ({
-      path: issue.path.join('.'),
-      message: issue.message,
-    })) || [];
+    const zodErrorResponse = handleZodError(err);
+    statusCode = zodErrorResponse.statusCode;
+    message = zodErrorResponse.message;
+    errorSources = zodErrorResponse.errorSources;
   } else if (err.name === 'PrismaClientValidationError') {
-    statusCode = 400;
-    message = 'Database validation error';
-    errorSources = [{ path: '', message: err.message }];
+    const prismaValidationResponse = handlePrismaValidationError(err);
+    statusCode = prismaValidationResponse.statusCode;
+    message = prismaValidationResponse.message;
+    errorSources = prismaValidationResponse.errorSources;
   } else if (err.name === 'PrismaClientKnownRequestError') {
-    statusCode = 400;
-    message = 'Database request error';
-    errorSources = [{ path: '', message: err.message }];
-  } else if (err.code === 'P2002') {
-    statusCode = 409;
-    message = 'Duplicate entry';
-    errorSources = [{ path: err.meta?.target?.join(',') || '', message: 'Already exists' }];
-  } else if (err.code === 'P2025') {
-    statusCode = 404;
-    message = 'Record not found';
-    errorSources = [{ path: '', message: 'Resource not found' }];
+    const prismaErrorResponse = handlePrismaError(err);
+    statusCode = prismaErrorResponse.statusCode;
+    message = prismaErrorResponse.message;
+    errorSources = prismaErrorResponse.errorSources;
+  } else if (err.code) {
+    const prismaErrorResponse = handlePrismaError(err);
+    statusCode = prismaErrorResponse.statusCode;
+    message = prismaErrorResponse.message;
+    errorSources = prismaErrorResponse.errorSources;
   }
 
   const response: Record<string, unknown> = {

@@ -1,3 +1,4 @@
+import { Request } from 'express';
 import { auth } from '../../lib/auth';
 import { prisma } from '../../lib/prisma';
 import AppError from '../../errors/AppError';
@@ -122,5 +123,42 @@ export const loginUser = async (payload: LoginPayload) => {
     user,
     session: result.session || null,
     setCookieHeader,
+  };
+};
+
+export const logoutUser = async (req: Request) => {
+  const response = await auth.api.signOut({
+    headers: req.headers as any,
+    asResponse: true,
+  });
+
+  let setCookieHeader: string | string[] | null = null;
+
+  if (response && typeof response.headers !== 'undefined') {
+    const headers = response.headers as any;
+    if (typeof headers.getSetCookie === 'function') {
+      const cookies = headers.getSetCookie();
+      setCookieHeader = cookies.length === 1 ? cookies[0] : cookies;
+    } else if (typeof headers.get === 'function') {
+      const raw = headers.get('set-cookie');
+      if (raw) setCookieHeader = raw;
+    }
+  }
+
+  return { setCookieHeader };
+};
+
+export const refreshSession = async (req: Request) => {
+  const response = await auth.api.getSession({
+    headers: req.headers as any,
+  });
+
+  if (!response || !response.session) {
+    throw new AppError('No active session to refresh', 401);
+  }
+
+  return {
+    user: response.user,
+    session: response.session,
   };
 };
