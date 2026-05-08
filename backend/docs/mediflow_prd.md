@@ -35,6 +35,7 @@
 **Problem it solves:**
 
 Pharmacies in developing countries (Bangladesh and globally) struggle with:
+
 - Drug stockouts — popular medicines run out with no warning
 - Expiry waste — medicines expire on shelves, costing thousands
 - Drug interaction errors — pharmacists miss dangerous drug combinations
@@ -43,6 +44,7 @@ Pharmacies in developing countries (Bangladesh and globally) struggle with:
 **MediFlow** replaces spreadsheets and paper notebooks with a full-stack, AI-powered platform that gives pharmacies real-time inventory control, AI-driven safety checks, automated supplier order management, and clinical decision support — all in one web application.
 
 **Who uses it:**
+
 - **Pharmacist (user role):** Day-to-day medicine dispensing, inventory, prescriptions
 - **Admin:** Platform-level management — all pharmacies, all users, drug master database, analytics
 
@@ -51,43 +53,45 @@ Pharmacies in developing countries (Bangladesh and globally) struggle with:
 ## 2. Tech Stack
 
 ### Frontend
-| Concern | Technology |
-|---------|-----------|
-| Framework | Next.js 14+ (App Router) |
-| Language | TypeScript (strict mode) |
-| Styling | Tailwind CSS + ShadCN UI |
-| State management | Zustand |
-| Forms | React Hook Form + Zod |
-| Data fetching | TanStack Query (React Query) |
-| Charts | Recharts |
-| File upload | React Dropzone |
-| Notifications | Sonner / react-hot-toast |
-| Real-time | Socket.io client |
+
+| Concern          | Technology                   |
+| ---------------- | ---------------------------- |
+| Framework        | Next.js 14+ (App Router)     |
+| Language         | TypeScript (strict mode)     |
+| Styling          | Tailwind CSS + ShadCN UI     |
+| State management | Zustand                      |
+| Forms            | React Hook Form + Zod        |
+| Data fetching    | TanStack Query (React Query) |
+| Charts           | Recharts                     |
+| File upload      | React Dropzone               |
+| Notifications    | Sonner / react-hot-toast     |
+| Real-time        | Socket.io client             |
 
 ### Backend
-| Concern | Technology |
-|---------|-----------|
-| Runtime | Node.js |
-| Framework | Express.js |
-| Language | TypeScript |
-| ORM | Prisma |
-| Database | PostgreSQL (Neon / Supabase) |
-| Auth | Better Auth (sessions + OAuth) |
-| File storage | Cloudinary |
-| Caching | In-memory (node-cache) / Redis |
-| Queue | BullMQ |
-| Logging | Winston |
-| Real-time | Socket.io |
-| AI | Google Gemini API (free tier) |
+
+| Concern      | Technology                     |
+| ------------ | ------------------------------ |
+| Runtime      | Node.js                        |
+| Framework    | Express.js                     |
+| Language     | TypeScript                     |
+| ORM          | Prisma                         |
+| Database     | PostgreSQL (Neon / Supabase)   |
+| Auth         | Better Auth (sessions + OAuth) |
+| File storage | Cloudinary                     |
+| Caching      | In-memory (node-cache) / Redis |
+| Queue        | BullMQ                         |
+| Logging      | Winston                        |
+| Real-time    | Socket.io                      |
+| AI           | Google Gemini API (free tier)  |
 
 ---
 
 ## 3. User Roles
 
-| Role | Description | Access Level |
-|------|-------------|--------------|
+| Role         | Description                                                                      | Access Level             |
+| ------------ | -------------------------------------------------------------------------------- | ------------------------ |
 | `PHARMACIST` | Registered pharmacy staff. Manages own pharmacy inventory, prescriptions, orders | Dashboard + public pages |
-| `ADMIN` | Platform super-admin. Manages all pharmacies, users, drug database, analytics | Full platform access |
+| `ADMIN`      | Platform super-admin. Manages all pharmacies, users, drug database, analytics    | Full platform access     |
 
 > **Note:** A pharmacy (branch) is created during pharmacist registration. Each pharmacist belongs to one pharmacy. Admin is seeded in the database directly.
 
@@ -96,6 +100,7 @@ Pharmacies in developing countries (Bangladesh and globally) struggle with:
 ## 4. Core Features & Functional Requirements
 
 ### 4.1 Authentication System
+
 - Email + password registration and login
 - **Better Auth** handles session management via HTTP-only cookies (no manual JWT issuance)
 - Role-based access control middleware on all protected routes (Better Auth plugins: `admin`, `customRole`)
@@ -105,6 +110,7 @@ Pharmacies in developing countries (Bangladesh and globally) struggle with:
 - `isBanned` check on every authenticated request via Better Auth's `banned` user plugin
 
 ### 4.2 Inventory Management
+
 - CRUD for medicine stock per pharmacy
 - Each inventory item tracks: drug name, quantity, unit price, expiry date, batch number, reorder level, supplier
 - Low stock alert: flag items where `quantity <= reorder_level`
@@ -113,11 +119,13 @@ Pharmacies in developing countries (Bangladesh and globally) struggle with:
 - Export inventory as PDF/CSV
 
 ### 4.3 Drug Master Database (Admin-managed)
+
 - A global catalogue of drugs maintained by Admin
 - Pharmacists search this catalogue when adding inventory items
 - Fields: name, generic name, category, dosage form, description, manufacturer, image, contraindications
 
 ### 4.4 Supplier Order Management
+
 - Pharmacist creates purchase orders for specific drugs from named suppliers
 - Order line items: drug, quantity ordered, unit price
 - Order status flow: `PENDING → SHIPPED → RECEIVED → CANCELLED`
@@ -125,22 +133,27 @@ Pharmacies in developing countries (Bangladesh and globally) struggle with:
 - AI suggests order quantities based on demand forecast
 
 ### 4.5 Dispensing / Sales Log
+
 - Record each time a medicine is dispensed to a patient
 - Fields: drug, quantity dispensed, date, pharmacist who dispensed
 - Feeds into AI demand forecasting
 - Powers sales charts in dashboard
 
-### 4.6 Patient & Interaction Records
-- Store patient name + list of current medications
-- Run AI drug interaction check and save results to patient record
-- View history of all interaction checks per patient
+### 4.6 Standalone AI Interaction Checker
+
+- Quick-check utility for pharmacists to analyze drug interactions without patient records
+- Enter 2–5 drug names to receive AI-powered interaction analysis
+- Results saved to pharmacy history for reference
+- Color-coded risk levels (safe/moderate/dangerous) with clinical recommendations
 
 ### 4.7 Review System (Drug Reviews)
+
 - Pharmacists can leave a clinical note / review on any drug in the master catalogue
 - Star rating (1–5), text comment
 - Helps other pharmacists know real-world usage experience
 
 ### 4.8 Admin Controls
+
 - Approve or suspend pharmacist accounts
 - Manage drug master database (add, edit, delete drugs)
 - View all pharmacies, their inventory levels, activity
@@ -154,9 +167,11 @@ Pharmacies in developing countries (Bangladesh and globally) struggle with:
 ### 5.1 Public Pages (No Login Required)
 
 #### Landing Page `/`
+
 The marketing homepage selling MediFlow to pharmacy owners.
 
 **Navbar (logged out — min 4 routes):**
+
 - Logo
 - Home
 - Features
@@ -167,6 +182,7 @@ The marketing homepage selling MediFlow to pharmacy owners.
 - Register button
 
 **Navbar (logged in — min 6 routes):**
+
 - Logo
 - Home
 - Dashboard
@@ -177,6 +193,7 @@ The marketing homepage selling MediFlow to pharmacy owners.
 - Notification bell
 
 **Hero Section:**
+
 - Height: 60–70% of viewport
 - Animated pill/medicine icons floating in background
 - Headline: "The Smart Pharmacy, Powered by AI"
@@ -185,6 +202,7 @@ The marketing homepage selling MediFlow to pharmacy owners.
 - Animated counter numbers (pharmacies using it, drugs tracked, interactions caught)
 
 **8 Required Sections:**
+
 1. **Features** — 6 feature cards with icons: Inventory Tracking, AI Drug Interaction Checker, Demand Forecasting, Supplier Orders, AI Chatbot, Analytics Dashboard
 2. **How It Works** — 3-step visual: Register → Set Up Inventory → Let AI Do the Rest
 3. **Statistics** — animated counters: 500+ Pharmacies, 10,000+ Drugs Tracked, 98% Accuracy, 2,000+ Interactions Caught
@@ -197,6 +215,7 @@ The marketing homepage selling MediFlow to pharmacy owners.
 10. **CTA Banner** — "Start managing your pharmacy smarter today" + "Sign Up Free" button
 
 **Footer:**
+
 - Logo + short tagline
 - Links: About, Features, Pricing, Blog, Contact, Privacy Policy, Terms of Service
 - Social icons: Facebook, LinkedIn, Twitter/X, GitHub
@@ -206,9 +225,11 @@ The marketing homepage selling MediFlow to pharmacy owners.
 ---
 
 #### Drug Search / Explore Page `/drugs`
+
 The public medicine listing page. **This is the "items listing" page for the contest.**
 
 **Requirements:**
+
 - Debounced search bar (500ms delay) — search by drug name or generic name
 - Filter sidebar:
   - Category (dropdown: Antibiotic, Analgesic, Antidiabetic, Cardiovascular, Vitamin, etc.)
@@ -224,9 +245,11 @@ The public medicine listing page. **This is the "items listing" page for the con
 ---
 
 #### Drug Detail Page `/drugs/[id]`
+
 Publicly accessible detail page. **This is the "items detail" page for the contest.**
 
 **Sections:**
+
 1. **Overview** — large image, name, generic name, category, dosage form, manufacturer
 2. **Description** — full description, uses, how it works
 3. **Key Information** — dosage guidelines, contraindications, storage requirements, side effects
@@ -236,26 +259,31 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 ---
 
 #### Blog Page `/blog`
+
 - List of all blog posts: image, title, excerpt, author, date, read time, category tag
 - Debounced search + category filter
 - Pagination
 
 #### Blog Post Page `/blog/[slug]`
+
 - Full article with rich text content
 - Author info, date, tags
 - Related posts section
 
 #### About Page `/about`
+
 - Mission statement
 - Team section (fictional team cards)
 - Company stats
 - Timeline of milestones
 
 #### Contact Page `/contact`
+
 - Contact form (name, email, subject, message) → saved to DB + email notification
 - Contact info: email, phone, address
 
 #### Privacy Policy `/privacy` and Terms `/terms`
+
 - Static rich text pages
 
 ---
@@ -263,6 +291,7 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 ### 5.2 Auth Pages
 
 #### Login Page `/login`
+
 - Email + password form
 - React Hook Form + Zod validation
 - Error messages on invalid credentials
@@ -273,6 +302,7 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 - Success → redirect to `/dashboard`
 
 #### Register Page `/register`
+
 - Fields: Full name, Pharmacy name, License number, Address, Phone, Email, Password, Confirm password
 - React Hook Form + Zod
 - All validations with error messages
@@ -284,15 +314,17 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 ### 5.3 Pharmacist Dashboard `/dashboard`
 
 **Sidebar navigation (min 3 menu items — we have 7):**
+
 - Overview (home icon)
 - Inventory (package icon)
 - Dispensing Log (clipboard icon)
 - Supplier Orders (truck icon)
-- Patients & Interactions (shield icon)
+- Interaction Checker (shield icon)
 - AI Assistant (bot icon)
 - Profile (user icon)
 
 **Dashboard Navbar:**
+
 - Pharmacy name + logo
 - Notification bell with dropdown (low stock alerts, expiry alerts)
 - Profile icon with dropdown: Profile, Settings, Logout
@@ -300,6 +332,7 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 ---
 
 #### Dashboard Overview `/dashboard`
+
 - **4 Stat cards:**
   1. Total inventory items (count)
   2. Low stock items (count, danger color if > 0)
@@ -314,6 +347,7 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 ---
 
 #### Inventory Management `/dashboard/inventory`
+
 - Table columns: Drug name, Category, Quantity, Unit price, Expiry date, Reorder level, Batch number, Supplier, Status (in stock / low / expired), Actions
 - Search by drug name
 - Filter by: category, status (in stock / low stock / expired)
@@ -329,6 +363,7 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 ---
 
 #### Dispensing Log `/dashboard/dispensing`
+
 - Table: Drug, Quantity dispensed, Patient name (optional), Pharmacist, Date, Actions
 - "Record Dispensing" button → form: select drug from inventory, quantity, optional patient name
 - On submit: deduct quantity from inventory item
@@ -338,6 +373,7 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 ---
 
 #### Supplier Orders `/dashboard/orders`
+
 - Table: Order ID, Supplier name, Status badge, Total amount, Items count, Created date, Actions
 - Status color: PENDING=amber, SHIPPED=blue, RECEIVED=green, CANCELLED=red
 - "Create Order" → multi-step form:
@@ -351,16 +387,19 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 
 ---
 
-#### Patients & Interactions `/dashboard/patients`
-- Table: Patient name, Phone (optional), Medications count, Last checked, Actions
-- "Add Patient" → name, phone, list of current medications
-- "Check Interactions" → triggers AI feature #1
-- View patient detail → full medication list + interaction history
-- Pagination + search by name
+#### Interaction Checker `/dashboard/interactions`
+
+- Drug interaction input form with tag-based drug entry (2–5 drugs)
+- "Check Interactions" button → triggers AI analysis
+- Results display: Overall risk badge (green/amber/red)
+- Cards per drug pair showing severity, clinical explanation, and recommendation
+- History table: Previous checks for this pharmacy with timestamp, drugs checked, and risk level
+- "View Details" to see full JSON result from any historical check
 
 ---
 
 #### AI Assistant `/dashboard/ai-assistant`
+
 - Full-page chat UI
 - Left panel: chat history list (previous conversations), "New Chat" button
 - Right panel: chat messages + input
@@ -372,6 +411,7 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 ---
 
 #### Profile `/dashboard/profile`
+
 - Editable form: full name, phone, email, pharmacy name, license number, address
 - Avatar upload (Cloudinary)
 - Change password section (current password, new password, confirm)
@@ -382,6 +422,7 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 ### 5.4 Admin Dashboard `/admin`
 
 **Sidebar navigation (min 5 menu items — we have 7):**
+
 - Overview
 - Pharmacies
 - Users
@@ -393,6 +434,7 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 ---
 
 #### Admin Overview `/admin`
+
 - **6 Stat cards:** Total pharmacies, Total pharmacists, Total drugs in catalogue, Total dispensing records this month, Active orders, New registrations this week
 - **Bar chart:** Pharmacies registered per month (last 6 months)
 - **Line chart:** Platform-wide dispensing activity last 30 days
@@ -402,18 +444,21 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 ---
 
 #### Pharmacies `/admin/pharmacies`
+
 - Table: Pharmacy name, License number, Address, Owner name, Status (ACTIVE/SUSPENDED), Registered date, Actions
 - Actions: View details, Suspend, Activate
 - Filter by status, search by name
 - Pagination
 
 #### Users `/admin/users`
+
 - Table: Name, Email, Role, Pharmacy, Status (active/banned), Joined date, Actions
 - Actions: View, Suspend/Activate, Delete
 - Filter by role, status
 - Pagination
 
 #### Drug Database `/admin/drugs`
+
 - Full CRUD for the master drug catalogue
 - Table: Image, Name, Generic name, Category, Dosage form, Manufacturer, Actions
 - "Add Drug" → full form with all fields + image upload (Cloudinary)
@@ -421,16 +466,19 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 - Pagination
 
 #### Analytics `/admin/analytics`
+
 - AI Data Analyzer feature embedded here
 - Charts: Top 20 most tracked drugs platform-wide, expiry rate trends, stockout frequency
 - "Generate AI Insight" button → calls AI API → displays AI-written summary of platform health
 
 #### Blog Manager `/admin/blog`
+
 - Table of all blog posts: title, status (published/draft), author, date, views, Actions
 - "Create Post" → rich text editor (React Quill / TipTap), title, excerpt, category, cover image
 - Edit, Delete, Publish/Unpublish toggle
 
 #### Settings `/admin/settings`
+
 - Platform name and tagline
 - Low stock threshold default (days)
 - Expiry alert threshold default (days)
@@ -447,17 +495,19 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 
 ### AI Feature 1: Drug Interaction Checker
 
-**Where:** `/dashboard/patients` → patient detail page → "Check Interactions" button  
-**Also available:** standalone checker widget in `/dashboard/patients`
+**Where:** `/dashboard/interactions` — standalone utility page
 
 **How it works:**
+
 1. User enters 2–5 drug names in input fields (tag input)
 2. Frontend sends `POST /api/v1/ai/check-interactions` with `{ drugs: ["Warfarin", "Aspirin", "Metformin"] }`
-3. Backend builds a structured prompt and calls Gemini API
-4. Response parsed as JSON and returned to frontend
-5. Frontend displays color-coded result cards
+3. Backend validates pharmacist's `pharmacyId` from session
+4. Backend builds a structured prompt and calls Gemini API
+5. Response parsed as JSON and saved to `DrugInteractionCheck` table (linked to pharmacy)
+6. Frontend displays color-coded result cards
 
 **Prompt template:**
+
 ```
 You are an expert clinical pharmacist. Analyze the following drug combination for interactions:
 Drugs: {drug_list}
@@ -480,9 +530,10 @@ Return ONLY valid JSON in this exact format with no extra text:
 ```
 
 **UI Result:**
+
 - Overall risk badge (green/amber/red)
 - One card per drug pair showing severity + reason + recommendation
-- "Save to Patient Record" button
+- "Run New Check" button to perform another analysis
 
 ---
 
@@ -491,6 +542,7 @@ Return ONLY valid JSON in this exact format with no extra text:
 **Where:** `/dashboard/inventory` → top banner "AI Forecast" + dedicated `/dashboard/inventory/forecast` page
 
 **How it works:**
+
 1. Backend aggregates last 30 days of dispensing logs per drug for this pharmacy
 2. Pharmacist clicks "Generate Forecast"
 3. Frontend sends `POST /api/v1/ai/demand-forecast` with `{ pharmacyId }`
@@ -499,6 +551,7 @@ Return ONLY valid JSON in this exact format with no extra text:
 6. Result cached for 6 hours (Redis / node-cache) to avoid repeated API calls
 
 **Prompt template:**
+
 ```
 You are a pharmacy inventory analyst. Analyze this 30-day sales data and forecast stock needs.
 
@@ -529,6 +582,7 @@ Return ONLY valid JSON:
 ```
 
 **UI Result:**
+
 - Summary card with overall_insight from AI
 - Sorted table by urgency (critical first)
 - Each row: drug name, days until empty, urgency badge, suggested order qty, "Create Order" shortcut button
@@ -541,6 +595,7 @@ Return ONLY valid JSON:
 **Where:** `/dashboard/ai-assistant` — dedicated full-page chat interface
 
 **How it works:**
+
 1. Pharmacist types a clinical question (dosage, substitution, side effects, etc.)
 2. Frontend sends `POST /api/v1/ai/chat` with `{ messages: [...conversationHistory], newMessage: "..." }`
 3. Backend maintains conversation context by passing full history to Gemini
@@ -548,8 +603,9 @@ Return ONLY valid JSON:
 5. Chat history saved to DB (`AiChatSession`, `AiChatMessage` tables)
 
 **System prompt (sent once as first message):**
+
 ```
-You are MediBot, an expert clinical pharmacist assistant built into the MediFlow platform. 
+You are MediBot, an expert clinical pharmacist assistant built into the MediFlow platform.
 You help pharmacists with:
 - Drug dosage questions (adult and pediatric)
 - Drug substitution recommendations
@@ -558,12 +614,13 @@ You help pharmacists with:
 - Storage and handling requirements
 - General pharmaceutical knowledge
 
-Always be clear, concise, and professional. Always end responses with: 
+Always be clear, concise, and professional. Always end responses with:
 "⚠️ For patient-specific decisions, always consult the prescribing physician."
 Never diagnose patients or replace medical advice.
 ```
 
 **UI:**
+
 - Left sidebar: list of past chat sessions with first message preview, "New Chat" button
 - Main area: chat bubbles (user right, MediBot left)
 - Typing indicator (animated dots) while streaming
@@ -581,6 +638,7 @@ Never diagnose patients or replace medical advice.
 **Why this replaces Prescription Reader:** Prescription reader needs image understanding from a paid/advanced API tier. The Auto Tagger works perfectly with Gemini's free tier and is genuinely useful — it lets admin add a drug name and Gemini fills in all other fields automatically.
 
 **How it works:**
+
 1. Admin types only the drug name (e.g., "Amoxicillin 500mg")
 2. Clicks "Auto-fill with AI"
 3. Frontend sends `POST /api/v1/ai/tag-drug` with `{ drugName: "Amoxicillin 500mg" }`
@@ -589,6 +647,7 @@ Never diagnose patients or replace medical advice.
 6. Form fields are pre-filled with AI output — admin can review and edit before saving
 
 **Prompt template:**
+
 ```
 You are a pharmaceutical database expert. Given a drug name, provide complete structured information.
 
@@ -611,6 +670,7 @@ Return ONLY valid JSON with no extra text:
 ```
 
 **UI:**
+
 - Drug form initially has only "Drug Name" filled in
 - "Auto-fill with AI" button with loading spinner
 - On success: all other fields populate instantly with smooth fade-in animation
@@ -712,8 +772,8 @@ model Pharmacy {
   inventoryItems InventoryItem[]
   supplierOrders SupplierOrder[]
   dispensingLogs DispensingLog[]
-  patients       Patient[]
   aiChatSessions AiChatSession[]
+  interactionChecks DrugInteractionCheck[]
 
   @@map("pharmacies")
 }
@@ -868,38 +928,20 @@ model DispensingLog {
 }
 
 // ─────────────────────────────────────────────
-// PATIENT & DRUG INTERACTION RECORDS
+// AI DRUG INTERACTION CHECKS (Standalone Utility)
 // ─────────────────────────────────────────────
-
-model Patient {
-  id          String   @id @default(uuid())
-  pharmacyId  String
-  name        String
-  phone       String?
-  medications String[]
-  notes       String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
-  pharmacy             Pharmacy               @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
-  interactionChecks    DrugInteractionCheck[]
-
-  @@map("patients")
-}
 
 model DrugInteractionCheck {
   id           String              @id @default(uuid())
-  patientId    String?
-  pharmacyId   String?
+  pharmacyId   String
   drugsChecked String[]
   overallRisk  InteractionSeverity
   resultJson   Json
   createdAt    DateTime            @default(now())
 
   // Relations
-  patient Patient? @relation(fields: [patientId], references: [id])
-  drugs   Drug[]
+  pharmacy Pharmacy @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
+  drugs    Drug[]
 
   @@map("drug_interaction_checks")
 }
@@ -1022,117 +1064,127 @@ model NewsletterSubscriber {
 ## 8. API Endpoints
 
 ### Auth
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| POST | `/api/v1/auth/register` | Register new pharmacist + pharmacy | Public |
-| POST | `/api/v1/auth/login` | Login, create Better Auth session | Public |
-| POST | `/api/v1/auth/logout` | Clear token cookies | Authenticated |
-| POST | `/api/v1/auth/refresh-token` | Refresh session (handled by Better Auth) | Public |
-| GET | `/api/v1/auth/me` | Get current user profile | Authenticated |
+
+| Method | Endpoint                     | Description                              | Auth          |
+| ------ | ---------------------------- | ---------------------------------------- | ------------- |
+| POST   | `/api/v1/auth/register`      | Register new pharmacist + pharmacy       | Public        |
+| POST   | `/api/v1/auth/login`         | Login, create Better Auth session        | Public        |
+| POST   | `/api/v1/auth/logout`        | Clear token cookies                      | Authenticated |
+| POST   | `/api/v1/auth/refresh-token` | Refresh session (handled by Better Auth) | Public        |
+| GET    | `/api/v1/auth/me`            | Get current user profile                 | Authenticated |
 
 ### Users
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/v1/users` | Get all users | Admin |
-| GET | `/api/v1/users/:id` | Get user by ID | Admin |
-| PATCH | `/api/v1/users/:id` | Update user profile | Owner / Admin |
-| PATCH | `/api/v1/users/:id/ban` | Ban or unban user | Admin |
-| DELETE | `/api/v1/users/:id` | Delete user | Admin |
-| POST | `/api/v1/users/upload-avatar` | Upload profile photo | Authenticated |
+
+| Method | Endpoint                      | Description          | Auth          |
+| ------ | ----------------------------- | -------------------- | ------------- |
+| GET    | `/api/v1/users`               | Get all users        | Admin         |
+| GET    | `/api/v1/users/:id`           | Get user by ID       | Admin         |
+| PATCH  | `/api/v1/users/:id`           | Update user profile  | Owner / Admin |
+| PATCH  | `/api/v1/users/:id/ban`       | Ban or unban user    | Admin         |
+| DELETE | `/api/v1/users/:id`           | Delete user          | Admin         |
+| POST   | `/api/v1/users/upload-avatar` | Upload profile photo | Authenticated |
 
 ### Pharmacies
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/v1/pharmacies` | Get all pharmacies | Admin |
-| GET | `/api/v1/pharmacies/:id` | Get pharmacy by ID | Admin / Owner |
-| PATCH | `/api/v1/pharmacies/:id` | Update pharmacy info | Owner / Admin |
-| PATCH | `/api/v1/pharmacies/:id/status` | Activate or suspend | Admin |
+
+| Method | Endpoint                        | Description          | Auth          |
+| ------ | ------------------------------- | -------------------- | ------------- |
+| GET    | `/api/v1/pharmacies`            | Get all pharmacies   | Admin         |
+| GET    | `/api/v1/pharmacies/:id`        | Get pharmacy by ID   | Admin / Owner |
+| PATCH  | `/api/v1/pharmacies/:id`        | Update pharmacy info | Owner / Admin |
+| PATCH  | `/api/v1/pharmacies/:id/status` | Activate or suspend  | Admin         |
 
 ### Drugs (Master Catalogue)
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/v1/drugs` | Get all drugs (search, filter, paginate) | Public |
-| GET | `/api/v1/drugs/:id` | Get drug detail | Public |
-| POST | `/api/v1/drugs` | Create drug in catalogue | Admin |
-| PATCH | `/api/v1/drugs/:id` | Update drug | Admin |
-| DELETE | `/api/v1/drugs/:id` | Soft delete drug (isActive=false) | Admin |
+
+| Method | Endpoint            | Description                              | Auth   |
+| ------ | ------------------- | ---------------------------------------- | ------ |
+| GET    | `/api/v1/drugs`     | Get all drugs (search, filter, paginate) | Public |
+| GET    | `/api/v1/drugs/:id` | Get drug detail                          | Public |
+| POST   | `/api/v1/drugs`     | Create drug in catalogue                 | Admin  |
+| PATCH  | `/api/v1/drugs/:id` | Update drug                              | Admin  |
+| DELETE | `/api/v1/drugs/:id` | Soft delete drug (isActive=false)        | Admin  |
 
 ### Inventory
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/v1/inventory` | Get pharmacy inventory (filter, sort, paginate) | Pharmacist |
-| GET | `/api/v1/inventory/:id` | Get inventory item detail | Pharmacist |
-| POST | `/api/v1/inventory` | Add item to inventory | Pharmacist |
-| PATCH | `/api/v1/inventory/:id` | Update inventory item | Pharmacist |
-| DELETE | `/api/v1/inventory/:id` | Remove inventory item | Pharmacist |
-| GET | `/api/v1/inventory/alerts/low-stock` | Get low stock items | Pharmacist |
-| GET | `/api/v1/inventory/alerts/expiring` | Get expiring items | Pharmacist |
+
+| Method | Endpoint                             | Description                                     | Auth       |
+| ------ | ------------------------------------ | ----------------------------------------------- | ---------- |
+| GET    | `/api/v1/inventory`                  | Get pharmacy inventory (filter, sort, paginate) | Pharmacist |
+| GET    | `/api/v1/inventory/:id`              | Get inventory item detail                       | Pharmacist |
+| POST   | `/api/v1/inventory`                  | Add item to inventory                           | Pharmacist |
+| PATCH  | `/api/v1/inventory/:id`              | Update inventory item                           | Pharmacist |
+| DELETE | `/api/v1/inventory/:id`              | Remove inventory item                           | Pharmacist |
+| GET    | `/api/v1/inventory/alerts/low-stock` | Get low stock items                             | Pharmacist |
+| GET    | `/api/v1/inventory/alerts/expiring`  | Get expiring items                              | Pharmacist |
 
 ### Dispensing Logs
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/v1/dispensing` | Get dispensing logs (filter by date, drug) | Pharmacist |
-| POST | `/api/v1/dispensing` | Record a dispensing event | Pharmacist |
-| DELETE | `/api/v1/dispensing/:id` | Delete a record | Pharmacist / Admin |
+
+| Method | Endpoint                 | Description                                | Auth               |
+| ------ | ------------------------ | ------------------------------------------ | ------------------ |
+| GET    | `/api/v1/dispensing`     | Get dispensing logs (filter by date, drug) | Pharmacist         |
+| POST   | `/api/v1/dispensing`     | Record a dispensing event                  | Pharmacist         |
+| DELETE | `/api/v1/dispensing/:id` | Delete a record                            | Pharmacist / Admin |
 
 ### Supplier Orders
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/v1/orders` | Get all orders for this pharmacy | Pharmacist |
-| GET | `/api/v1/orders/:id` | Get order with line items | Pharmacist |
-| POST | `/api/v1/orders` | Create a new order | Pharmacist |
-| PATCH | `/api/v1/orders/:id/status` | Update order status | Pharmacist |
-| DELETE | `/api/v1/orders/:id` | Cancel order (if PENDING) | Pharmacist |
 
-### Patients & Interactions
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/v1/patients` | Get patients for pharmacy | Pharmacist |
-| GET | `/api/v1/patients/:id` | Get patient + interaction history | Pharmacist |
-| POST | `/api/v1/patients` | Add patient | Pharmacist |
-| PATCH | `/api/v1/patients/:id` | Update patient medications | Pharmacist |
-| DELETE | `/api/v1/patients/:id` | Delete patient record | Pharmacist |
+| Method | Endpoint                    | Description                      | Auth       |
+| ------ | --------------------------- | -------------------------------- | ---------- |
+| GET    | `/api/v1/orders`            | Get all orders for this pharmacy | Pharmacist |
+| GET    | `/api/v1/orders/:id`        | Get order with line items        | Pharmacist |
+| POST   | `/api/v1/orders`            | Create a new order               | Pharmacist |
+| PATCH  | `/api/v1/orders/:id/status` | Update order status              | Pharmacist |
+| DELETE | `/api/v1/orders/:id`        | Cancel order (if PENDING)        | Pharmacist |
+
+### AI Interaction History
+
+| Method | Endpoint                      | Description                                | Auth       |
+| ------ | ----------------------------- | ------------------------------------------ | ---------- |
+| GET    | `/api/v1/ai/interactions`     | Get interaction check history for pharmacy | Pharmacist |
+| GET    | `/api/v1/ai/interactions/:id` | Get specific interaction check details     | Pharmacist |
 
 ### Drug Reviews
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/v1/drugs/:id/reviews` | Get reviews for a drug | Public |
-| POST | `/api/v1/drugs/:id/reviews` | Submit review | Pharmacist |
-| DELETE | `/api/v1/reviews/:id` | Delete review | Owner / Admin |
+
+| Method | Endpoint                    | Description            | Auth          |
+| ------ | --------------------------- | ---------------------- | ------------- |
+| GET    | `/api/v1/drugs/:id/reviews` | Get reviews for a drug | Public        |
+| POST   | `/api/v1/drugs/:id/reviews` | Submit review          | Pharmacist    |
+| DELETE | `/api/v1/reviews/:id`       | Delete review          | Owner / Admin |
 
 ### AI Endpoints
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| POST | `/api/v1/ai/check-interactions` | Drug interaction check | Pharmacist |
-| POST | `/api/v1/ai/demand-forecast` | Generate stock forecast | Pharmacist |
-| POST | `/api/v1/ai/chat` | Send chat message (streaming SSE) | Pharmacist |
-| GET | `/api/v1/ai/chat/sessions` | Get chat session list | Pharmacist |
-| GET | `/api/v1/ai/chat/sessions/:id` | Get chat session messages | Pharmacist |
-| DELETE | `/api/v1/ai/chat/sessions/:id` | Delete chat session | Pharmacist |
-| POST | `/api/v1/ai/tag-drug` | Auto-fill drug fields with AI | Admin |
-| POST | `/api/v1/ai/analyze-platform` | Generate platform health insight | Admin |
+
+| Method | Endpoint                        | Description                       | Auth       |
+| ------ | ------------------------------- | --------------------------------- | ---------- |
+| POST   | `/api/v1/ai/check-interactions` | Drug interaction check            | Pharmacist |
+| POST   | `/api/v1/ai/demand-forecast`    | Generate stock forecast           | Pharmacist |
+| POST   | `/api/v1/ai/chat`               | Send chat message (streaming SSE) | Pharmacist |
+| GET    | `/api/v1/ai/chat/sessions`      | Get chat session list             | Pharmacist |
+| GET    | `/api/v1/ai/chat/sessions/:id`  | Get chat session messages         | Pharmacist |
+| DELETE | `/api/v1/ai/chat/sessions/:id`  | Delete chat session               | Pharmacist |
+| POST   | `/api/v1/ai/tag-drug`           | Auto-fill drug fields with AI     | Admin      |
+| POST   | `/api/v1/ai/analyze-platform`   | Generate platform health insight  | Admin      |
 
 ### Blog
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/v1/blog` | Get published posts (filter, paginate) | Public |
-| GET | `/api/v1/blog/:slug` | Get post by slug | Public |
-| POST | `/api/v1/blog` | Create blog post | Admin |
-| PATCH | `/api/v1/blog/:id` | Update blog post | Admin |
-| DELETE | `/api/v1/blog/:id` | Delete blog post | Admin |
-| PATCH | `/api/v1/blog/:id/publish` | Toggle publish status | Admin |
+
+| Method | Endpoint                   | Description                            | Auth   |
+| ------ | -------------------------- | -------------------------------------- | ------ |
+| GET    | `/api/v1/blog`             | Get published posts (filter, paginate) | Public |
+| GET    | `/api/v1/blog/:slug`       | Get post by slug                       | Public |
+| POST   | `/api/v1/blog`             | Create blog post                       | Admin  |
+| PATCH  | `/api/v1/blog/:id`         | Update blog post                       | Admin  |
+| DELETE | `/api/v1/blog/:id`         | Delete blog post                       | Admin  |
+| PATCH  | `/api/v1/blog/:id/publish` | Toggle publish status                  | Admin  |
 
 ### Admin Dashboard
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/v1/admin/stats` | Platform overview metrics | Admin |
-| GET | `/api/v1/admin/activity` | Recent activity feed | Admin |
+
+| Method | Endpoint                 | Description               | Auth  |
+| ------ | ------------------------ | ------------------------- | ----- |
+| GET    | `/api/v1/admin/stats`    | Platform overview metrics | Admin |
+| GET    | `/api/v1/admin/activity` | Recent activity feed      | Admin |
 
 ### Misc
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| POST | `/api/v1/contact` | Submit contact message | Public |
-| POST | `/api/v1/newsletter/subscribe` | Subscribe to newsletter | Public |
+
+| Method | Endpoint                       | Description             | Auth   |
+| ------ | ------------------------------ | ----------------------- | ------ |
+| POST   | `/api/v1/contact`              | Submit contact message  | Public |
+| POST   | `/api/v1/newsletter/subscribe` | Subscribe to newsletter | Public |
 
 ---
 
@@ -1202,11 +1254,6 @@ backend/
 │   │   │   ├── order.route.ts
 │   │   │   ├── order.service.ts
 │   │   │   └── order.validation.ts
-│   │   ├── Patient/
-│   │   │   ├── patient.controller.ts
-│   │   │   ├── patient.route.ts
-│   │   │   ├── patient.service.ts
-│   │   │   └── patient.validation.ts
 │   │   ├── Review/
 │   │   │   ├── review.controller.ts
 │   │   │   ├── review.route.ts
@@ -1278,9 +1325,8 @@ frontend/
 │   │   │   ├── orders/
 │   │   │   │   ├── page.tsx
 │   │   │   │   └── [id]/page.tsx
-│   │   │   ├── patients/
-│   │   │   │   ├── page.tsx
-│   │   │   │   └── [id]/page.tsx
+│   │   │   ├── interactions/
+│   │   │   │   └── page.tsx
 │   │   │   ├── ai-assistant/page.tsx
 │   │   │   └── profile/page.tsx
 │   ├── (admin)/
@@ -1381,38 +1427,40 @@ frontend/
 
 ### Frontend (3 required — we implement all 5)
 
-| Requirement | Implementation |
-|------------|---------------|
-| Server Components | Drug list, drug detail, blog pages — fetched server-side with Next.js RSC |
-| Suspense / Streaming | Wrap dashboard charts and drug detail sections in `<Suspense>` with skeleton fallbacks |
-| Optimistic UI | Adding inventory item — show it in the table immediately, rollback if API fails |
-| Live notifications | Socket.io broadcasts low-stock alert to logged-in pharmacist in real time when another dispensing event triggers it |
-| Real-time updates | AI chat streaming via SSE — responses stream word by word |
+| Requirement          | Implementation                                                                                                      |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Server Components    | Drug list, drug detail, blog pages — fetched server-side with Next.js RSC                                           |
+| Suspense / Streaming | Wrap dashboard charts and drug detail sections in `<Suspense>` with skeleton fallbacks                              |
+| Optimistic UI        | Adding inventory item — show it in the table immediately, rollback if API fails                                     |
+| Live notifications   | Socket.io broadcasts low-stock alert to logged-in pharmacist in real time when another dispensing event triggers it |
+| Real-time updates    | AI chat streaming via SSE — responses stream word by word                                                           |
 
 ### Backend (3 required — we implement all 5)
 
-| Requirement | Implementation |
-|------------|---------------|
-| Rate limiting | `express-rate-limit`: global 100 req/15min, AI endpoints 10 req/15min |
-| Logging | Winston: info level to console, error level to `logs/error.log`, requests logged via morgan |
-| Caching | `node-cache`: AI forecast response cached per pharmacyId for 6 hours |
-| Queue system | BullMQ: daily job runs at midnight to check all inventory items for low stock + expiry, emits Socket.io events |
-| Error tracking | All caught errors logged to file; production: integrate Sentry DSN |
+| Requirement    | Implementation                                                                                                 |
+| -------------- | -------------------------------------------------------------------------------------------------------------- |
+| Rate limiting  | `express-rate-limit`: global 100 req/15min, AI endpoints 10 req/15min                                          |
+| Logging        | Winston: info level to console, error level to `logs/error.log`, requests logged via morgan                    |
+| Caching        | `node-cache`: AI forecast response cached per pharmacyId for 6 hours                                           |
+| Queue system   | BullMQ: daily job runs at midnight to check all inventory items for low stock + expiry, emits Socket.io events |
+| Error tracking | All caught errors logged to file; production: integrate Sentry DSN                                             |
 
 ---
 
 ## 11. UI & Design Rules
 
 ### Color Palette (max 3 primary + neutral)
-| Token | Color | Usage |
-|-------|-------|-------|
-| Primary | `#0EA5E9` (sky blue) | Buttons, links, active states |
-| Secondary | `#10B981` (emerald) | Success states, "safe" interactions, in-stock badges |
-| Accent | `#F59E0B` (amber) | Warnings, low stock, moderate severity |
-| Danger | `#EF4444` (red) | Errors, dangerous interactions, out of stock |
-| Neutral | Gray scale | Text, backgrounds, borders |
+
+| Token     | Color                | Usage                                                |
+| --------- | -------------------- | ---------------------------------------------------- |
+| Primary   | `#0EA5E9` (sky blue) | Buttons, links, active states                        |
+| Secondary | `#10B981` (emerald)  | Success states, "safe" interactions, in-stock badges |
+| Accent    | `#F59E0B` (amber)    | Warnings, low stock, moderate severity               |
+| Danger    | `#EF4444` (red)      | Errors, dangerous interactions, out of stock         |
+| Neutral   | Gray scale           | Text, backgrounds, borders                           |
 
 ### Global Rules
+
 - Light mode default, dark mode via `class="dark"` toggle stored in localStorage
 - All cards: same border radius (`rounded-xl` / `12px`), same padding (`p-5`)
 - All cards: `border border-gray-200 dark:border-gray-700` with white/gray-900 background
@@ -1423,17 +1471,19 @@ frontend/
 - No lorem ipsum anywhere — all content is real pharma domain content
 
 ### Responsive Breakpoints
-| Breakpoint | Cards per row |
-|-----------|--------------|
-| Mobile (<768px) | 1 |
-| Tablet (768–1024px) | 2 |
-| Desktop (>1024px) | 4 |
+
+| Breakpoint          | Cards per row |
+| ------------------- | ------------- |
+| Mobile (<768px)     | 1             |
+| Tablet (768–1024px) | 2             |
+| Desktop (>1024px)   | 4             |
 
 ---
 
 ## 12. Environment Variables
 
 ### Backend `.env`
+
 ```env
 NODE_ENV=development
 PORT=5000
@@ -1465,6 +1515,7 @@ FRONTEND_URL=http://localhost:3000
 ```
 
 ### Frontend `.env.local`
+
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:5000/api/v1
 NEXT_PUBLIC_SOCKET_URL=http://localhost:5000
@@ -1482,6 +1533,7 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret
 ## 13. Response Format
 
 ### Success Response
+
 ```json
 {
   "success": true,
@@ -1497,6 +1549,7 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret
 ```
 
 ### Error Response
+
 ```json
 {
   "success": false,
@@ -1559,17 +1612,18 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret
 
 ## 16. Demo Credentials
 
-| Role | Email | Password |
-|------|-------|----------|
-| Pharmacist | `pharmacist@mediflow.com` | `Demo@1234` |
-| Admin | `admin@mediflow.com` | `Admin@1234` |
+| Role       | Email                     | Password     |
+| ---------- | ------------------------- | ------------ |
+| Pharmacist | `pharmacist@mediflow.com` | `Demo@1234`  |
+| Admin      | `admin@mediflow.com`      | `Admin@1234` |
 
 Both accounts seeded via `prisma/seed.ts` with realistic sample data:
+
 - 50 drugs in master catalogue
 - 30 inventory items for demo pharmacy
 - 15 dispensing logs (last 30 days) for chart data
 - 5 supplier orders in various statuses
-- 3 patients with interaction history
+- 5 interaction checks in history
 - 10 blog posts (published)
 - 5 AI chat sessions with message history
 
@@ -1578,6 +1632,7 @@ Both accounts seeded via `prisma/seed.ts` with realistic sample data:
 ## Dependencies Reference
 
 ### Backend `package.json`
+
 ```json
 {
   "dependencies": {
@@ -1616,6 +1671,7 @@ Both accounts seeded via `prisma/seed.ts` with realistic sample data:
 ```
 
 ### Frontend `package.json`
+
 ```json
 {
   "dependencies": {

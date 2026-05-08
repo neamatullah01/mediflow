@@ -80,8 +80,8 @@ model Pharmacy {
   inventoryItems InventoryItem[]
   supplierOrders SupplierOrder[]
   dispensingLogs DispensingLog[]
-  patients       Patient[]
   aiChatSessions AiChatSession[]
+  interactionChecks DrugInteractionCheck[]
 
   @@map("pharmacies")
 }
@@ -241,38 +241,20 @@ model DispensingLog {
 }
 
 // ─────────────────────────────────────────────
-// PATIENT & DRUG INTERACTION RECORDS
+// AI DRUG INTERACTION CHECKS (Standalone Utility)
 // ─────────────────────────────────────────────
-
-model Patient {
-  id          String   @id @default(uuid())
-  pharmacyId  String
-  name        String
-  phone       String?
-  medications String[]
-  notes       String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
-  pharmacy             Pharmacy               @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
-  interactionChecks    DrugInteractionCheck[]
-
-  @@map("patients")
-}
 
 model DrugInteractionCheck {
   id           String              @id @default(uuid())
-  patientId    String?
-  pharmacyId   String?
+  pharmacyId   String
   drugsChecked String[]
   overallRisk  InteractionSeverity
   resultJson   Json
   createdAt    DateTime            @default(now())
 
   // Relations
-  patient Patient? @relation(fields: [patientId], references: [id])
-  drugs   Drug[]
+  pharmacy Pharmacy @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
+  drugs    Drug[]
 
   @@map("drug_interaction_checks")
 }
