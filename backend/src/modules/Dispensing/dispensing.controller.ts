@@ -43,11 +43,8 @@ const dispensingController = {
 
     const validated = createDispensingSchema.parse(req.body);
 
-    // Get Socket.io instance if available
-    const io = (req as any).io;
-    const emitLowStockAlert = io
-      ? (pId: string, item: any) => io.to(pId).emit('low-stock-alert', item)
-      : undefined;
+    const { io } = await import('../../server');
+    const emitLowStockAlert = (pId: string, item: any) => io.to(pId).emit('low-stock-alert', item);
 
     const log = await dispensingService.createDispensing(
       pharmacyId,

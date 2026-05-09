@@ -43,7 +43,30 @@ const inventoryAlertWorker = redisConnection
             },
           });
 
+          // Query for low stock inventory items
+          const lowStockItems = await prisma.inventoryItem.findMany({
+            where: {
+              status: {
+                in: ['LOW_STOCK', 'OUT_OF_STOCK'],
+              },
+            },
+            include: {
+              drug: {
+                select: {
+                  name: true,
+                  genericName: true,
+                },
+              },
+              pharmacy: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          });
+
           const expiredCount = expiredItems.length;
+          const lowStockCount = lowStockItems.length;
 
           if (expiredCount > 0) {
             // Emit alert to all connected clients
@@ -60,16 +83,29 @@ const inventoryAlertWorker = redisConnection
               })),
             });
 
-            logger.warn(`Expiry alert: ${expiredCount} expired items found`, {
-              count: expiredCount,
-              items: expiredItems.map((item) => ({
-                id: item.id,
-                drugName: item.drug.name,
-                pharmacyName: item.pharmacy.name,
-              })),
-            });
+            logger.warn(`Expiry alert: ${expiredCount} expired items found`);
           } else {
             logger.info('No expired inventory items found');
+          }
+
+          if (lowStockCount > 0) {
+            // Emit alert to all connected clients
+            io.emit('low-stock-alert', {
+              count: lowStockCount,
+              items: lowStockItems.map((item) => ({
+                id: item.id,
+                drugName: item.drug.name,
+                genericName: item.drug.genericName,
+                pharmacyName: item.pharmacy.name,
+                batchNumber: item.batchNumber,
+                quantity: item.quantity,
+                reorderLevel: item.reorderLevel,
+              })),
+            });
+
+            logger.warn(`Low stock alert: ${lowStockCount} items found below reorder level`);
+          } else {
+            logger.info('No low stock inventory items found');
           }
 
           return {

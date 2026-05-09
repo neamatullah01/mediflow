@@ -172,6 +172,81 @@ const getExpiringAlerts = async (pharmacyId: string) => {
   return items;
 };
 
+const getAllInventory = async (pharmacyId: string) => {
+  return prisma.inventoryItem.findMany({
+    where: { pharmacyId },
+    include: { drug: true },
+    orderBy: { createdAt: 'desc' },
+  });
+};
+
+const importBulkInventory = async (pharmacyId: string, items: any[]) => {
+  const results = { successful: 0, failed: 0, errors: [] as string[] };
+
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    try {
+      if (!item.drugId || !item.quantity || !item.expiryDate || !item.unitPrice) {
+        throw new AppError('Missing required fields (drugId, quantity, expiryDate, unitPrice)', 400);
+      }
+
+      const drug = await prisma.drug.findFirst({ where: { id: item.drugId, isActive: true } });
+      if (!drug) {
+        throw new AppError(`Drug not found for ID: ${item.drugId}`, 404);
+      }
+
+      const expiryDate = new Date(item.expiryDate);
+      if (isNaN(expiryDate.getTime())) {
+        throw new AppError('Invalid expiry date format', 400);
+      }
+
+      const quantity = Number(item.quantity);
+      const unitPrice = Number(item.unitPrice);
+      const reorderLevel = item.reorderLevel ? Number(item.reorderLevel) : 10;
+      const status = computeStatus(quantity, reorderLevel, expiryDate);
+
+      // Check if an item with the same drugId and batchNumber exists
+      const existing = await prisma.inventoryItem.findFirst({
+        where: {
+          pharmacyId,
+          drugId: item.drugId,
+          batchNumber: item.batchNumber || null,
+        },
+      });
+
+      if (existing) {
+        const newQuantity = existing.quantity + quantity;
+        const newStatus = computeStatus(newQuantity, existing.reorderLevel, existing.expiryDate);
+        await prisma.inventoryItem.update({
+          where: { id: existing.id },
+          data: { quantity: newQuantity, status: newStatus as any },
+        });
+      } else {
+        await prisma.inventoryItem.create({
+          data: {
+            pharmacyId,
+            drugId: item.drugId,
+            quantity,
+            unitPrice,
+            expiryDate,
+            batchNumber: item.batchNumber || null,
+            reorderLevel,
+            supplierName: item.supplierName || null,
+            status: status as any,
+          },
+        });
+      }
+
+      results.successful++;
+    } catch (error: any) {
+      results.failed++;
+      results.errors.push(`Row ${i + 1}: ${error.message || 'Unknown error'}`);
+    }
+  }
+
+  return results;
+};
+
 export { computeStatus };
 
 const inventoryService = {
@@ -182,6 +257,8 @@ const inventoryService = {
   deleteItem,
   getLowStockAlerts,
   getExpiringAlerts,
+  getAllInventory,
+  importBulkInventory,
 };
 
 export default inventoryService;
