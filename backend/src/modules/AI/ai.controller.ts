@@ -74,11 +74,12 @@ const aiController = {
   }),
 
   analyzePlatform: catchAsync(async (_req: Request, res: Response) => {
+    const result = await aiService.generatePlatformAnalytics();
     sendResponse(res, {
-      statusCode: 501,
-      success: false,
-      message: 'Platform analytics AI not yet implemented',
-      data: null,
+      statusCode: 200,
+      success: true,
+      message: 'Platform analytics generated successfully',
+      data: result,
     });
   }),
 

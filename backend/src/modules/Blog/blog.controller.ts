@@ -7,14 +7,19 @@ import AppError from '../../errors/AppError';
 
 const blogController = {
   getPosts: catchAsync(async (req: Request, res: Response) => {
-    const { page, limit, search, category } = req.query;
+    const { page, limit, search, category, isPublished } = req.query;
+    const isAdmin = req.user?.role === 'ADMIN';
 
-    const result = await blogService.getPosts({
-      page: page ? Number(page) : undefined,
-      limit: limit ? Number(limit) : undefined,
-      search: search as string | undefined,
-      category: category as string | undefined,
-    });
+    const result = await blogService.getPosts(
+      {
+        page: page ? Number(page) : undefined,
+        limit: limit ? Number(limit) : undefined,
+        search: search as string | undefined,
+        category: category as string | undefined,
+        isPublished: isPublished as string | undefined,
+      },
+      isAdmin,
+    );
 
     sendResponse(res, {
       statusCode: 200,

@@ -9,6 +9,7 @@ interface BlogQuery {
   limit?: number | undefined;
   search?: string | undefined;
   category?: string | undefined;
+  isPublished?: string | undefined;
 }
 
 const generateUniqueSlug = async (title: string, excludeId?: string): Promise<string> => {
@@ -26,12 +27,18 @@ const generateUniqueSlug = async (title: string, excludeId?: string): Promise<st
   return slug;
 };
 
-const getPosts = async (query: BlogQuery) => {
+const getPosts = async (query: BlogQuery, isAdmin: boolean = false) => {
   const page = query.page || 1;
   const limit = query.limit || 10;
   const skip = getSkip(page, limit);
 
-  const where: any = { isPublished: true };
+  const where: any = {};
+
+  if (!isAdmin) {
+    where.isPublished = true;
+  } else if (query.isPublished === 'true' || query.isPublished === 'false') {
+    where.isPublished = query.isPublished === 'true';
+  }
 
   if (query.search) {
     where.OR = [

@@ -20,6 +20,13 @@ export const io = new Server(server, {
 io.on('connection', (socket) => {
   logger.info(`Socket connected: ${socket.id}`);
 
+  socket.on('join-pharmacy', (pharmacyId: string) => {
+    if (pharmacyId) {
+      socket.join(pharmacyId);
+      logger.info(`Socket ${socket.id} joined pharmacy room: ${pharmacyId}`);
+    }
+  });
+
   socket.on('disconnect', () => {
     logger.info(`Socket disconnected: ${socket.id}`);
   });

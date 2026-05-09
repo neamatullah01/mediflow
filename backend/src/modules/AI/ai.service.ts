@@ -7,6 +7,7 @@ import {
   INTERACTION_CHECK_PROMPT,
   DEMAND_FORECAST_PROMPT,
   AUTO_TAGGER_PROMPT,
+  PLATFORM_ANALYTICS_PROMPT,
   CHATBOT_SYSTEM_PROMPT,
 } from './ai.prompts';
 
@@ -389,11 +390,62 @@ const createChatSession = async (userId: string, pharmacyId: string) => {
   return session;
 };
 
+// ─────────────────────────────────────────────
+// AI Feature 5: Platform Analytics (Admin-only)
+// ─────────────────────────────────────────────
+
+const generatePlatformAnalytics = async () => {
+  const [totalPharmacies, totalPharmacists, totalDrugs, inventoryByStatus, ordersByStatus] =
+    await Promise.all([
+      prisma.pharmacy.count(),
+      prisma.user.count({ where: { role: 'PHARMACIST' } }),
+      prisma.drug.count(),
+      prisma.inventoryItem.groupBy({
+        by: ['status'],
+        _count: { status: true },
+      }),
+      prisma.supplierOrder.groupBy({
+        by: ['status'],
+        _count: { status: true },
+      }),
+    ]);
+
+  const platformData = JSON.stringify({
+    totalPharmacies,
+    totalPharmacists,
+    totalDrugs,
+    inventoryByStatus: inventoryByStatus.map((item) => ({
+      status: item.status,
+      count: item._count.status,
+    })),
+    ordersByStatus: ordersByStatus.map((item) => ({
+      status: item.status,
+      count: item._count.status,
+    })),
+  }, null, 2);
+
+  const prompt = PLATFORM_ANALYTICS_PROMPT.replace('{platform_data}', platformData);
+
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+  const result = await model.generateContent(prompt);
+  const text = result.response.text();
+
+  const parsed = parseGeminiJSON<{
+    health_score: number;
+    summary: string;
+    key_risks: string[];
+    recommendations: string[];
+  }>(text);
+
+  return parsed;
+};
+
 const aiService = {
   checkInteractions,
   generateDemandForecast,
   tagDrug,
   streamChatSession,
+  generatePlatformAnalytics,
   getInteractionHistory,
   getInteractionById,
   getChatSessions,
