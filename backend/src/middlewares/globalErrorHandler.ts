@@ -1,4 +1,5 @@
 import { ErrorRequestHandler } from 'express';
+import * as Sentry from '@sentry/node';
 import AppError from '../errors/AppError';
 import handleZodError from '../errors/handleZodError';
 import handlePrismaError from '../errors/handlePrismaError';
@@ -6,6 +7,10 @@ import handlePrismaValidationError from '../errors/handlePrismaValidationError';
 import { env } from '../config';
 
 const globalErrorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
+  if (process.env.NODE_ENV === 'production') {
+    Sentry.captureException(err);
+  }
+
   let statusCode = 500;
   let message = 'Something went wrong';
   let errorSources: { path: string; message: string }[] = [];

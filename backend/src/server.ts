@@ -1,9 +1,14 @@
 import app from './app';
+import * as Sentry from '@sentry/node';
 import http from 'http';
 import { Server } from 'socket.io';
 import { env } from './config';
 import { scheduleInventoryJobs } from './jobs/inventoryAlerts.job';
 import logger from './utils/logger';
+
+if (process.env.NODE_ENV === 'production' && process.env.SENTRY_DSN) {
+  Sentry.init({ dsn: process.env.SENTRY_DSN, environment: process.env.NODE_ENV });
+}
 
 const PORT = env.PORT;
 const server = http.createServer(app);
