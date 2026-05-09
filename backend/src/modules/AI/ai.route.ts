@@ -17,6 +17,7 @@ router.get('/interactions', verifyAuth(Role.PHARMACIST, Role.ADMIN), aiControlle
 router.get('/interactions/:id', verifyAuth(Role.PHARMACIST, Role.ADMIN), aiController.getInteractionById);
 
 // Chat sessions (DB reads — no AI needed)
+router.post('/chat/sessions', verifyAuth(Role.PHARMACIST, Role.ADMIN), aiController.createChatSession);
 router.get('/chat/sessions', verifyAuth(Role.PHARMACIST, Role.ADMIN), aiController.getChatSessions);
 router.get('/chat/sessions/:id', verifyAuth(Role.PHARMACIST, Role.ADMIN), aiController.getChatSession);
 router.delete('/chat/sessions/:id', verifyAuth(Role.PHARMACIST, Role.ADMIN), aiController.deleteChatSession);

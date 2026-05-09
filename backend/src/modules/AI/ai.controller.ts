@@ -5,40 +5,71 @@ import aiService from './ai.service';
 import AppError from '../../errors/AppError';
 
 const aiController = {
-  // ─── AI Endpoints (no AI integration per user request) ───────────────────
-  checkInteractions: catchAsync(async (_req: Request, res: Response) => {
+  // ─── AI-Powered Endpoints ──────────────────────────────────────────────
+
+  checkInteractions: catchAsync(async (req: Request, res: Response) => {
+    const pharmacyId = req.user?.pharmacyId;
+    if (!pharmacyId) throw new AppError('Pharmacy not associated with your account', 400);
+
+    const { drugs } = req.body as { drugs: string[] };
+    if (!Array.isArray(drugs)) throw new AppError('drugs must be an array of strings', 400);
+
+    const result = await aiService.checkInteractions(pharmacyId, drugs);
     sendResponse(res, {
-      statusCode: 501,
-      success: false,
-      message: 'AI integration not enabled. Configure GEMINI_API_KEY to activate.',
-      data: null,
+      statusCode: 200,
+      success: true,
+      message: 'Drug interaction check completed',
+      data: result,
     });
   }),
 
-  demandForecast: catchAsync(async (_req: Request, res: Response) => {
+  demandForecast: catchAsync(async (req: Request, res: Response) => {
+    const pharmacyId = req.user?.pharmacyId;
+    if (!pharmacyId) throw new AppError('Pharmacy not associated with your account', 400);
+
+    const result = await aiService.generateDemandForecast(pharmacyId);
     sendResponse(res, {
-      statusCode: 501,
-      success: false,
-      message: 'AI integration not enabled. Configure GEMINI_API_KEY to activate.',
-      data: null,
+      statusCode: 200,
+      success: true,
+      message: 'Demand forecast generated successfully',
+      data: result,
     });
   }),
 
-  chat: catchAsync(async (_req: Request, res: Response) => {
-    sendResponse(res, {
-      statusCode: 501,
-      success: false,
-      message: 'AI integration not enabled. Configure GEMINI_API_KEY to activate.',
-      data: null,
-    });
+  chat: catchAsync(async (req: Request, res: Response) => {
+    const userId = req.user?.id;
+    const pharmacyId = req.user?.pharmacyId;
+    if (!userId || !pharmacyId) throw new AppError('Unauthorized', 401);
+
+    const { sessionId, message } = req.body as { sessionId?: string; message: string };
+
+    // If no sessionId provided, create a new session first
+    let chatSessionId = sessionId;
+    if (!chatSessionId) {
+      const session = await aiService.createChatSession(userId, pharmacyId);
+      chatSessionId = session.id;
+    }
+
+    // Configure SSE headers
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    // Send the sessionId as the first event so the client knows which session to use
+    res.write(`data: ${JSON.stringify({ sessionId: chatSessionId })}\n\n`);
+
+    await aiService.streamChatSession(chatSessionId, message, res);
   }),
 
-  tagDrug: catchAsync(async (_req: Request, res: Response) => {
+  tagDrug: catchAsync(async (req: Request, res: Response) => {
+    const { drugName } = req.body as { drugName: string };
+    if (!drugName) throw new AppError('drugName is required', 400);
+
+    const result = await aiService.tagDrug(drugName);
     sendResponse(res, {
-      statusCode: 501,
-      success: false,
-      message: 'AI integration not enabled. Configure GEMINI_API_KEY to activate.',
-      data: null,
+      statusCode: 200,
+      success: true,
+      message: 'Drug auto-tagged successfully',
+      data: result,
     });
   }),
 
@@ -46,7 +77,7 @@ const aiController = {
     sendResponse(res, {
       statusCode: 501,
       success: false,
-      message: 'AI integration not enabled. Configure GEMINI_API_KEY to activate.',
+      message: 'Platform analytics AI not yet implemented',
       data: null,
     });
   }),
@@ -134,6 +165,20 @@ const aiController = {
       success: true,
       message: 'Chat session deleted successfully',
       data: null,
+    });
+  }),
+
+  createChatSession: catchAsync(async (req: Request, res: Response) => {
+    const userId = req.user?.id;
+    const pharmacyId = req.user?.pharmacyId;
+    if (!userId || !pharmacyId) throw new AppError('Unauthorized', 401);
+
+    const session = await aiService.createChatSession(userId, pharmacyId);
+    sendResponse(res, {
+      statusCode: 201,
+      success: true,
+      message: 'Chat session created successfully',
+      data: session,
     });
   }),
 };
