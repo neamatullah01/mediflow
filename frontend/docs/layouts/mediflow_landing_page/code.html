@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediFlow | The Smart Pharmacy, Powered by AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#4d2b00",
+                    "on-secondary-fixed-variant": "#005236",
+                    "error-container": "#ffdad6",
+                    "primary-fixed-dim": "#89ceff",
+                    "error": "#ba1a1a",
+                    "secondary-fixed": "#6ffbbe",
+                    "tertiary": "#8a5100",
+                    "on-primary": "#ffffff",
+                    "secondary": "#006c49",
+                    "on-tertiary-fixed": "#2c1600",
+                    "on-background": "#171c20",
+                    "on-secondary-container": "#00714d",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#2c3135",
+                    "surface-dim": "#d6dae0",
+                    "outline": "#6e7881",
+                    "secondary-container": "#6cf8bb",
+                    "surface-container-highest": "#dee3e9",
+                    "on-primary-fixed-variant": "#004c6e",
+                    "inverse-on-surface": "#edf1f7",
+                    "surface-container-high": "#e4e8ee",
+                    "surface-container-low": "#f0f4fa",
+                    "tertiary-fixed-dim": "#ffb86e",
+                    "inverse-primary": "#89ceff",
+                    "surface-tint": "#006591",
+                    "on-surface-variant": "#3e4850",
+                    "background": "#f6faff",
+                    "on-surface": "#171c20",
+                    "primary-fixed": "#c9e6ff",
+                    "on-tertiary-fixed-variant": "#693c00",
+                    "surface": "#f6faff",
+                    "on-secondary-fixed": "#002113",
+                    "on-primary-fixed": "#001e2f",
+                    "on-secondary": "#ffffff",
+                    "primary": "#006591",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-bright": "#f6faff",
+                    "on-error-container": "#93000a",
+                    "primary-container": "#0ea5e9",
+                    "tertiary-container": "#de8712",
+                    "outline-variant": "#bec8d2",
+                    "on-primary-container": "#003751",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#ffdcbd",
+                    "surface-variant": "#dee3e9",
+                    "surface-container": "#eaeef4",
+                    "secondary-fixed-dim": "#4edea3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "0.5rem",
+                    "xs": "0.25rem",
+                    "md": "1rem",
+                    "lg": "1.25rem",
+                    "container-padding": "2rem",
+                    "gutter": "1.5rem",
+                    "base": "4px",
+                    "xl": "2rem"
+            },
+            "fontFamily": {},
+            "fontSize": {
+                    "display-md": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- PublicNavbar -->
+<nav class="bg-surface dark:bg-on-background border-b border-outline-variant dark:border-outline fixed top-0 left-0 right-0 z-50">
+<div class="flex justify-between items-center w-full px-container-padding h-16 max-w-7xl mx-auto">
+<div class="text-headline-lg font-headline-lg font-bold text-primary dark:text-primary-fixed-dim">MediFlow</div>
+<div class="hidden md:flex gap-xl">
+<a class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1 transition-all" href="#">Home</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Features</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Drug Search</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Blog</a>
+</div>
+<div class="flex items-center gap-md">
+<button class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim px-md py-sm hover:bg-surface-container-high transition-all rounded-lg">Login</button>
+<button class="font-label-md text-label-md bg-primary text-on-primary px-lg py-sm rounded-lg hover:opacity-80 transition-all">Register</button>
+</div>
+</div>
+</nav>
+<main class="pt-16">
+<!-- Hero Section -->
+<section class="relative overflow-hidden py-xl lg:py-32 bg-surface">
+<div class="max-w-7xl mx-auto px-container-padding flex flex-col lg:flex-row items-center gap-xl relative z-10">
+<div class="flex-1 text-center lg:text-left">
+<h1 class="font-display-lg text-display-lg lg:text-[56px] lg:leading-[64px] text-on-surface mb-md">
+                        The Smart Pharmacy, <br/>
+<span class="text-primary">Powered by AI</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-xl max-w-xl mx-auto lg:mx-0">
+                        Modernizing pharmaceutical management with clinical precision. Optimize inventory, prevent interactions, and predict demand with our integrated AI ecosystem.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-md justify-center lg:justify-start">
+<button class="bg-primary text-on-primary font-label-md text-label-md px-xl py-md rounded-xl hover:shadow-lg transition-all">Get Started Today</button>
+<button class="border border-primary text-primary font-label-md text-label-md px-xl py-md rounded-xl hover:bg-primary-container/10 transition-all flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined">play_circle</span> View Demo
+                        </button>
+</div>
+</div>
+<div class="flex-1 relative w-full flex justify-center items-center">
+<div class="relative w-full max-w-lg aspect-square">
+<div class="absolute inset-0 bg-primary-container/20 rounded-full blur-3xl animate-pulse"></div>
+<img class="relative z-10 w-full h-full object-cover rounded-3xl shadow-2xl border-4 border-white" data-alt="A clean, professional high-angle shot of a digital tablet displaying a sophisticated pharmaceutical dashboard with drug molecules and charts. The setting is a sterile, modern pharmacy with soft blue and white clinic lighting. The overall mood is clinical, high-tech, and highly efficient." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQKdFHhImxpuWmBQTC7yImvQ7wnmehtz5V6-AC_IiY4lvtpNEkzE-6p8nuBq9cfbQ_JHs-PpLVeDaN8ZYzOc1RhUbGBdrsdCJwig7t8l0_ZnWW5aVh1dGi2kSghWMb7h_Z7-fKK0SVx5RTn-sJX4s_U0iJCAfk2qncKvLTLSm1NeoehbUs9TQwFdOfWHWWT0fwT6KoyitvCbbG4tnEQmRriQIRiX4erMnjfICdh0pEUvRBxBdJrY28Vv1tFDtNJCu1ed2ebSOxVwOK"/>
+<!-- Floating AI Icons -->
+<div class="absolute -top-4 -left-4 bg-white p-md rounded-2xl shadow-lg z-20 flex items-center gap-sm border border-outline-variant">
+<span class="material-symbols-outlined text-primary" data-weight="fill">verified_user</span>
+<span class="font-label-md text-label-md">99.9% Precision</span>
+</div>
+<div class="absolute -bottom-8 -right-4 bg-secondary-container p-md rounded-2xl shadow-lg z-20 flex items-center gap-sm border border-secondary">
+<span class="material-symbols-outlined text-on-secondary-container">inventory_2</span>
+<span class="font-label-md text-label-md text-on-secondary-container">AI Stock Alert</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Section -->
+<section class="py-xl bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-container-padding grid grid-cols-2 md:grid-cols-4 gap-xl">
+<div class="text-center">
+<div class="font-display-md text-display-md text-primary mb-xs">500+</div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase">Pharmacies</div>
+</div>
+<div class="text-center">
+<div class="font-display-md text-display-md text-primary mb-xs">12M+</div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase">Prescriptions</div>
+</div>
+<div class="text-center">
+<div class="font-display-md text-display-md text-primary mb-xs">4.9/5</div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase">Client Rating</div>
+</div>
+<div class="text-center">
+<div class="font-display-md text-display-md text-primary mb-xs">24/7</div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase">AI Monitoring</div>
+</div>
+</div>
+</section>
+<!-- Features Section (Bento Grid) -->
+<section class="py-xl bg-background">
+<div class="max-w-7xl mx-auto px-container-padding">
+<div class="text-center mb-xl">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-sm">Engineered for Accuracy</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Our features are designed to minimize human error and maximize operational efficiency in clinical settings.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Large Feature Card -->
+<div class="md:col-span-2 bg-white p-xl rounded-xl border border-outline-variant hover:border-primary transition-all group">
+<div class="flex flex-col md:flex-row gap-lg">
+<div class="flex-1">
+<span class="material-symbols-outlined text-primary text-[48px] mb-md group-hover:scale-110 transition-transform">analytics</span>
+<h3 class="font-headline-sm text-headline-sm mb-sm text-on-surface">Predictive Demand Forecast</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Using adaptive intelligence, MediFlow predicts medication demand based on local health trends, weather patterns, and historical data, reducing stockouts by 45%.</p>
+</div>
+<div class="flex-1 flex items-end">
+<div class="w-full h-32 bg-primary-container/10 rounded-lg border-b-4 border-primary p-md flex items-end gap-xs">
+<div class="bg-primary w-full h-[60%] rounded-t-sm"></div>
+<div class="bg-primary w-full h-[80%] rounded-t-sm"></div>
+<div class="bg-primary w-full h-[40%] rounded-t-sm"></div>
+<div class="bg-primary w-full h-[90%] rounded-t-sm"></div>
+<div class="bg-primary w-full h-[55%] rounded-t-sm"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Feature Card -->
+<div class="bg-white p-xl rounded-xl border border-outline-variant flex flex-col justify-between">
+<div>
+<span class="material-symbols-outlined text-secondary text-[40px] mb-md">verified_user</span>
+<h3 class="font-headline-sm text-headline-sm mb-sm text-on-surface">Interaction Checker</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Real-time cross-referencing of 100k+ drug interaction data points to ensure patient safety.</p>
+</div>
+</div>
+<!-- Row of 3 Features -->
+<div class="bg-white p-xl rounded-xl border border-outline-variant hover:shadow-md transition-all">
+<span class="material-symbols-outlined text-primary-container text-[40px] mb-md">inventory_2</span>
+<h3 class="font-headline-sm text-headline-sm mb-sm text-on-surface">Inventory Matrix</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Automated tracking with smart reordering and expiration alerts.</p>
+</div>
+<div class="bg-white p-xl rounded-xl border border-outline-variant hover:shadow-md transition-all">
+<span class="material-symbols-outlined text-on-tertiary-container text-[40px] mb-md">smart_toy</span>
+<h3 class="font-headline-sm text-headline-sm mb-sm text-on-surface">AI Assistant</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Voice-activated queries for rapid pharmacology referencing.</p>
+</div>
+<div class="bg-white p-xl rounded-xl border border-outline-variant hover:shadow-md transition-all">
+<span class="material-symbols-outlined text-error text-[40px] mb-md">notifications_active</span>
+<h3 class="font-headline-sm text-headline-sm mb-sm text-on-surface">Risk Mitigation</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Instant alerts for recalled drugs or high-risk prescription patterns.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Drug Categories (Horizontal Scroll) -->
+<section class="py-xl bg-surface-container-lowest">
+<div class="max-w-7xl mx-auto px-container-padding">
+<div class="flex justify-between items-end mb-lg">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Specialized Inventories</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Access critical drug data across specialized categories.</p>
+</div>
+<div class="flex gap-sm">
+<button class="p-sm rounded-full border border-outline-variant text-on-surface-variant hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="p-sm rounded-full border border-outline-variant text-on-surface-variant hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="flex gap-lg overflow-x-auto hide-scrollbar pb-md">
+<div class="min-w-[280px] bg-white p-lg rounded-xl border border-outline-variant shadow-sm flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">cardiology</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface">Cardiovascular</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">1,240 items</div>
+</div>
+</div>
+<div class="min-w-[280px] bg-white p-lg rounded-xl border border-outline-variant shadow-sm flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">neurology</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface">Neurology</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">890 items</div>
+</div>
+</div>
+<div class="min-w-[280px] bg-white p-lg rounded-xl border border-outline-variant shadow-sm flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-tertiary-container/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">emergency</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface">Antibiotics</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">2,150 items</div>
+</div>
+</div>
+<div class="min-w-[280px] bg-white p-lg rounded-xl border border-outline-variant shadow-sm flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-error-container/10 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">respiratory_rate</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface">Respiratory</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">450 items</div>
+</div>
+</div>
+<div class="min-w-[280px] bg-white p-lg rounded-xl border border-outline-variant shadow-sm flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined">vaccines</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface">Immunology</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">630 items</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- AI Showcase Section -->
+<section class="py-xl bg-on-background text-white relative overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(14,165,233,0.15),transparent)]"></div>
+<div class="max-w-7xl mx-auto px-container-padding relative z-10 grid lg:grid-cols-2 gap-xl items-center">
+<div>
+<span class="inline-block px-md py-xs bg-primary/20 text-primary-fixed-dim rounded-full font-label-sm text-label-sm mb-md border border-primary/30">ADAPTIVE INTELLIGENCE</span>
+<h2 class="font-display-md text-display-md mb-md">Clinical Interaction AI</h2>
+<p class="font-body-lg text-body-lg text-surface-variant mb-xl">Our LLM-powered interaction checker doesn't just read data; it understands context. It flags subtle contraindications that manual checks might miss.</p>
+<div class="space-y-md">
+<div class="flex gap-md">
+<div class="mt-1 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary text-sm" data-weight="fill">check_circle</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-white">Multimodal Data Parsing</h4>
+<p class="font-body-sm text-body-sm text-surface-variant">Scans handwritten prescriptions and digital records simultaneously.</p>
+</div>
+</div>
+<div class="flex gap-md">
+<div class="mt-1 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary text-sm" data-weight="fill">check_circle</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-white">Dynamic Patient Profiling</h4>
+<p class="font-body-sm text-body-sm text-surface-variant">Considers BMI, age, and chronic conditions in risk assessment.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
+<!-- Chat Mockup -->
+<div class="bg-[#1e252b] p-md rounded-2xl border border-outline/30 shadow-2xl">
+<div class="flex items-center gap-sm mb-md border-b border-outline/20 pb-sm">
+<span class="material-symbols-outlined text-primary">smart_toy</span>
+<span class="font-label-md text-label-md">MediFlow Assistant</span>
+</div>
+<div class="space-y-sm">
+<div class="bg-surface-variant/10 p-sm rounded-lg text-body-sm text-label-sm">Verify Lisinopril interaction with grapefruit juice.</div>
+<div class="bg-primary/20 p-sm rounded-lg text-body-sm text-label-sm border-l-2 border-primary">Interaction Alert: Moderate. Furanocoumarins in grapefruit can inhibit CYP3A4...</div>
+</div>
+</div>
+<!-- Data Mockup -->
+<div class="bg-[#1e252b] p-md rounded-2xl border border-outline/30 shadow-2xl transform sm:translate-y-12">
+<div class="flex items-center gap-sm mb-md border-b border-outline/20 pb-sm">
+<span class="material-symbols-outlined text-secondary-fixed">monitoring</span>
+<span class="font-label-md text-label-md">Demand Prediction</span>
+</div>
+<div class="space-y-md">
+<div class="h-2 w-full bg-outline/20 rounded-full overflow-hidden">
+<div class="h-full bg-secondary-fixed w-[85%]"></div>
+</div>
+<div class="flex justify-between font-label-sm text-label-sm text-surface-variant">
+<span>Influenza Vaccine</span>
+<span class="text-secondary-fixed">+85% next week</span>
+</div>
+<div class="h-2 w-full bg-outline/20 rounded-full overflow-hidden">
+<div class="h-full bg-primary-fixed-dim w-[40%]"></div>
+</div>
+<div class="flex justify-between font-label-sm text-label-sm text-surface-variant">
+<span>Allergy Relief</span>
+<span class="text-primary-fixed-dim">+40% forecast</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials -->
+<section class="py-xl bg-surface">
+<div class="max-w-7xl mx-auto px-container-padding">
+<h2 class="font-headline-lg text-headline-lg text-on-surface text-center mb-xl">Trusted by Practitioners</h2>
+<div class="grid md:grid-cols-3 gap-lg">
+<div class="bg-white p-xl rounded-xl border border-outline-variant italic text-on-surface-variant relative">
+<span class="material-symbols-outlined absolute -top-4 -left-2 text-primary opacity-20 text-[64px]">format_quote</span>
+<p class="font-body-md text-body-md mb-md relative z-10">"MediFlow has transformed our pharmacy. The interaction checker is remarkably fast and provides clinical nuances we haven't seen in other software."</p>
+<div class="font-label-md text-label-md text-on-surface not-italic">— Dr. Elena Rossi, Senior Pharmacist</div>
+</div>
+<div class="bg-white p-xl rounded-xl border border-outline-variant italic text-on-surface-variant relative">
+<span class="material-symbols-outlined absolute -top-4 -left-2 text-primary opacity-20 text-[64px]">format_quote</span>
+<p class="font-body-md text-body-md mb-md relative z-10">"The demand forecasting tool saved us from three major stockouts during the last flu season. It's like having a full-time data analyst."</p>
+<div class="font-label-md text-label-md text-on-surface not-italic">— Marcus Chen, Operations Manager</div>
+</div>
+<div class="bg-white p-xl rounded-xl border border-outline-variant italic text-on-surface-variant relative">
+<span class="material-symbols-outlined absolute -top-4 -left-2 text-primary opacity-20 text-[64px]">format_quote</span>
+<p class="font-body-md text-body-md mb-md relative z-10">"Simple to use, but extremely powerful under the hood. Our technicians were trained and productive within a single afternoon."</p>
+<div class="font-label-md text-label-md text-on-surface not-italic">— Sarah Thompson, Lead Technician</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Blog Preview -->
+<section class="py-xl bg-background">
+<div class="max-w-7xl mx-auto px-container-padding">
+<div class="flex justify-between items-center mb-xl">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Clinical Insights Blog</h2>
+<a class="text-primary font-label-md text-label-md flex items-center gap-xs" href="#">View all articles <span class="material-symbols-outlined">arrow_forward</span></a>
+</div>
+<div class="grid md:grid-cols-3 gap-gutter">
+<article class="group cursor-pointer">
+<img class="w-full aspect-[16/9] object-cover rounded-xl mb-md group-hover:scale-[1.02] transition-transform" data-alt="A macro photograph of several white pill capsules scattered on a pristine white surface with soft, natural lighting coming from the side. The image uses a high-key aesthetic with soft blues and grays, emphasizing clinical cleanliness and modern medicine." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrUgH3D_bqySSoCWYsriqgR4fsVwoFKXBa9bvYO9PWC49U8zS4N0mWADQJbGL2cKxc7lGnl7Xorp7GuAnggqpxS8jIh3HaLx7ht8C9Nwhfv7zeTgcRdkSLmqmnFQ4152Ss0DbSRWYb0IlPZAAvWcpokKa6lVeHJ0DpY2TzZLQ_6yYt--k3KGFkTF7GbKdxAacG2EAx3jXnrv6UuDXBjuwWrJT_d51DeIyUdFnI-0ue8UPx8A968eYWjIIS61inPD7wlTIOt2TdXMUK"/>
+<div class="font-label-sm text-label-sm text-primary mb-sm">PHARMACOLOGY • 5 MIN READ</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-sm group-hover:text-primary transition-colors">The Future of AI in Drug Interaction Prevention</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">How large language models are closing the gap in complex pharmaceutical safety protocols...</p>
+</article>
+<article class="group cursor-pointer">
+<img class="w-full aspect-[16/9] object-cover rounded-xl mb-md group-hover:scale-[1.02] transition-transform" data-alt="A professional pharmacist in a crisp white lab coat interacting with a wall-mounted digital touch-screen display in a high-end, minimalist pharmacy environment. The lighting is bright and even, casting soft shadows, with a focus on the interaction between human expertise and digital precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBieHyyLvgEOZXohnqNMXCkezPBqhGOKGs5E2BjUkVb1ikbm9c-604CD-shoWAG5BRULaefgk5U62B5Ts0ksZdpEmCEHPNlCp6lhK9iL0atvG62gVzmqHTbpHUJHt_Y3h3LuDGjcKGBsJ-r0AVCEfRrW9L9J0dPlaeSOmLHrpVX4q3LVDhxfA2jnA8OC6Zai_QlG6xzsbIdqFX_4wX7FkQ7TzwPQhWPvDL-gDxL_ajoedCrY7Gj3D-tGrOEniwnPz_UK9xCnU4CDl5K"/>
+<div class="font-label-sm text-label-sm text-primary mb-sm">LOGISTICS • 8 MIN READ</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-sm group-hover:text-primary transition-colors">Optimizing Inventory for Rural Pharmacies</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Leveraging predictive analytics to solve the logistical challenges of remote healthcare delivery...</p>
+</article>
+<article class="group cursor-pointer">
+<img class="w-full aspect-[16/9] object-cover rounded-xl mb-md group-hover:scale-[1.02] transition-transform" data-alt="An artistic, minimalist close-up of amber medicine bottles neatly arranged on a clinical shelf, with soft bokeh background and cool-toned pharmaceutical lighting. The composition is balanced and serene, representing the order and reliability of professional medical storage." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBX00ufTp8OU2hhpZC1hMrry3qVPXJuPx-xTLW0G6OvZz34rkdaa9sQmKkWqJWdU6ylDzWD-YmDvmC87yiu4ZawfPg_bsSHDkkCvraOt2ga0B_phaF3lN3lr9TWuiQIoxoC8hm5uU-TRtkWC7pL2MPjGHG_6NPWM2egYiKjShTdj_lOgIf0NtJ7VyZA5eFnlyOLYhCHp8UczDukibWmMLBy6fA_qQEGrVBhP763Cg37DxRV_1eLBkg1EdumWfLsxlBctpvE9HTT4Cvg"/>
+<div class="font-label-sm text-label-sm text-primary mb-sm">INDUSTRY • 4 MIN READ</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-sm group-hover:text-primary transition-colors">Regulatory Compliance in the Digital Age</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Understanding the evolving landscape of digital prescription audits and data privacy laws...</p>
+</article>
+</div>
+</div>
+</section>
+<!-- Newsletter & FAQ -->
+<section class="py-xl bg-surface-container-low border-t border-outline-variant">
+<div class="max-w-7xl mx-auto px-container-padding grid lg:grid-cols-2 gap-xl">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-xl">Frequently Asked Questions</h2>
+<div class="space-y-md">
+<div class="border-b border-outline-variant pb-md">
+<button class="w-full flex justify-between items-center text-left group">
+<span class="font-label-md text-label-md text-on-surface">Is MediFlow HIPPA compliant?</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">add</span>
+</button>
+</div>
+<div class="border-b border-outline-variant pb-md">
+<button class="w-full flex justify-between items-center text-left group">
+<span class="font-label-md text-label-md text-on-surface">How often is the drug database updated?</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">add</span>
+</button>
+</div>
+<div class="border-b border-outline-variant pb-md">
+<button class="w-full flex justify-between items-center text-left group">
+<span class="font-label-md text-label-md text-on-surface">Can it integrate with existing hospital EMRs?</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">add</span>
+</button>
+</div>
+</div>
+</div>
+<div class="bg-primary-container/10 p-xl rounded-2xl border border-primary/20">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-sm">Stay Updated</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-xl">Get the latest clinical insights and product updates delivered to your inbox every month.</p>
+<form class="flex gap-sm">
+<input class="flex-1 rounded-lg border-outline-variant focus:border-primary focus:ring-primary font-body-sm text-body-sm p-md" placeholder="professional@clinic.com" type="email"/>
+<button class="bg-primary text-on-primary px-lg py-md rounded-lg font-label-md text-label-md hover:opacity-90 transition-all">Subscribe</button>
+</form>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-md">By subscribing, you agree to our Privacy Policy and clinical data handling terms.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- PublicFooter -->
+<footer class="bg-surface-container-low dark:bg-on-background border-t border-outline-variant dark:border-outline">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-container-padding py-xl max-w-7xl mx-auto">
+<div class="flex flex-col items-center md:items-start gap-xs mb-xl md:mb-0">
+<div class="text-headline-sm font-headline-sm font-bold text-primary dark:text-primary-fixed-dim">MediFlow</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant dark:text-surface-variant">© 2024 MediFlow. Clinical Precision &amp; Adaptive Intelligence.</div>
+</div>
+<div class="flex flex-wrap justify-center gap-xl">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-all" href="#">Privacy Policy</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-all" href="#">Terms of Service</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-all" href="#">Contact</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-all" href="#">Careers</a>
+</div>
+</div>
+</footer>
+</body></html>

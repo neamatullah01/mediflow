@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google"; // Swap to Poppins if preferred
+import { Inter } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "sonner"; // From your requested tech stack
+import { Toaster } from "sonner";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
 
 export const metadata: Metadata = {
   title: "MediFlow | AI Pharmacy Management",

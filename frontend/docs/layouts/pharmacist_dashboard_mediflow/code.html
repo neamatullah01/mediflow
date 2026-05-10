@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#4d2b00",
+                    "on-secondary-fixed-variant": "#005236",
+                    "error-container": "#ffdad6",
+                    "primary-fixed-dim": "#89ceff",
+                    "error": "#ba1a1a",
+                    "secondary-fixed": "#6ffbbe",
+                    "tertiary": "#8a5100",
+                    "on-primary": "#ffffff",
+                    "secondary": "#006c49",
+                    "on-tertiary-fixed": "#2c1600",
+                    "on-background": "#171c20",
+                    "on-secondary-container": "#00714d",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#2c3135",
+                    "surface-dim": "#d6dae0",
+                    "outline": "#6e7881",
+                    "secondary-container": "#6cf8bb",
+                    "surface-container-highest": "#dee3e9",
+                    "on-primary-fixed-variant": "#004c6e",
+                    "inverse-on-surface": "#edf1f7",
+                    "surface-container-high": "#e4e8ee",
+                    "surface-container-low": "#f0f4fa",
+                    "tertiary-fixed-dim": "#ffb86e",
+                    "inverse-primary": "#89ceff",
+                    "surface-tint": "#006591",
+                    "on-surface-variant": "#3e4850",
+                    "background": "#f6faff",
+                    "on-surface": "#171c20",
+                    "primary-fixed": "#c9e6ff",
+                    "on-tertiary-fixed-variant": "#693c00",
+                    "surface": "#f6faff",
+                    "on-secondary-fixed": "#002113",
+                    "on-primary-fixed": "#001e2f",
+                    "on-secondary": "#ffffff",
+                    "primary": "#006591",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-bright": "#f6faff",
+                    "on-error-container": "#93000a",
+                    "primary-container": "#0ea5e9",
+                    "tertiary-container": "#de8712",
+                    "outline-variant": "#bec8d2",
+                    "on-primary-container": "#003751",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#ffdcbd",
+                    "surface-variant": "#dee3e9",
+                    "surface-container": "#eaeef4",
+                    "secondary-fixed-dim": "#4edea3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "0.5rem",
+                    "xs": "0.25rem",
+                    "md": "1rem",
+                    "lg": "1.25rem",
+                    "container-padding": "2rem",
+                    "gutter": "1.5rem",
+                    "base": "4px",
+                    "xl": "2rem"
+            },
+            "fontFamily": {},
+            "fontSize": {
+                    "display-md": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-hidden flex h-screen">
+<!-- PharmacistSidebar -->
+<aside class="hidden md:flex flex-col h-full w-64 border-r border-outline-variant bg-surface p-md gap-sm fixed left-0 top-0 z-50">
+<div class="mb-xl px-sm">
+<h1 class="text-headline-sm font-headline-sm font-bold text-primary">MediFlow</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Pharmacist Portal</p>
+</div>
+<nav class="flex flex-col gap-xs flex-1">
+<a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container font-bold rounded-lg transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Overview</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label-md text-label-md">Inventory</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="medication">medication</span>
+<span class="font-label-md text-label-md">Dispensing</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="font-label-md text-label-md">Orders</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span class="font-label-md text-label-md">Interaction Checker</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-label-md text-label-md">AI Assistant</span>
+</a>
+</nav>
+<div class="mt-auto p-sm bg-surface-container-low rounded-xl border border-outline-variant">
+<div class="flex items-center gap-sm">
+<img alt="Pharmacist" class="w-10 h-10 rounded-full border border-outline-variant bg-white" data-alt="A professional headshot of a pharmacist in a sterile, clinical environment. The lighting is bright and airy, reflecting a high-end medical clinic aesthetic with clean white surfaces and soft blue secondary lighting. The mood is trustworthy and expert, emphasizing clinical precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPvGpnbDtm2IHqiEw_VFe7FD_wD7AomCSJwhsUdSSXHnSYbUoWUHM6mjnkuz_ZkRtq0fEWkT5DTfUF_694gya20LO30Mfk-GxleEdTXk5PAlQFgPzVTRdOtNe6DYfYmiIpkbl3R0r5X9rNUDB2xMiKH1nXYMMDoFOasbShNWUEuLoPd99sbdjNQaV4tpXFlMH4zSZtZ9NHn6j2wDbg9mhH5zZAMYvhYln8W5V5c9H1CVoC0qPi2UhbtIL-Un0XmvdVj3C7hs3NjhYb"/>
+<div>
+<p class="font-label-md text-label-md font-bold">Dr. Sarah Chen</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Senior Pharmacist</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="flex-1 flex flex-col min-w-0 md:ml-64 h-full overflow-hidden">
+<!-- DashboardTopNav -->
+<header class="h-16 flex justify-between items-center px-lg border-b border-outline-variant bg-surface sticky top-0 z-40">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full h-10 pl-10 pr-4 bg-surface-container-low border border-outline-variant rounded-full text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Search medications, patients, or orders..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-full active:opacity-70">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-full active:opacity-70">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Dashboard Canvas -->
+<main class="flex-1 overflow-y-auto p-lg scrollbar-hide space-y-lg">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md">
+<div>
+<h2 class="font-display-md text-display-md text-on-surface">Pharmacy Overview</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Operational status and inventory intelligence for June 24, 2024.</p>
+</div>
+<div class="flex gap-sm">
+<button class="flex items-center gap-xs px-md py-sm bg-white border border-primary text-primary font-label-md text-label-md rounded-lg hover:bg-primary-container/10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">file_download</span>
+                        Export Report
+                    </button>
+<button class="flex items-center gap-xs px-md py-sm bg-primary text-on-primary font-label-md text-label-md rounded-lg hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                        New Dispense
+                    </button>
+</div>
+</div>
+<!-- Stat Cards Bento Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-lg">
+<div class="flex justify-between items-start mb-sm">
+<span class="material-symbols-outlined p-xs bg-primary-container/20 text-primary rounded-lg" data-icon="inventory">inventory</span>
+<span class="text-label-sm font-label-sm text-secondary font-bold">+2.4%</span>
+</div>
+<p class="text-label-md font-label-md text-on-surface-variant">Total items</p>
+<p class="text-display-md font-display-md">4,829</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-lg">
+<div class="flex justify-between items-start mb-sm">
+<span class="material-symbols-outlined p-xs bg-error-container/40 text-error rounded-lg" data-icon="warning">warning</span>
+<span class="text-label-sm font-label-sm text-error font-bold">Alert</span>
+</div>
+<p class="text-label-md font-label-md text-on-surface-variant">Low stock</p>
+<p class="text-display-md font-display-md text-error">12</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-lg">
+<div class="flex justify-between items-start mb-sm">
+<span class="material-symbols-outlined p-xs bg-tertiary-container/20 text-tertiary rounded-lg" data-icon="event_busy">event_busy</span>
+<span class="text-label-sm font-label-sm text-tertiary font-bold">Action Needed</span>
+</div>
+<p class="text-label-md font-label-md text-on-surface-variant">Expiring soon</p>
+<p class="text-display-md font-display-md text-tertiary">28</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-lg">
+<div class="flex justify-between items-start mb-sm">
+<span class="material-symbols-outlined p-xs bg-on-secondary-container/10 text-secondary rounded-lg" data-icon="check_circle">check_circle</span>
+<span class="text-label-sm font-label-sm text-secondary font-bold">Today</span>
+</div>
+<p class="text-label-md font-label-md text-on-surface-variant">Total dispensed</p>
+<p class="text-display-md font-display-md">142</p>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Dispensing Activity (Line) -->
+<div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant p-5 rounded-lg flex flex-col gap-md">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm">Dispensing Activity</h3>
+<select class="bg-surface-container-low border border-outline-variant text-label-sm px-sm py-xs rounded-lg focus:outline-none">
+<option>Last 7 Days</option>
+<option>Last 30 Days</option>
+</select>
+</div>
+<div class="h-64 w-full bg-surface-container-low rounded-lg relative overflow-hidden flex items-end px-md pb-md">
+<div class="absolute inset-0 flex flex-col justify-between p-md text-label-sm text-on-surface-variant opacity-50">
+<div class="border-b border-outline-variant/50 w-full h-0"></div>
+<div class="border-b border-outline-variant/50 w-full h-0"></div>
+<div class="border-b border-outline-variant/50 w-full h-0"></div>
+</div>
+<div class="flex-1 flex items-end justify-between gap-md relative z-10">
+<div class="w-full flex flex-col items-center gap-xs">
+<div class="w-full bg-primary/20 h-24 rounded-t-sm border-t-2 border-primary relative group">
+<div class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-on-background text-white text-[10px] px-sm py-xs rounded">120</div>
+</div>
+<span class="text-label-sm opacity-60">Mon</span>
+</div>
+<div class="w-full flex flex-col items-center gap-xs">
+<div class="w-full bg-primary/20 h-32 rounded-t-sm border-t-2 border-primary"></div>
+<span class="text-label-sm opacity-60">Tue</span>
+</div>
+<div class="w-full flex flex-col items-center gap-xs">
+<div class="w-full bg-primary/20 h-28 rounded-t-sm border-t-2 border-primary"></div>
+<span class="text-label-sm opacity-60">Wed</span>
+</div>
+<div class="w-full flex flex-col items-center gap-xs">
+<div class="w-full bg-primary/20 h-40 rounded-t-sm border-t-2 border-primary"></div>
+<span class="text-label-sm opacity-60">Thu</span>
+</div>
+<div class="w-full flex flex-col items-center gap-xs">
+<div class="w-full bg-primary/30 h-48 rounded-t-sm border-t-2 border-primary"></div>
+<span class="text-label-sm opacity-60">Fri</span>
+</div>
+<div class="w-full flex flex-col items-center gap-xs">
+<div class="w-full bg-primary/20 h-20 rounded-t-sm border-t-2 border-primary"></div>
+<span class="text-label-sm opacity-60">Sat</span>
+</div>
+<div class="w-full flex flex-col items-center gap-xs">
+<div class="w-full bg-primary/20 h-16 rounded-t-sm border-t-2 border-primary"></div>
+<span class="text-label-sm opacity-60">Sun</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Inventory by Category (Pie Placeholder) -->
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-lg flex flex-col gap-md">
+<h3 class="font-headline-sm text-headline-sm">Inventory Mix</h3>
+<div class="flex-1 flex flex-col justify-center items-center gap-lg">
+<div class="w-40 h-40 rounded-full border-[20px] border-primary border-r-secondary border-b-tertiary-container border-l-outline relative flex items-center justify-center">
+<div class="text-center">
+<p class="text-headline-sm font-bold">14</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest">Classes</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-md w-full">
+<div class="flex items-center gap-sm">
+<div class="w-3 h-3 bg-primary rounded-full"></div>
+<span class="text-label-sm">Antibiotics (45%)</span>
+</div>
+<div class="flex items-center gap-sm">
+<div class="w-3 h-3 bg-secondary rounded-full"></div>
+<span class="text-label-sm">Analgesics (25%)</span>
+</div>
+<div class="flex items-center gap-sm">
+<div class="w-3 h-3 bg-tertiary-container rounded-full"></div>
+<span class="text-label-sm">Cardio (20%)</span>
+</div>
+<div class="flex items-center gap-sm">
+<div class="w-3 h-3 bg-outline rounded-full"></div>
+<span class="text-label-sm">Others (10%)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Top 5 Drugs (Bar) -->
+<div class="lg:col-span-1 bg-surface-container-lowest border border-outline-variant p-5 rounded-lg flex flex-col gap-md">
+<h3 class="font-headline-sm text-headline-sm">Top 5 Dispensed</h3>
+<div class="space-y-md mt-sm">
+<div class="space-y-xs">
+<div class="flex justify-between text-label-md">
+<span>Amoxicillin</span>
+<span class="font-bold">245 units</span>
+</div>
+<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[90%] rounded-full"></div>
+</div>
+</div>
+<div class="space-y-xs">
+<div class="flex justify-between text-label-md">
+<span>Atorvastatin</span>
+<span class="font-bold">189 units</span>
+</div>
+<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[70%] rounded-full"></div>
+</div>
+</div>
+<div class="space-y-xs">
+<div class="flex justify-between text-label-md">
+<span>Metformin</span>
+<span class="font-bold">162 units</span>
+</div>
+<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[60%] rounded-full"></div>
+</div>
+</div>
+<div class="space-y-xs">
+<div class="flex justify-between text-label-md">
+<span>Lisinopril</span>
+<span class="font-bold">120 units</span>
+</div>
+<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[45%] rounded-full"></div>
+</div>
+</div>
+<div class="space-y-xs">
+<div class="flex justify-between text-label-md">
+<span>Amlodipine</span>
+<span class="font-bold">95 units</span>
+</div>
+<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[35%] rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Insights Card -->
+<div class="lg:col-span-2 bg-white border border-transparent rounded-lg p-5 relative overflow-hidden" style="border: 2px solid transparent; border-image: linear-gradient(to bottom right, #0ea5e9, #10b981) 1;">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-primary" data-icon="auto_awesome">auto_awesome</span>
+<h3 class="font-headline-sm text-headline-sm">AI Stock Intelligence</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="bg-primary-container/5 p-md rounded-lg border border-primary-container/20">
+<p class="font-label-md text-label-md text-primary mb-xs">Predictive Restock</p>
+<p class="text-body-sm font-body-sm">Amoxicillin usage is projected to increase by 15% next week based on local seasonal health patterns. Recommend ordering 50 additional units.</p>
+</div>
+<div class="bg-on-secondary-fixed-variant/5 p-md rounded-lg border border-on-secondary-fixed-variant/20">
+<p class="font-label-md text-label-md text-secondary mb-xs">Inventory Optimization</p>
+<p class="text-body-sm font-body-sm">Three items in 'Dermatology' have had zero turnover in 90 days. AI suggests reducing base stock levels to free up capital.</p>
+</div>
+</div>
+<div class="mt-lg flex justify-end">
+<button class="text-primary font-label-md text-label-md hover:underline">View Intelligence Report</button>
+</div>
+</div>
+</div>
+<!-- Alerts Tables Section -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-gutter">
+<!-- Low Stock Table -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col">
+<div class="p-5 border-b border-outline-variant flex justify-between items-center bg-error-container/5">
+<h3 class="font-headline-sm text-headline-sm flex items-center gap-sm">
+<span class="material-symbols-outlined text-error">priority_high</span>
+                            Critical Low Stock
+                        </h3>
+<span class="px-sm py-xs bg-error-container text-on-error-container text-label-sm rounded-full">12 Items</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-label-sm font-label-sm uppercase tracking-wider text-on-surface-variant">
+<th class="p-md">Drug Name</th>
+<th class="p-md">Current Stock</th>
+<th class="p-md">Threshold</th>
+<th class="p-md">Action</th>
+</tr>
+</thead>
+<tbody class="text-body-sm">
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<td class="p-md font-bold">Lisinopril 10mg</td>
+<td class="p-md text-error font-bold">5</td>
+<td class="p-md">50</td>
+<td class="p-md"><button class="text-primary hover:underline">Restock</button></td>
+</tr>
+<tr class="border-b border-outline-variant bg-surface-container-low/30 hover:bg-surface-container-low transition-colors">
+<td class="p-md font-bold">Metoprolol 25mg</td>
+<td class="p-md text-error font-bold">2</td>
+<td class="p-md">25</td>
+<td class="p-md"><button class="text-primary hover:underline">Restock</button></td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<td class="p-md font-bold">Warfarin 5mg</td>
+<td class="p-md text-error font-bold">8</td>
+<td class="p-md">40</td>
+<td class="p-md"><button class="text-primary hover:underline">Restock</button></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Expiring Soon Table -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col">
+<div class="p-5 border-b border-outline-variant flex justify-between items-center bg-tertiary-container/5">
+<h3 class="font-headline-sm text-headline-sm flex items-center gap-sm">
+<span class="material-symbols-outlined text-tertiary">hourglass_bottom</span>
+                            Expiring Soon
+                        </h3>
+<span class="px-sm py-xs bg-tertiary-fixed text-on-tertiary-fixed text-label-sm rounded-full">28 Items</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-label-sm font-label-sm uppercase tracking-wider text-on-surface-variant">
+<th class="p-md">Drug Name</th>
+<th class="p-md">Expiry Date</th>
+<th class="p-md">Lot #</th>
+<th class="p-md">Status</th>
+</tr>
+</thead>
+<tbody class="text-body-sm">
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<td class="p-md font-bold">Insulin Glargine</td>
+<td class="p-md">Jul 12, 2024</td>
+<td class="p-md">LX-9902</td>
+<td class="p-md">
+<span class="px-xs py-[2px] bg-error-container text-on-error-container text-[10px] rounded font-bold uppercase">18 Days</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant bg-surface-container-low/30 hover:bg-surface-container-low transition-colors">
+<td class="p-md font-bold">Albuterol Inhaler</td>
+<td class="p-md">Aug 05, 2024</td>
+<td class="p-md">AB-1144</td>
+<td class="p-md">
+<span class="px-xs py-[2px] bg-tertiary-fixed text-on-tertiary-fixed text-[10px] rounded font-bold uppercase">42 Days</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<td class="p-md font-bold">Levothyroxine 50mcg</td>
+<td class="p-md">Aug 14, 2024</td>
+<td class="p-md">LV-4491</td>
+<td class="p-md">
+<span class="px-xs py-[2px] bg-tertiary-fixed text-on-tertiary-fixed text-[10px] rounded font-bold uppercase">51 Days</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

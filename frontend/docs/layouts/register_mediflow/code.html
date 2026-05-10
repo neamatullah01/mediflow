@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Register | MediFlow - Clinical Precision &amp; AI Intelligence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#f6faff",
+                        "primary-fixed-dim": "#89ceff",
+                        "surface-container-highest": "#dee3e9",
+                        "inverse-primary": "#89ceff",
+                        "surface": "#f6faff",
+                        "on-primary-fixed": "#001e2f",
+                        "primary-container": "#0ea5e9",
+                        "on-primary": "#ffffff",
+                        "background": "#f6faff",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#d6dae0",
+                        "inverse-on-surface": "#edf1f7",
+                        "surface-tint": "#006591",
+                        "on-primary-container": "#003751",
+                        "tertiary-container": "#de8712",
+                        "surface-variant": "#dee3e9",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#2c3135",
+                        "surface-container-low": "#f0f4fa",
+                        "on-tertiary-fixed-variant": "#693c00",
+                        "on-tertiary-fixed": "#2c1600",
+                        "on-background": "#171c20",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed": "#ffdcbd",
+                        "primary-fixed": "#c9e6ff",
+                        "on-secondary-fixed": "#002113",
+                        "on-primary-fixed-variant": "#004c6e",
+                        "on-tertiary-container": "#4d2b00",
+                        "primary": "#006591",
+                        "secondary-container": "#6cf8bb",
+                        "on-surface-variant": "#3e4850",
+                        "on-surface": "#171c20",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb86e",
+                        "secondary": "#006c49",
+                        "on-secondary-fixed-variant": "#005236",
+                        "secondary-fixed-dim": "#4edea3",
+                        "secondary-fixed": "#6ffbbe",
+                        "outline": "#6e7881",
+                        "on-secondary-container": "#00714d",
+                        "surface-container-high": "#e4e8ee",
+                        "tertiary": "#8a5100",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#eaeef4",
+                        "outline-variant": "#bec8d2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "1rem",
+                        "sm": "0.5rem",
+                        "xl": "2rem",
+                        "lg": "1.25rem",
+                        "container-padding": "2rem",
+                        "base": "4px",
+                        "gutter": "1.5rem",
+                        "xs": "0.25rem"
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "display-md": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ai-gradient-border {
+            border: 1px solid;
+            border-image: linear-gradient(to right, #0ea5e9, #6cf8bb) 1;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden">
+<!-- PublicNavbar Component -->
+<nav class="bg-surface border-b border-outline-variant docked full-width top-0 z-50">
+<div class="flex justify-between items-center w-full px-container-padding h-16 max-w-7xl mx-auto">
+<div class="text-headline-lg font-headline-lg font-bold text-primary">MediFlow</div>
+<div class="hidden md:flex gap-lg items-center">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Features</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Drug Search</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Blog</a>
+</div>
+<div class="flex gap-md items-center">
+<a class="text-primary hover:text-primary transition-colors font-label-md text-label-md px-md py-sm" href="#">Login</a>
+<a class="bg-primary text-on-primary px-lg py-sm rounded-lg font-label-md text-label-md hover:opacity-90 transition-all border-b-2 border-primary pb-1" href="#">Register</a>
+</div>
+</div>
+</nav>
+<!-- Main Registration Shell -->
+<main class="min-h-[calc(100vh-128px)] w-full max-w-7xl mx-auto flex flex-col md:flex-row px-container-padding py-xl gap-gutter">
+<!-- Left Column: Platform Benefits & AI Highlights -->
+<aside class="w-full md:w-5/12 flex flex-col gap-xl">
+<div class="flex flex-col gap-md">
+<h1 class="text-display-md font-display-md text-primary leading-tight">Elevate Your Pharmacy with Adaptive Intelligence.</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-md">Join thousands of clinical professionals using MediFlow to automate precision and ensure patient safety with every dispense.</p>
+</div>
+<!-- Benefit Card: AI Interaction Checker -->
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-xl shadow-sm ai-gradient-border">
+<div class="flex items-start gap-md">
+<div class="bg-primary-container p-sm rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="verified_user">verified_user</span>
+</div>
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface mb-xs">AI Interaction Checker</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Real-time cross-referencing of over 50,000 drug profiles to identify potential contraindications before they happen.</p>
+</div>
+</div>
+</div>
+<!-- Benefit Card: Demand Forecasting -->
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-xl shadow-sm">
+<div class="flex items-start gap-md">
+<div class="bg-secondary-container p-sm rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="trending_up">trending_up</span>
+</div>
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface mb-xs">Predictive Inventory</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Forecast seasonal demands and optimize stock levels using adaptive machine learning models.</p>
+</div>
+</div>
+</div>
+<div class="mt-auto hidden md:block rounded-xl overflow-hidden relative h-64 border border-outline-variant">
+<img alt="Clinical Environment" class="w-full h-full object-cover" data-alt="A clean, minimalist high-tech pharmacy laboratory with bright, soft overhead lighting. The scene shows pharmaceutical professionals in sterile white coats working with modern, sleek medical technology and digital displays. The atmosphere is calm, professional, and reflects the brand's commitment to clinical precision and modern medicine." src="https://lh3.googleusercontent.com/aida-public/AB6AXuASq5nwWVfDlva607xExFMua4ANaP4cy2H9yttSGUWmcxx0lGdtOHA7iYzKsHwGb8xV9nQdzZYctEsTyTFmy045CwCFzu_sgD-89KoR2fkSvJUTTiFblDbpgVf_WLpLBnCpvfNnOsVZSOmLOMRlvtKAiI40mCotm9x51ldJ3wNRQ3hXNI6V5vmGeC-WJjlKFjegDS6TTlzml6SP3wFrAz-7IjSAs6ts7cyk48pljfOQupL45VavKVzrcNzvxj6UW2cYA2hyvhGVYfnA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent flex items-end p-lg">
+<p class="text-on-primary font-label-md text-label-md italic">"MediFlow has reduced our dispensing errors by 34% in the first quarter." — Dr. Sarah Chen, Clinical Lead</p>
+</div>
+</div>
+</aside>
+<!-- Right Column: Registration Form -->
+<section class="w-full md:w-7/12">
+<div class="bg-surface-container-lowest border border-outline-variant p-5 md:p-10 rounded-xl shadow-sm">
+<header class="mb-lg">
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Practitioner Registration</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-xs">Establish your secure pharmacy workspace in minutes.</p>
+</header>
+<form class="flex flex-col gap-lg">
+<!-- Personal Info Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="text-label-md font-label-md text-on-surface">Full Name</label>
+<input class="w-full px-md py-sm rounded-lg border border-outline-variant focus:border-primary-container focus:ring-2 focus:ring-primary-container outline-none transition-all text-body-sm" placeholder="Dr. Jane Smith" type="text"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="text-label-md font-label-md text-on-surface">Pharmacy Name</label>
+<input class="w-full px-md py-sm rounded-lg border border-outline-variant focus:border-primary-container focus:ring-2 focus:ring-primary-container outline-none transition-all text-body-sm" placeholder="Central Health Pharma" type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="text-label-md font-label-md text-on-surface">License Number</label>
+<input class="w-full px-md py-sm rounded-lg border border-outline-variant focus:border-primary-container focus:ring-2 focus:ring-primary-container outline-none transition-all text-body-sm" placeholder="PH-99281-XC" type="text"/>
+<span class="text-xs text-on-surface-variant">Used for professional verification</span>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="text-label-md font-label-md text-on-surface">Phone Number</label>
+<input class="w-full px-md py-sm rounded-lg border border-outline-variant focus:border-primary-container focus:ring-2 focus:ring-primary-container outline-none transition-all text-body-sm" placeholder="+1 (555) 000-0000" type="tel"/>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="text-label-md font-label-md text-on-surface">Physical Address</label>
+<input class="w-full px-md py-sm rounded-lg border border-outline-variant focus:border-primary-container focus:ring-2 focus:ring-primary-container outline-none transition-all text-body-sm" placeholder="123 Medical Plaza, Suite 400" type="text"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="text-label-md font-label-md text-on-surface">Email Address</label>
+<input class="w-full px-md py-sm rounded-lg border border-outline-variant focus:border-primary-container focus:ring-2 focus:ring-primary-container outline-none transition-all text-body-sm" placeholder="jane.smith@pharmacy.com" type="email"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="text-label-md font-label-md text-on-surface">Password</label>
+<input class="w-full px-md py-sm rounded-lg border border-outline-variant focus:border-primary-container focus:ring-2 focus:ring-primary-container outline-none transition-all text-body-sm" placeholder="••••••••" type="password"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="text-label-md font-label-md text-on-surface">Confirm Password</label>
+<input class="w-full px-md py-sm rounded-lg border border-outline-variant focus:border-primary-container focus:ring-2 focus:ring-primary-container outline-none transition-all text-body-sm" placeholder="••••••••" type="password"/>
+</div>
+</div>
+<div class="flex items-start gap-sm mt-sm">
+<input class="mt-1 rounded border-outline-variant text-primary focus:ring-primary" id="terms" type="checkbox"/>
+<label class="text-body-sm font-body-sm text-on-surface-variant leading-snug" for="terms">
+                            I agree to the <a class="text-primary hover:underline" href="#">Terms of Service</a> and acknowledge the <a class="text-primary hover:underline" href="#">Privacy Policy</a> regarding clinical data handling.
+                        </label>
+</div>
+<button class="w-full bg-primary text-on-primary py-md rounded-lg font-headline-sm text-headline-sm hover:opacity-90 active:scale-[0.98] transition-all shadow-md mt-md" type="submit">
+                        Complete Registration
+                    </button>
+<div class="text-center mt-md">
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+                            Already have an account? <a class="text-primary font-bold hover:underline" href="#">Login here</a>
+</p>
+</div>
+</form>
+</div>
+<!-- Security Trust Badges -->
+<div class="mt-lg flex flex-wrap justify-center md:justify-start gap-xl opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-on-surface" data-icon="lock">lock</span>
+<span class="text-label-sm font-label-sm">HIPAA COMPLIANT</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-on-surface" data-icon="security">security</span>
+<span class="text-label-sm font-label-sm">256-BIT ENCRYPTION</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-on-surface" data-icon="verified">verified</span>
+<span class="text-label-sm font-label-sm">FDA DATA SYNCED</span>
+</div>
+</div>
+</section>
+</main>
+<!-- PublicFooter Component -->
+<footer class="bg-surface-container-low border-t border-outline-variant">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-container-padding py-xl max-w-7xl mx-auto gap-md">
+<div class="flex flex-col items-center md:items-start gap-xs">
+<div class="text-headline-sm font-headline-sm font-bold text-primary">MediFlow</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant text-center md:text-left">© 2024 MediFlow. Clinical Precision &amp; Adaptive Intelligence.</p>
+</div>
+<div class="flex gap-lg">
+<a class="text-on-surface-variant hover:text-primary font-label-md text-label-md transition-all duration-200" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary font-label-md text-label-md transition-all duration-200" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary font-label-md text-label-md transition-all duration-200" href="#">Contact</a>
+<a class="text-on-surface-variant hover:text-primary font-label-md text-label-md transition-all duration-200" href="#">Careers</a>
+</div>
+</div>
+</footer>
+</body></html>

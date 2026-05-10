@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#4edea3",
+                    "secondary-fixed": "#6ffbbe",
+                    "on-primary-container": "#003751",
+                    "on-tertiary-fixed-variant": "#693c00",
+                    "surface-container": "#eaeef4",
+                    "outline-variant": "#bec8d2",
+                    "on-secondary-container": "#00714d",
+                    "secondary": "#006c49",
+                    "surface": "#f6faff",
+                    "surface-container-high": "#e4e8ee",
+                    "secondary-container": "#6cf8bb",
+                    "surface-dim": "#d6dae0",
+                    "outline": "#6e7881",
+                    "primary-container": "#0ea5e9",
+                    "on-tertiary": "#ffffff",
+                    "inverse-on-surface": "#edf1f7",
+                    "surface-container-highest": "#dee3e9",
+                    "on-error-container": "#93000a",
+                    "on-surface": "#171c20",
+                    "surface-container-low": "#f0f4fa",
+                    "surface-variant": "#dee3e9",
+                    "on-primary": "#ffffff",
+                    "primary-fixed-dim": "#89ceff",
+                    "on-background": "#171c20",
+                    "on-error": "#ffffff",
+                    "primary": "#006591",
+                    "surface-bright": "#f6faff",
+                    "tertiary-fixed-dim": "#ffb86e",
+                    "background": "#f6faff",
+                    "tertiary": "#8a5100",
+                    "surface-tint": "#006591",
+                    "on-tertiary-fixed": "#2c1600",
+                    "on-secondary-fixed": "#002113",
+                    "primary-fixed": "#c9e6ff",
+                    "on-tertiary-container": "#4d2b00",
+                    "on-secondary-fixed-variant": "#005236",
+                    "inverse-surface": "#2c3135",
+                    "on-secondary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#de8712",
+                    "inverse-primary": "#89ceff",
+                    "on-surface-variant": "#3e4850",
+                    "on-primary-fixed-variant": "#004c6e",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#001e2f",
+                    "tertiary-fixed": "#ffdcbd"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "0.25rem",
+                    "gutter": "1.5rem",
+                    "md": "1rem",
+                    "xl": "2rem",
+                    "container-padding": "2rem",
+                    "sm": "0.5rem",
+                    "lg": "1.25rem",
+                    "base": "4px"
+            },
+            "fontSize": {
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-md": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #f6faff;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar Shell -->
+<aside class="flex flex-col h-screen fixed left-0 top-0 z-50 py-md bg-surface-container-low dark:bg-surface-container-lowest border-r border-outline-variant dark:border-outline w-64">
+<div class="px-md mb-xl">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_pharmacy</span>
+</div>
+<div>
+<h1 class="text-headline-lg font-headline-lg font-bold text-primary dark:text-primary-fixed-dim">PharmTrack</h1>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Enterprise Suite</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary mx-2 my-1 p-3 flex items-center gap-3 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-body-sm font-body-sm">Overview</span>
+</a>
+<a class="bg-primary-container text-on-primary-container font-semibold rounded-lg mx-2 my-1 p-3 flex items-center gap-3 scale-[0.97] transition-transform" href="#">
+<span class="material-symbols-outlined">local_pharmacy</span>
+<span class="text-body-sm font-body-sm">Pharmacies</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary mx-2 my-1 p-3 flex items-center gap-3 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-body-sm font-body-sm">User Management</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary mx-2 my-1 p-3 flex items-center gap-3 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">medication</span>
+<span class="text-body-sm font-body-sm">Drug Database</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary mx-2 my-1 p-3 flex items-center gap-3 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-body-sm font-body-sm">Settings</span>
+</a>
+</nav>
+<div class="px-md mt-auto mb-md">
+<button class="w-full bg-primary text-on-primary py-3 rounded-xl font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition-all">
+<span class="material-symbols-outlined">add</span>
+                New Entry
+            </button>
+</div>
+<div class="border-t border-outline-variant pt-md mx-2">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary mx-2 my-1 p-3 flex items-center gap-3 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="text-body-sm font-body-sm">Support</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary mx-2 my-1 p-3 flex items-center gap-3 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-body-sm font-body-sm">Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 ml-64 min-h-screen flex flex-col">
+<!-- TopAppBar Shell -->
+<header class="flex justify-between items-center w-full px-gutter h-16 z-40 sticky top-0 bg-surface-container-lowest dark:bg-surface-dim border-b border-outline-variant dark:border-outline">
+<div class="flex items-center flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container rounded-full border-none focus:ring-2 focus:ring-primary-container text-body-sm" placeholder="Search by pharmacy name..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-highest transition-colors duration-200 rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-highest transition-colors duration-200 rounded-full">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-3 ml-2">
+<div class="text-right hidden sm:block">
+<p class="text-label-md font-label-md text-on-surface">Alex Thompson</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">System Administrator</p>
+</div>
+<img alt="Admin profile portrait" class="w-10 h-10 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of a middle-aged male administrator in a brightly lit, modern corporate office. He is wearing a sharp navy blue suit and has a friendly, confident expression. The background is slightly blurred, showing a sleek glass-walled conference room and minimalist architectural details in soft white and gray tones, perfectly aligning with a clinical and professional light-mode UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlpzbMizMGkkyrCo2J2dsp8CXgf5EgeyGJ_6QEYQv3iIH9Tkq0fhjPr2X-5ae4uPr5RuL2vBazXQRC5Acqg-89uFBxd8CvGYsvVKveMkksZif4Qv5kYarunfdJh-o1x3QZerZwhx7mO7VuZuxynjKpWmWQ5POLq7pVyg-P0IPrFJtJUzFnPrzkifSSVQOE-zrIkzFMuIM0ZwO5nSReepAoAdzsLgV8wpZeWAD6jaCGR6HhT9FkyIacQeD7391W3tVwBGdpRHOc49vS"/>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="p-gutter space-y-gutter">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+<div>
+<h2 class="text-display-md font-display-md text-on-surface">Pharmacy Network</h2>
+<p class="text-body-md font-body-md text-on-surface-variant">Oversee and manage regional pharmacy locations across the enterprise.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<select class="appearance-none bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2.5 pr-10 text-body-sm focus:ring-2 focus:ring-primary-container outline-none">
+<option>All Statuses</option>
+<option>Active</option>
+<option>Suspended</option>
+<option>Pending Verification</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
+</div>
+<button class="bg-primary text-on-primary px-5 py-2.5 rounded-lg text-label-md font-label-md flex items-center gap-2 shadow-sm hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-[20px]">file_download</span>
+                        Export Data
+                    </button>
+</div>
+</div>
+<!-- Bento Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Total Pharmacies</span>
+<span class="material-symbols-outlined text-primary">store</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-display-lg font-display-lg">1,248</span>
+<span class="text-secondary text-label-sm font-label-sm">+3.2%</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Active Units</span>
+<span class="material-symbols-outlined text-secondary">verified</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-display-lg font-display-lg">1,210</span>
+<span class="text-secondary text-label-sm font-label-sm">97% Total</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-xl shadow-sm border-l-4 border-l-error">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Suspended</span>
+<span class="material-symbols-outlined text-error">gavel</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-display-lg font-display-lg">38</span>
+<span class="text-error text-label-sm font-label-sm">-2% vs LM</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-xl shadow-sm bg-gradient-to-br from-primary-container/10 to-secondary-container/10">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Verification Queue</span>
+<span class="material-symbols-outlined text-primary">hourglass_empty</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-display-lg font-display-lg">12</span>
+<span class="text-primary text-label-sm font-label-sm">Priority 4</span>
+</div>
+</div>
+</div>
+<!-- Main Data Table Section -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="p-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Pharmacy Name</th>
+<th class="p-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">License Number</th>
+<th class="p-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Address</th>
+<th class="p-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Owner</th>
+<th class="p-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Status</th>
+<th class="p-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Registered Date</th>
+<th class="p-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container/20 flex items-center justify-center text-primary font-bold text-xs">CP</div>
+<span class="text-body-sm font-semibold text-on-surface">City Pharma Center</span>
+</div>
+</td>
+<td class="p-4 text-body-sm text-on-surface-variant font-mono">PH-2023-8891</td>
+<td class="p-4 text-body-sm text-on-surface-variant">742 Evergreen Terrace, Springfield</td>
+<td class="p-4 text-body-sm text-on-surface">Dr. Sarah Mitchell</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-secondary-container text-on-secondary-container">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                        Active
+                                    </span>
+</td>
+<td class="p-4 text-body-sm text-on-surface-variant">Jan 12, 2023</td>
+<td class="p-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="px-3 py-1.5 text-label-sm font-label-sm text-primary hover:bg-primary/5 rounded transition-all">View Details</button>
+<button class="px-3 py-1.5 text-label-sm font-label-sm text-error border border-error/20 hover:bg-error/5 rounded transition-all">Suspend</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="bg-surface-container-low/30 hover:bg-surface-container transition-colors">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-secondary-container/20 flex items-center justify-center text-secondary font-bold text-xs">NW</div>
+<span class="text-body-sm font-semibold text-on-surface">Northwest Health Plus</span>
+</div>
+</td>
+<td class="p-4 text-body-sm text-on-surface-variant font-mono">PH-2023-4412</td>
+<td class="p-4 text-body-sm text-on-surface-variant">1200 Highland Ave, Seattle</td>
+<td class="p-4 text-body-sm text-on-surface">Marcus Vane</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-error-container text-on-error-container">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                                        Suspended
+                                    </span>
+</td>
+<td class="p-4 text-body-sm text-on-surface-variant">Feb 05, 2023</td>
+<td class="p-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="px-3 py-1.5 text-label-sm font-label-sm text-primary hover:bg-primary/5 rounded transition-all">View Details</button>
+<button class="px-3 py-1.5 text-label-sm font-label-sm text-secondary border border-secondary/20 hover:bg-secondary/5 rounded transition-all">Activate</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-tertiary-container/20 flex items-center justify-center text-tertiary font-bold text-xs">RM</div>
+<span class="text-body-sm font-semibold text-on-surface">Riverside Meds</span>
+</div>
+</td>
+<td class="p-4 text-body-sm text-on-surface-variant font-mono">PH-2023-9902</td>
+<td class="p-4 text-body-sm text-on-surface-variant">33 Waterfront Blvd, Austin</td>
+<td class="p-4 text-body-sm text-on-surface">Elena Rodriguez</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-secondary-container text-on-secondary-container">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                        Active
+                                    </span>
+</td>
+<td class="p-4 text-body-sm text-on-surface-variant">Mar 18, 2023</td>
+<td class="p-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="px-3 py-1.5 text-label-sm font-label-sm text-primary hover:bg-primary/5 rounded transition-all">View Details</button>
+<button class="px-3 py-1.5 text-label-sm font-label-sm text-error border border-error/20 hover:bg-error/5 rounded transition-all">Suspend</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="bg-surface-container-low/30 hover:bg-surface-container transition-colors">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-fixed/20 flex items-center justify-center text-primary font-bold text-xs">GK</div>
+<span class="text-body-sm font-semibold text-on-surface">Green Knot Pharmacy</span>
+</div>
+</td>
+<td class="p-4 text-body-sm text-on-surface-variant font-mono">PH-2023-1029</td>
+<td class="p-4 text-body-sm text-on-surface-variant">880 Pine Oak Ln, Denver</td>
+<td class="p-4 text-body-sm text-on-surface">Dr. Julian Moore</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-secondary-container text-on-secondary-container">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                        Active
+                                    </span>
+</td>
+<td class="p-4 text-body-sm text-on-surface-variant">May 10, 2023</td>
+<td class="p-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="px-3 py-1.5 text-label-sm font-label-sm text-primary hover:bg-primary/5 rounded transition-all">View Details</button>
+<button class="px-3 py-1.5 text-label-sm font-label-sm text-error border border-error/20 hover:bg-error/5 rounded transition-all">Suspend</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-on-tertiary-fixed-variant/20 flex items-center justify-center text-tertiary font-bold text-xs">LV</div>
+<span class="text-body-sm font-semibold text-on-surface">Lakeview Rx</span>
+</div>
+</td>
+<td class="p-4 text-body-sm text-on-surface-variant font-mono">PH-2023-5561</td>
+<td class="p-4 text-body-sm text-on-surface-variant">402 Lakeshore Dr, Madison</td>
+<td class="p-4 text-body-sm text-on-surface">Samantha Reed</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface-container-high text-on-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+                                        Pending
+                                    </span>
+</td>
+<td class="p-4 text-body-sm text-on-surface-variant">Jun 22, 2023</td>
+<td class="p-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="px-3 py-1.5 text-label-sm font-label-sm text-primary hover:bg-primary/5 rounded transition-all">Verify Now</button>
+<button class="px-3 py-1.5 text-label-sm font-label-sm text-on-surface-variant hover:bg-surface-variant rounded transition-all">Archive</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="p-4 border-t border-outline-variant flex items-center justify-between bg-surface-container-low/50">
+<span class="text-body-sm text-on-surface-variant">Showing 1 to 10 of 1,248 entries</span>
+<div class="flex items-center gap-1">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded transition-all disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded font-semibold text-xs">1</button>
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-container text-on-surface rounded font-semibold text-xs transition-all">2</button>
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-container text-on-surface rounded font-semibold text-xs transition-all">3</button>
+<span class="px-2 text-outline">...</span>
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-container text-on-surface rounded font-semibold text-xs transition-all">125</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded transition-all">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Contextual Insights / AI Suggestion -->
+<div class="bg-surface-container-lowest border border-sky-400/30 rounded-xl p-5 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-sky-400/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-container to-secondary-container flex items-center justify-center text-white shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<h4 class="text-headline-sm font-headline-sm text-primary">Intelligent Network Insight</h4>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">Based on recent registration trends, the Northwest region is showing a 15% increase in verification requests. We recommend allocating additional administrative resources to the licensing queue this week to maintain our 48-hour SLA.</p>
+<div class="flex gap-4 mt-4">
+<button class="text-label-md font-label-md text-primary flex items-center gap-1 hover:underline">
+                                View Analytics Report
+                                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+<button class="text-label-md font-label-md text-on-surface-variant hover:text-on-surface">Dismiss</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- System Footer -->
+<footer class="mt-auto p-gutter border-t border-outline-variant text-center">
+<p class="text-label-sm font-label-sm text-on-surface-variant">© 2024 PharmTrack Enterprise Suite • v4.2.0-stable • Clinical Precision &amp; Adaptive Intelligence</p>
+</footer>
+</main>
+</body></html>

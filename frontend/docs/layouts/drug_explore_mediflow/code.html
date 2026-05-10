@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Drug Search | MediFlow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-container": "#4d2b00",
+                      "on-secondary-fixed-variant": "#005236",
+                      "error-container": "#ffdad6",
+                      "primary-fixed-dim": "#89ceff",
+                      "error": "#ba1a1a",
+                      "secondary-fixed": "#6ffbbe",
+                      "tertiary": "#8a5100",
+                      "on-primary": "#ffffff",
+                      "secondary": "#006c49",
+                      "on-tertiary-fixed": "#2c1600",
+                      "on-background": "#171c20",
+                      "on-secondary-container": "#00714d",
+                      "on-error": "#ffffff",
+                      "inverse-surface": "#2c3135",
+                      "surface-dim": "#d6dae0",
+                      "outline": "#6e7881",
+                      "secondary-container": "#6cf8bb",
+                      "surface-container-highest": "#dee3e9",
+                      "on-primary-fixed-variant": "#004c6e",
+                      "inverse-on-surface": "#edf1f7",
+                      "surface-container-high": "#e4e8ee",
+                      "surface-container-low": "#f0f4fa",
+                      "tertiary-fixed-dim": "#ffb86e",
+                      "inverse-primary": "#89ceff",
+                      "surface-tint": "#006591",
+                      "on-surface-variant": "#3e4850",
+                      "background": "#f6faff",
+                      "on-surface": "#171c20",
+                      "primary-fixed": "#c9e6ff",
+                      "on-tertiary-fixed-variant": "#693c00",
+                      "surface": "#f6faff",
+                      "on-secondary-fixed": "#002113",
+                      "on-primary-fixed": "#001e2f",
+                      "on-secondary": "#ffffff",
+                      "primary": "#006591",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-bright": "#f6faff",
+                      "on-error-container": "#93000a",
+                      "primary-container": "#0ea5e9",
+                      "tertiary-container": "#de8712",
+                      "outline-variant": "#bec8d2",
+                      "on-primary-container": "#003751",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-fixed": "#ffdcbd",
+                      "surface-variant": "#dee3e9",
+                      "surface-container": "#eaeef4",
+                      "secondary-fixed-dim": "#4edea3"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sm": "0.5rem",
+                      "xs": "0.25rem",
+                      "md": "1rem",
+                      "lg": "1.25rem",
+                      "container-padding": "2rem",
+                      "gutter": "1.5rem",
+                      "base": "4px",
+                      "xl": "2rem"
+              },
+              "fontFamily": {},
+              "fontSize": {
+                      "display-md": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .drug-card-shadow {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col font-body-md">
+<!-- PublicNavbar Component -->
+<nav class="bg-surface docked full-width top-0 border-b border-outline-variant z-50 sticky">
+<div class="flex justify-between items-center w-full px-container-padding h-16 max-w-7xl mx-auto">
+<div class="text-headline-lg font-headline-lg font-bold text-primary">MediFlow</div>
+<div class="hidden md:flex gap-xl items-center">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Features</a>
+<a class="text-primary border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Drug Search</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Blog</a>
+</div>
+<div class="flex gap-md">
+<button class="px-md py-sm text-primary font-label-md text-label-md hover:bg-surface-container-low rounded-lg transition-all">Login</button>
+<button class="px-lg py-sm bg-primary-container text-on-primary-container font-label-md text-label-md rounded-lg hover:opacity-80 transition-all">Register</button>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow max-w-7xl w-full mx-auto px-container-padding py-xl">
+<!-- Search Header Area -->
+<header class="mb-xl">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<h1 class="font-display-md text-display-md text-on-surface mb-xs">Explore Medications</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Search through our clinical database for pharmaceuticals and interactions.</p>
+</div>
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-12 pr-4 py-3 bg-surface-container-lowest border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary-container focus:border-primary transition-all outline-none" placeholder="Search drug name, generic or manufacturer..." type="text"/>
+</div>
+</div>
+</header>
+<div class="flex flex-col md:flex-row gap-gutter">
+<!-- Filter Sidebar -->
+<aside class="w-full md:w-64 flex-shrink-0">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md sticky top-24">
+<div class="flex items-center justify-between mb-md">
+<h2 class="font-headline-sm text-headline-sm">Filters</h2>
+<button class="text-primary font-label-sm text-label-sm">Reset</button>
+</div>
+<div class="space-y-lg">
+<!-- Category -->
+<div>
+<label class="font-label-md text-label-md text-on-surface mb-sm block">Category</label>
+<div class="space-y-xs">
+<label class="flex items-center gap-sm cursor-pointer hover:bg-surface-container-low p-xs rounded">
+<input class="rounded border-outline text-primary focus:ring-primary-container" type="checkbox"/>
+<span class="text-body-sm">Antibiotics</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer hover:bg-surface-container-low p-xs rounded">
+<input class="rounded border-outline text-primary focus:ring-primary-container" type="checkbox"/>
+<span class="text-body-sm">Analgesics</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer hover:bg-surface-container-low p-xs rounded">
+<input class="rounded border-outline text-primary focus:ring-primary-container" type="checkbox"/>
+<span class="text-body-sm">Antipyretics</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer hover:bg-surface-container-low p-xs rounded">
+<input class="rounded border-outline text-primary focus:ring-primary-container" type="checkbox"/>
+<span class="text-body-sm">Antihistamines</span>
+</label>
+</div>
+</div>
+<!-- Dosage Form -->
+<div>
+<label class="font-label-md text-label-md text-on-surface mb-sm block">Dosage Form</label>
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-sm text-body-sm focus:ring-primary-container focus:border-primary">
+<option>All Forms</option>
+<option>Tablet</option>
+<option>Capsule</option>
+<option>Liquid</option>
+<option>Inhaler</option>
+</select>
+</div>
+<!-- Manufacturer -->
+<div>
+<label class="font-label-md text-label-md text-on-surface mb-sm block">Manufacturer</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-sm text-body-sm focus:ring-primary-container focus:border-primary mb-sm" placeholder="e.g. Pfizer" type="text"/>
+</div>
+<!-- Sort -->
+<div>
+<label class="font-label-md text-label-md text-on-surface mb-sm block">Sort By</label>
+<div class="flex flex-col gap-xs">
+<label class="flex items-center gap-sm text-body-sm">
+<input checked="" class="text-primary" name="sort" type="radio"/>
+                                    Relevance
+                                </label>
+<label class="flex items-center gap-sm text-body-sm">
+<input class="text-primary" name="sort" type="radio"/>
+                                    A - Z
+                                </label>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Results Grid -->
+<div class="flex-grow">
+<!-- Active Filters / Stats -->
+<div class="flex items-center justify-between mb-md">
+<span class="text-body-sm text-on-surface-variant">Showing 1-12 of 154 results</span>
+<div class="flex gap-sm">
+<span class="px-sm py-1 bg-secondary-container text-on-secondary-container rounded-full text-label-sm flex items-center gap-xs">
+                            Antibiotic <span class="material-symbols-outlined text-[14px]">close</span>
+</span>
+</div>
+</div>
+<!-- Bento Grid for Drugs -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
+<!-- Drug Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden drug-card-shadow flex flex-col hover:border-primary-container transition-all group">
+<div class="aspect-video relative overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A clean, clinical shot of a pharmaceutical blister pack sitting on a sterile white surface under soft, high-key medical lighting. The color palette is dominated by pure whites and subtle sky-blue accents, reflecting a sense of safety and professional healthcare standards. The composition is minimalist and sharp, focusing on the precision of medicine production." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGD51xVg224y6QG4b_uba5wVZHKjrLbJ30HFNGhqQ2lmT3Pqd7GERiaHIzgpLL8_67efCi_9_qm_uDUPh2kOgx0lmXrhsmvj-HnWw9NIsdOYnbxUf7IciS-DcopNDvTQQ38VXNDv1NXhygmTXErJshvMO58tJNREveyN4jBOQm-n2lvW99GRTU0UIQtiye-ofNns16uI01GgSfkeLhwn08XkmQ0Xh3X15zTG1D89otz1pBAfUnszNgf1L-w-DEHEL_EBK3BEm5F2W1"/>
+<span class="absolute top-2 left-2 px-2 py-1 bg-primary text-on-primary rounded text-[10px] font-bold uppercase">Rx Only</span>
+</div>
+<div class="p-md flex-grow flex flex-col">
+<div class="mb-xs">
+<span class="text-label-sm text-secondary font-bold uppercase tracking-wider">Antibiotic</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs">Amoxicillin</h3>
+<p class="text-body-sm text-on-surface-variant italic mb-md">Amoxicillin Trihydrate</p>
+<div class="mt-auto space-y-sm">
+<div class="flex items-center gap-xs text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">pill</span>
+<span>500mg Capsule</span>
+</div>
+<div class="flex items-center gap-xs text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">factory</span>
+<span>GSK Pharma</span>
+</div>
+<button class="w-full mt-md py-sm bg-white border border-primary text-primary font-label-md text-label-md rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-colors">
+                                    View Details
+                                </button>
+</div>
+</div>
+</div>
+<!-- Drug Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden drug-card-shadow flex flex-col hover:border-primary-container transition-all group">
+<div class="aspect-video relative overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A macro photograph of professional medical capsules arranged in a neat pattern on a reflective white medical tray. The lighting is diffused and bright, emphasizing a clinical and modern lab environment. A sophisticated color palette of white, teal, and emerald greens creates a feeling of adaptive intelligence and reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAtDvhGBMb98aVlltpbTTYYdCydVXRqPHy-Emul3inzXXhvzNDiVtNTvPDAWcIb2CDtIZc_dmVBXROKhnAz-7DrP12-Eauk3Os-VFcweVPG0WfISxm0fI55aRNc057MkL2IjARPLHcKSgdHbeE0GYcPlO-g6C_VMGwjoYkyhGmsl6c8pDUU3-fzIvIurpmwe4WwvFsP6WGpn926hblHAYavf4GJsZ74X7SYvNmuix12US3yXUzxfKSArnYAiwSxiOofZ3zb6u0hRw_"/>
+</div>
+<div class="p-md flex-grow flex flex-col">
+<div class="mb-xs">
+<span class="text-label-sm text-secondary font-bold uppercase tracking-wider">Analgesic</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs">Ibuprofen</h3>
+<p class="text-body-sm text-on-surface-variant italic mb-md">Isobutylphenylpropionic acid</p>
+<div class="mt-auto space-y-sm">
+<div class="flex items-center gap-xs text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">tablet_android</span>
+<span>200mg Tablet</span>
+</div>
+<div class="flex items-center gap-xs text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">factory</span>
+<span>Advantage Labs</span>
+</div>
+<button class="w-full mt-md py-sm bg-white border border-primary text-primary font-label-md text-label-md rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-colors">
+                                    View Details
+                                </button>
+</div>
+</div>
+</div>
+<!-- Drug Card 3 (Skeleton Loader Example) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden drug-card-shadow flex flex-col animate-pulse">
+<div class="aspect-video bg-surface-container-highest"></div>
+<div class="p-md space-y-md">
+<div class="h-3 bg-surface-container-highest rounded w-1/4"></div>
+<div class="h-6 bg-surface-container-highest rounded w-3/4"></div>
+<div class="h-4 bg-surface-container-highest rounded w-1/2"></div>
+<div class="pt-4 space-y-sm">
+<div class="h-4 bg-surface-container-highest rounded w-full"></div>
+<div class="h-4 bg-surface-container-highest rounded w-2/3"></div>
+</div>
+<div class="h-10 bg-surface-container-highest rounded w-full mt-md"></div>
+</div>
+</div>
+<!-- Drug Card 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden drug-card-shadow flex flex-col hover:border-primary-container transition-all group">
+<div class="aspect-video relative overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Modern medical diagnostic equipment in a high-tech pharmacy setting, featuring a bright and clean environment with soft shadows. The image showcases advanced technology with a palette of sterile whites and vibrant blue light accents. The mood is calm, futuristic, and precisely clinical, suggesting a high standard of patient care and drug research." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDd4COW1XHrEkTP00snCzf-EacqldaeY-U5pE0RlfUbqAIz-oFohb_LK-e3Gtq6FaXDVfCvH3jhE24fLbAnz03x0iqVzzEMV1ValvHSmxuwlTJlnycWAkWiO0yD-hTcEy5qBiIoi0k_FyMn1iLHBgOTkiodplcNBy6uFv9H0EdIwPPh9b2Kink117nzvT8WAGUTm0bPdGFBBi8pBOM4-wXJ1v41zAfvoTRm3IiRcFyGGaEWyyH23FmAcxc8P1s-19paUEPDHvFyKD58"/>
+</div>
+<div class="p-md flex-grow flex flex-col">
+<div class="mb-xs">
+<span class="text-label-sm text-secondary font-bold uppercase tracking-wider">Antihistamine</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs">Cetirizine</h3>
+<p class="text-body-sm text-on-surface-variant italic mb-md">Cetirizine Hydrochloride</p>
+<div class="mt-auto space-y-sm">
+<div class="flex items-center gap-xs text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">pill</span>
+<span>10mg Tablet</span>
+</div>
+<div class="flex items-center gap-xs text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">factory</span>
+<span>PharmaCare Co.</span>
+</div>
+<button class="w-full mt-md py-sm bg-white border border-primary text-primary font-label-md text-label-md rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-colors">
+                                    View Details
+                                </button>
+</div>
+</div>
+</div>
+<!-- AI Suggested Item -->
+<div class="bg-surface-container-lowest border border-primary-container ring-1 ring-primary-container rounded-xl overflow-hidden drug-card-shadow flex flex-col relative">
+<div class="absolute top-3 right-3 z-10">
+<span class="bg-primary text-on-primary text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+                                AI SUGGESTED
+                            </span>
+</div>
+<div class="aspect-video relative overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="A futuristic medical lab setting with glowing cyan and white interfaces displaying chemical structures. The lighting is low-key with high-contrast glowing elements, creating a sense of advanced AI-driven discovery. The aesthetic is clean and professional, using a corporate modern style with clinical precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAj5sC2geUZ2mkg_2tct-EnNf3lc3_T5Zzqu6Yy-1MjDR1gE3IfmACDy6qcscyG6sz6tHoHyJKATruBL9g01p7sFFle3L-NipXzFTiX5dwmPf3S1D10Mz9eYuDhYYl92aUvLGklDL9HxcSdrZ8DT6L8PuiATk_vZI7U79fKV3QnL7LWyJoPH_EDPam9QYfDbkzuLv-Asy6I6_c5p9ipSstQ8YLffeFwaeLEIh_NSe0sjoKIXa2SwBlQPZpqLYPdTLRyP6PmYgWprr6A"/>
+</div>
+<div class="p-md flex-grow flex flex-col bg-gradient-to-b from-primary-container/10 to-transparent">
+<div class="mb-xs">
+<span class="text-label-sm text-secondary font-bold uppercase tracking-wider">Steroid</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs">Prednisone</h3>
+<p class="text-body-sm text-on-surface-variant italic mb-md">Corticosteroid</p>
+<div class="mt-auto space-y-sm">
+<div class="flex items-center gap-xs text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">medication</span>
+<span>5mg Tablet</span>
+</div>
+<div class="flex items-center gap-xs text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">factory</span>
+<span>Medix Global</span>
+</div>
+<button class="w-full mt-md py-sm bg-primary text-on-primary font-label-md text-label-md rounded-lg hover:opacity-90 transition-colors">
+                                    Check Stock
+                                </button>
+</div>
+</div>
+</div>
+<!-- More cards for full grid appearance -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden drug-card-shadow flex flex-col group">
+<div class="aspect-video bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="A high-resolution image of medical syrup being poured into a transparent dosing cup. The lighting is bright and clear, emphasizing the purity and transparency of the medication. The background is a minimalist, modern pharmacy laboratory with clean lines and a professional blue and white color scheme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZixwJ7NOZ8-s2KalF6VUz5DMD_ND7gKB0Nt6gGZ93ObdHAucSoTWeLKRBE532-sP47X7bpeH7pBx7FmiXc6ssHRUEED6MeOFZVsFNDMTgPPFJn29YWNvluzTiAmmcSdVowddYgQoeqCEg8Kil90vN_qUOpFBl8CTyUkSpsUab33Dm7eNrXAlHNgTgfM7GkhSW-M2R37vKEBF3kwT-VdDr5JZCleFHZz_UXBuQ9omjmd-4VN4rHthNFzWDH5Kun0rF_Gc_EjpZkGLI"/>
+</div>
+<div class="p-md flex flex-col">
+<div class="mb-xs"><span class="text-label-sm text-secondary font-bold uppercase tracking-wider">Antipyretic</span></div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs">Paracetamol</h3>
+<p class="text-body-sm text-on-surface-variant mb-md italic">Acetaminophen</p>
+<div class="mt-auto space-y-sm">
+<button class="w-full py-sm bg-white border border-primary text-primary font-label-md text-label-md rounded-lg hover:bg-primary-container transition-colors">View Details</button>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden drug-card-shadow flex flex-col animate-pulse">
+<div class="aspect-video bg-surface-container-highest"></div>
+<div class="p-md space-y-md">
+<div class="h-3 bg-surface-container-highest rounded w-1/4"></div>
+<div class="h-6 bg-surface-container-highest rounded w-3/4"></div>
+<div class="h-4 bg-surface-container-highest rounded w-1/2"></div>
+<div class="h-10 bg-surface-container-highest rounded w-full mt-md"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden drug-card-shadow flex flex-col animate-pulse">
+<div class="aspect-video bg-surface-container-highest"></div>
+<div class="p-md space-y-md">
+<div class="h-3 bg-surface-container-highest rounded w-1/4"></div>
+<div class="h-6 bg-surface-container-highest rounded w-3/4"></div>
+<div class="h-4 bg-surface-container-highest rounded w-1/2"></div>
+<div class="h-10 bg-surface-container-highest rounded w-full mt-md"></div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="mt-xl flex justify-center items-center gap-sm">
+<button class="p-2 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 rounded-lg bg-primary text-on-primary font-label-md">1</button>
+<button class="w-10 h-10 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-high font-label-md transition-colors">2</button>
+<button class="w-10 h-10 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-high font-label-md transition-colors">3</button>
+<span class="px-2">...</span>
+<button class="w-10 h-10 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-high font-label-md transition-colors">14</button>
+<button class="p-2 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- PublicFooter Component -->
+<footer class="bg-surface-container-low border-t border-outline-variant mt-xl">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-container-padding py-xl max-w-7xl mx-auto gap-md">
+<div class="flex flex-col items-center md:items-start">
+<div class="text-headline-sm font-headline-sm font-bold text-primary mb-xs">MediFlow</div>
+<p class="text-body-sm text-on-surface-variant text-center md:text-left">© 2024 MediFlow. Clinical Precision &amp; Adaptive Intelligence.</p>
+</div>
+<div class="flex gap-xl">
+<a class="text-on-surface-variant hover:text-primary font-label-md text-label-md transition-all" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary font-label-md text-label-md transition-all" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary font-label-md text-label-md transition-all" href="#">Contact</a>
+<a class="text-on-surface-variant hover:text-primary font-label-md text-label-md transition-all" href="#">Careers</a>
+</div>
+</div>
+</footer>
+</body></html>

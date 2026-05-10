@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#4d2b00",
+                    "on-secondary-fixed-variant": "#005236",
+                    "error-container": "#ffdad6",
+                    "primary-fixed-dim": "#89ceff",
+                    "error": "#ba1a1a",
+                    "secondary-fixed": "#6ffbbe",
+                    "tertiary": "#8a5100",
+                    "on-primary": "#ffffff",
+                    "secondary": "#006c49",
+                    "on-tertiary-fixed": "#2c1600",
+                    "on-background": "#171c20",
+                    "on-secondary-container": "#00714d",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#2c3135",
+                    "surface-dim": "#d6dae0",
+                    "outline": "#6e7881",
+                    "secondary-container": "#6cf8bb",
+                    "surface-container-highest": "#dee3e9",
+                    "on-primary-fixed-variant": "#004c6e",
+                    "inverse-on-surface": "#edf1f7",
+                    "surface-container-high": "#e4e8ee",
+                    "surface-container-low": "#f0f4fa",
+                    "tertiary-fixed-dim": "#ffb86e",
+                    "inverse-primary": "#89ceff",
+                    "surface-tint": "#006591",
+                    "on-surface-variant": "#3e4850",
+                    "background": "#f6faff",
+                    "on-surface": "#171c20",
+                    "primary-fixed": "#c9e6ff",
+                    "on-tertiary-fixed-variant": "#693c00",
+                    "surface": "#f6faff",
+                    "on-secondary-fixed": "#002113",
+                    "on-primary-fixed": "#001e2f",
+                    "on-secondary": "#ffffff",
+                    "primary": "#006591",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-bright": "#f6faff",
+                    "on-error-container": "#93000a",
+                    "primary-container": "#0ea5e9",
+                    "tertiary-container": "#de8712",
+                    "outline-variant": "#bec8d2",
+                    "on-primary-container": "#003751",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#ffdcbd",
+                    "surface-variant": "#dee3e9",
+                    "surface-container": "#eaeef4",
+                    "secondary-fixed-dim": "#4edea3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "0.5rem",
+                    "xs": "0.25rem",
+                    "md": "1rem",
+                    "lg": "1.25rem",
+                    "container-padding": "2rem",
+                    "gutter": "1.5rem",
+                    "base": "4px",
+                    "xl": "2rem"
+            },
+            "fontFamily": {},
+            "fontSize": {
+                    "display-md": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .zebra-table tr:nth-child(even) {
+            background-color: #f0f4fa;
+        }
+        .ai-gradient-border {
+            border: 2px solid transparent;
+            background: linear-gradient(#ffffff, #ffffff) padding-box,
+                        linear-gradient(to right, #0ea5e9, #006c49) border-box;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<aside class="fixed left-0 top-0 h-full w-64 bg-surface border-r border-outline-variant flex flex-col p-md gap-sm z-50">
+<div class="mb-xl px-sm">
+<h1 class="text-headline-sm font-headline-sm font-bold text-primary">MediFlow</h1>
+<p class="text-label-sm text-on-surface-variant">Pharmacist Portal</p>
+</div>
+<nav class="flex flex-col gap-xs">
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-active:scale-95">dashboard</span>
+<span class="font-label-md">Overview</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-active:scale-95">inventory_2</span>
+<span class="font-label-md">Inventory</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-active:scale-95">medication</span>
+<span class="font-label-md">Dispensing</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-active:scale-95">shopping_cart</span>
+<span class="font-label-md">Orders</span>
+</a>
+<a class="flex items-center gap-md p-md bg-primary-container text-on-primary-container font-bold rounded-lg group" href="#">
+<span class="material-symbols-outlined group-active:scale-95">verified_user</span>
+<span class="font-label-md">Interaction Checker</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined group-active:scale-95">smart_toy</span>
+<span class="font-label-md">AI Assistant</span>
+</a>
+</nav>
+</aside>
+<div class="ml-64 min-h-screen flex flex-col">
+<header class="h-16 flex justify-between items-center px-lg bg-surface border-b border-outline-variant sticky top-0 z-40">
+<div class="flex-1 max-w-xl">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-10 pr-4 focus:ring-2 focus:ring-primary-container focus:border-primary outline-none transition-all text-body-sm" placeholder="Search patients, drugs, or records..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md ml-lg">
+<button class="p-2 hover:bg-surface-container-highest rounded-full transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="flex items-center gap-sm pl-md border-l border-outline-variant">
+<div class="text-right hidden sm:block">
+<p class="text-label-md font-bold leading-tight">Dr. Aris Thorne</p>
+<p class="text-label-sm text-on-surface-variant">Senior Pharmacist</p>
+</div>
+<img alt="User Profile" class="w-10 h-10 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of a clinical pharmacist wearing a white lab coat in a modern medical environment. The lighting is crisp and sterile, emphasizing precision and professionalism. The background features blurred pharmaceutical shelving, maintaining a clean and clinical atmosphere consistent with a high-end medical dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuArayrnUsU8ChOjoc6hGsmER7gkfBE6GTgk8TkgTQxxeGY4lgYkkpVTQAACzZlNtKul0HHxmzcy_yKMfpLSSwIZORaHP29H29VeoleVrWLXBXBcCBecc-JT2fOyhIQn_zHH-k7riEI83ETYk2K8GZEY_XCiscyMizFyd-y9PvXkCN7IuDSWN9OIc7GdXiMiLAMl8GtQ-Qx4jV7TZa55ch5PgBSsAcds6ZXpdBJFfkrMBpzWHLfVk79uK1KbJVPYlAsyjzleOmAipeY9"/>
+</div>
+</div>
+</header>
+<main class="p-container-padding max-w-7xl mx-auto w-full flex flex-col gap-xl">
+<section class="flex flex-col gap-md">
+<div class="flex justify-between items-end">
+<div>
+<h2 class="text-display-md font-display-md text-on-surface">Interaction Checker</h2>
+<p class="text-body-md text-on-surface-variant">Analyze potential drug-to-drug interactions with clinical precision.</p>
+</div>
+<button class="bg-primary text-on-primary px-lg py-sm rounded-lg flex items-center gap-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+<span class="font-label-md">New Patient Profile</span>
+</button>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm">
+<label class="text-label-md font-bold text-on-surface mb-sm block">Enter Medications to Compare</label>
+<div class="flex flex-wrap gap-sm p-sm border border-outline-variant rounded-lg min-h-[64px] bg-surface focus-within:ring-2 focus-within:ring-primary-container focus-within:border-primary transition-all">
+<div class="flex items-center gap-xs bg-primary-fixed text-on-primary-fixed px-sm py-xs rounded-full">
+<span class="text-label-sm">Warfarin 5mg</span>
+<span class="material-symbols-outlined text-[16px] cursor-pointer">close</span>
+</div>
+<div class="flex items-center gap-xs bg-primary-fixed text-on-primary-fixed px-sm py-xs rounded-full">
+<span class="text-label-sm">Aspirin 81mg</span>
+<span class="material-symbols-outlined text-[16px] cursor-pointer">close</span>
+</div>
+<div class="flex items-center gap-xs bg-primary-fixed text-on-primary-fixed px-sm py-xs rounded-full">
+<span class="text-label-sm">Simvastatin 20mg</span>
+<span class="material-symbols-outlined text-[16px] cursor-pointer">close</span>
+</div>
+<input class="border-none focus:ring-0 text-body-sm flex-1 min-w-[150px] bg-transparent" placeholder="Add medication..." type="text"/>
+</div>
+<div class="mt-md flex justify-end">
+<button class="bg-primary text-on-primary px-xl py-md rounded-lg font-label-md hover:opacity-90 transition-all flex items-center gap-md">
+<span class="material-symbols-outlined">verified_user</span>
+                            Check Interactions
+                        </button>
+</div>
+</div>
+</section>
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<div class="lg:col-span-2 flex flex-col gap-gutter">
+<div class="flex items-center justify-between">
+<h3 class="text-headline-sm font-headline-sm">Analysis Results</h3>
+<div class="flex items-center gap-sm bg-error-container text-on-error-container px-md py-sm rounded-full">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-label-md font-bold uppercase tracking-wider">High Risk Identified</span>
+</div>
+</div>
+<div class="flex flex-col gap-md">
+<div class="bg-surface border border-outline-variant rounded-xl p-5 hover:border-error transition-colors">
+<div class="flex justify-between items-start mb-md">
+<div class="flex items-center gap-md">
+<div class="bg-error/10 text-error p-sm rounded-lg">
+<span class="material-symbols-outlined">emergency</span>
+</div>
+<div>
+<h4 class="font-bold text-body-lg">Warfarin + Aspirin</h4>
+<p class="text-label-sm text-error font-bold uppercase">Major Interaction</p>
+</div>
+</div>
+</div>
+<div class="space-y-sm text-body-sm text-on-surface-variant">
+<p><span class="font-bold text-on-surface">Explanation:</span> Concurrent use of anticoagulants and antiplatelet agents significantly increases the risk of serious bleeding complications, including gastrointestinal hemorrhage.</p>
+<div class="p-md bg-surface-container-low rounded-lg border-l-4 border-error mt-sm">
+<p class="font-bold text-on-surface mb-xs">Clinical Recommendation:</p>
+<p>Avoid combination unless benefits outweigh bleeding risks. Monitor PT/INR frequently if co-administration is necessary. Consider safer alternatives for pain management.</p>
+</div>
+</div>
+</div>
+<div class="bg-surface border border-outline-variant rounded-xl p-5">
+<div class="flex justify-between items-start mb-md">
+<div class="flex items-center gap-md">
+<div class="bg-tertiary-container/10 text-tertiary p-sm rounded-lg">
+<span class="material-symbols-outlined">info</span>
+</div>
+<div>
+<h4 class="font-bold text-body-lg">Warfarin + Simvastatin</h4>
+<p class="text-label-sm text-tertiary font-bold uppercase">Moderate Interaction</p>
+</div>
+</div>
+</div>
+<div class="space-y-sm text-body-sm text-on-surface-variant">
+<p><span class="font-bold text-on-surface">Explanation:</span> Simvastatin may enhance the anticoagulant effect of warfarin by inhibiting its metabolism or through unknown mechanisms, potentially increasing INR.</p>
+<div class="p-md bg-surface-container-low rounded-lg border-l-4 border-tertiary mt-sm">
+<p class="font-bold text-on-surface mb-xs">Clinical Recommendation:</p>
+<p>Monitor INR closely when initiating or changing simvastatin dose. Adjust warfarin dosage as needed based on lab results.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-gutter">
+<h3 class="text-headline-sm font-headline-sm">AI Clinical Insight</h3>
+<div class="ai-gradient-border rounded-xl p-5 flex flex-col gap-md">
+<div class="flex items-center gap-sm text-primary">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md font-bold">MediFlow Intelligence</span>
+</div>
+<p class="text-body-sm leading-relaxed">
+                            Based on this patient's profile and current drug entry, the cumulative bleeding risk is in the 94th percentile for their age bracket (65+). 
+                        </p>
+<div class="bg-primary/5 p-sm rounded-lg">
+<p class="text-label-sm font-bold text-primary mb-xs">Suggested Action:</p>
+<p class="text-body-sm italic">"Review patient's most recent CBC and stool guaiac test results before finalizing dispensing."</p>
+</div>
+<button class="mt-md text-primary font-label-md flex items-center gap-xs hover:underline">
+                            View full AI analysis
+                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+<div class="bg-surface border border-outline-variant rounded-xl p-5">
+<h4 class="font-bold text-body-md mb-md">Drug Properties</h4>
+<div class="space-y-md">
+<div class="flex justify-between items-center border-b border-outline-variant pb-sm">
+<span class="text-body-sm text-on-surface-variant">Warfarin</span>
+<span class="text-label-sm bg-secondary-container text-on-secondary-container px-sm py-xs rounded">Anticoagulant</span>
+</div>
+<div class="flex justify-between items-center border-b border-outline-variant pb-sm">
+<span class="text-body-sm text-on-surface-variant">Aspirin</span>
+<span class="text-label-sm bg-secondary-container text-on-secondary-container px-sm py-xs rounded">Antiplatelet</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-body-sm text-on-surface-variant">Simvastatin</span>
+<span class="text-label-sm bg-secondary-container text-on-secondary-container px-sm py-xs rounded">HMG-CoA Reductase</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="flex flex-col gap-md">
+<div class="flex items-center justify-between">
+<h3 class="text-headline-sm font-headline-sm">Recent Check History</h3>
+<button class="text-primary font-label-md">View Archives</button>
+</div>
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<table class="w-full text-left zebra-table border-collapse">
+<thead>
+<tr class="bg-surface-container-high text-label-sm text-on-surface font-bold uppercase tracking-wider">
+<th class="p-md">Date &amp; Time</th>
+<th class="p-md">Drugs Analyzed</th>
+<th class="p-md text-center">Max Risk Level</th>
+<th class="p-md">Status</th>
+<th class="p-md text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="text-body-sm">
+<tr>
+<td class="p-md text-on-surface-variant">Oct 24, 09:15 AM</td>
+<td class="p-md font-bold">Lisinopril, Spironolactone, Metformin</td>
+<td class="p-md text-center">
+<span class="inline-block px-sm py-xs bg-tertiary-container/20 text-tertiary-container font-bold rounded text-label-sm">MODERATE</span>
+</td>
+<td class="p-md">
+<span class="flex items-center gap-xs text-on-secondary-fixed-variant">
+<span class="w-2 h-2 bg-secondary rounded-full"></span>
+                                        Reviewed
+                                    </span>
+</td>
+<td class="p-md text-right">
+<button class="text-primary hover:bg-primary-container/10 p-sm rounded transition-colors">Details</button>
+</td>
+</tr>
+<tr>
+<td class="p-md text-on-surface-variant">Oct 23, 04:30 PM</td>
+<td class="p-md font-bold">Clopidogrel, Omeprazole</td>
+<td class="p-md text-center">
+<span class="inline-block px-sm py-xs bg-error-container/20 text-error font-bold rounded text-label-sm">MAJOR</span>
+</td>
+<td class="p-md">
+<span class="flex items-center gap-xs text-on-tertiary-fixed-variant">
+<span class="w-2 h-2 bg-tertiary rounded-full"></span>
+                                        Pending Action
+                                    </span>
+</td>
+<td class="p-md text-right">
+<button class="text-primary hover:bg-primary-container/10 p-sm rounded transition-colors">Details</button>
+</td>
+</tr>
+<tr>
+<td class="p-md text-on-surface-variant">Oct 23, 11:20 AM</td>
+<td class="p-md font-bold">Amoxicillin, Probiotic Acidophilus</td>
+<td class="p-md text-center">
+<span class="inline-block px-sm py-xs bg-secondary-container/20 text-on-secondary-fixed-variant font-bold rounded text-label-sm">MINOR</span>
+</td>
+<td class="p-md">
+<span class="flex items-center gap-xs text-on-secondary-fixed-variant">
+<span class="w-2 h-2 bg-secondary rounded-full"></span>
+                                        Reviewed
+                                    </span>
+</td>
+<td class="p-md text-right">
+<button class="text-primary hover:bg-primary-container/10 p-sm rounded transition-colors">Details</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</main>
+<footer class="mt-auto border-t border-outline-variant bg-surface-container-low py-xl px-container-padding flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto w-full">
+<div class="mb-md md:mb-0">
+<span class="text-headline-sm font-bold text-primary">MediFlow</span>
+<p class="text-body-sm text-on-surface-variant mt-sm">© 2024 MediFlow. Clinical Precision &amp; Adaptive Intelligence.</p>
+</div>
+<div class="flex gap-xl">
+<a class="text-label-md text-on-surface-variant hover:text-primary transition-all" href="#">Privacy Policy</a>
+<a class="text-label-md text-on-surface-variant hover:text-primary transition-all" href="#">Terms of Service</a>
+<a class="text-label-md text-on-surface-variant hover:text-primary transition-all" href="#">Contact</a>
+<a class="text-label-md text-on-surface-variant hover:text-primary transition-all" href="#">Careers</a>
+</div>
+</footer>
+</div>
+</body></html>

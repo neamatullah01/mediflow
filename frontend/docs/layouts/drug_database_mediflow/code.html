@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Drug Database - PharmTrack Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#4edea3",
+                    "secondary-fixed": "#6ffbbe",
+                    "on-primary-container": "#003751",
+                    "on-tertiary-fixed-variant": "#693c00",
+                    "surface-container": "#eaeef4",
+                    "outline-variant": "#bec8d2",
+                    "on-secondary-container": "#00714d",
+                    "secondary": "#006c49",
+                    "surface": "#f6faff",
+                    "surface-dim": "#d6dae0",
+                    "outline": "#6e7881",
+                    "primary-container": "#0ea5e9",
+                    "on-tertiary": "#ffffff",
+                    "inverse-on-surface": "#edf1f7",
+                    "surface-container-highest": "#dee3e9",
+                    "on-error-container": "#93000a",
+                    "on-surface": "#171c20",
+                    "surface-container-low": "#f0f4fa",
+                    "surface-variant": "#dee3e9",
+                    "on-primary": "#ffffff",
+                    "primary-fixed-dim": "#89ceff",
+                    "on-background": "#171c20",
+                    "on-error": "#ffffff",
+                    "primary": "#006591",
+                    "surface-bright": "#f6faff",
+                    "tertiary-fixed-dim": "#ffb86e",
+                    "background": "#f6faff",
+                    "tertiary": "#8a5100",
+                    "surface-tint": "#006591",
+                    "on-tertiary-fixed": "#2c1600",
+                    "on-secondary-fixed": "#002113",
+                    "primary-fixed": "#c9e6ff",
+                    "on-tertiary-container": "#4d2b00",
+                    "on-secondary-fixed-variant": "#005236",
+                    "inverse-surface": "#2c3135",
+                    "on-secondary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#de8712",
+                    "inverse-primary": "#89ceff",
+                    "on-surface-variant": "#3e4850",
+                    "on-primary-fixed-variant": "#004c6e",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#001e2f",
+                    "tertiary-fixed": "#ffdcbd"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "0.25rem",
+                    "gutter": "1.5rem",
+                    "md": "1rem",
+                    "xl": "2rem",
+                    "container-padding": "2rem",
+                    "sm": "0.5rem",
+                    "lg": "1.25rem",
+                    "base": "4px"
+            },
+            "fontFamily": {},
+            "fontSize": {
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-md": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #bec8d2;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden">
+<aside class="flex flex-col h-screen fixed left-0 top-0 z-50 py-md bg-surface-container-low dark:bg-surface-container-lowest border-r border-outline-variant dark:border-outline w-64">
+<div class="px-md mb-xl">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">medication</span>
+</div>
+<div>
+<h1 class="text-headline-lg font-headline-lg font-bold text-primary dark:text-primary-fixed-dim">PharmTrack</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant opacity-70">Enterprise Suite</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1 px-2 custom-scrollbar overflow-y-auto">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary mx-2 my-1 p-3 flex items-center gap-3 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-body-sm font-body-sm">Overview</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary mx-2 my-1 p-3 flex items-center gap-3 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">local_pharmacy</span>
+<span class="text-body-sm font-body-sm">Pharmacies</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary mx-2 my-1 p-3 flex items-center gap-3 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-body-sm font-body-sm">User Management</span>
+</a>
+<a class="bg-primary-container text-on-primary-container font-semibold rounded-lg mx-2 my-1 p-3 flex items-center gap-3 scale-[0.97] transition-transform" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">medication</span>
+<span class="text-body-sm font-body-sm">Drug Database</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary mx-2 my-1 p-3 flex items-center gap-3 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-body-sm font-body-sm">Settings</span>
+</a>
+<div class="mt-xl pt-md border-t border-outline-variant px-md">
+<button class="w-full bg-primary text-on-primary py-3 px-4 rounded-xl font-label-md flex items-center justify-center gap-2 hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                    New Entry
+                </button>
+</div>
+</nav>
+<div class="px-2 mt-auto border-t border-outline-variant pt-md">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary mx-2 my-1 p-3 flex items-center gap-3 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="text-body-sm font-body-sm">Support</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary mx-2 my-1 p-3 flex items-center gap-3 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-body-sm font-body-sm">Log Out</span>
+</a>
+</div>
+</aside>
+<main class="ml-64 flex-1 h-screen flex flex-col bg-background">
+<header class="flex justify-between items-center w-full px-gutter h-16 z-40 bg-surface-container-lowest dark:bg-surface-dim border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative max-w-md w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container border-none rounded-lg text-body-sm focus:ring-2 focus:ring-primary-container outline-none transition-all" placeholder="Search drug database..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="w-px h-8 bg-outline-variant"></div>
+<div class="flex items-center gap-3 ml-2">
+<div class="text-right">
+<p class="text-label-md font-label-md text-on-surface">Dr. Sarah Chen</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">System Admin</p>
+</div>
+<img alt="Admin profile portrait" class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="A professional close-up portrait of a female doctor with a stethoscope around her neck, smiling warmly in a bright, modern clinic environment. The lighting is soft and clinical, highlighting the sterile white lab coat. The overall aesthetic is trustworthy and minimal, consistent with high-end healthcare interface photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkPB8bAfdh2-BIg9KcSrckxHzQ7vh8cx3iQoMQaWARbfB9gC85XnaUd9XraDUT6y5OFfGNPRYXAxNjqJvykg6KPyia7MYQrS6GwyY5IqjN1xz3lUqTfz1RUj8_pzPjXKOWvfSrmQD3f3G66sG3dFMEpf--b_fbAUXJMmV02hsqMAiSg8wsGtwFHstDuZOUukVCqz5rBjiA_QyKE49wbsfZjaBqYJp7RreHOX7qzBzlWIg-rJSfVcgiiZQ3i1niU2pxZAENBOx_q6Wg"/>
+</div>
+</div>
+</header>
+<section class="p-gutter overflow-y-auto flex-1 flex flex-col gap-6 custom-scrollbar">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Drug Database</h2>
+<p class="text-body-md text-on-surface-variant">Manage the master catalogue of pharmaceutical products.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<select class="appearance-none bg-surface-container-lowest border border-outline-variant text-on-surface-variant text-body-sm rounded-lg pl-4 pr-10 py-2.5 focus:border-primary-container outline-none cursor-pointer">
+<option>All Categories</option>
+<option>Antibiotics</option>
+<option>Analgesics</option>
+<option>Antivirals</option>
+<option>Cardiovascular</option>
+<option>Dermatological</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
+</div>
+<button class="bg-primary text-on-primary text-label-md px-5 py-2.5 rounded-lg flex items-center gap-2 hover:opacity-90 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                        Add New Drug
+                    </button>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex-1 flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="px-5 py-4 text-label-sm text-on-surface-variant font-semibold uppercase tracking-wider w-20 text-center">Image</th>
+<th class="px-5 py-4 text-label-sm text-on-surface-variant font-semibold uppercase tracking-wider">Product Name</th>
+<th class="px-5 py-4 text-label-sm text-on-surface-variant font-semibold uppercase tracking-wider">Generic Name</th>
+<th class="px-5 py-4 text-label-sm text-on-surface-variant font-semibold uppercase tracking-wider">Category</th>
+<th class="px-5 py-4 text-label-sm text-on-surface-variant font-semibold uppercase tracking-wider">Dosage Form</th>
+<th class="px-5 py-4 text-label-sm text-on-surface-variant font-semibold uppercase tracking-wider">Manufacturer</th>
+<th class="px-5 py-4 text-label-sm text-on-surface-variant font-semibold uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-5 py-3 text-center">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high border border-outline-variant flex items-center justify-center overflow-hidden">
+<img alt="Drug box" class="w-full h-full object-cover" data-alt="A clean, clinical product shot of a pharmaceutical box on a pure white background. The packaging is minimalist with blue and green accent colors, conveying medical precision and pharmaceutical safety. Soft shadows under the product give it a three-dimensional feel in a high-key lighting setup." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcxSheGpLXMkpSYjjfNSA3sL8iSuViQtZnXlao964sDlDCdXC9tyK1OWN8_onwqjompJL6BqvH32NBnS4oWZlQQ0SBehJCJcXIwt8EHUc9s26peNlEnmZ1jEfe4YsG7emwa9t8a-N8PQ2bxumigaTGj08vgJaOLhgQgSjKVw8pyf2S8PHyBum-KBGLXape9w5Bw-2XlkQAp12UMXQrnocWMJbQGWKNhvdQao1rDh2VjGgS2JfvZILUDM98A2nHSikG3swZ0AxI8QCs"/>
+</div>
+</td>
+<td class="px-5 py-3">
+<p class="text-body-sm font-semibold text-on-surface">Amoxicillin Sandoz</p>
+<p class="text-[11px] text-primary font-medium">ID: PT-8829</p>
+</td>
+<td class="px-5 py-3 text-body-sm text-on-surface-variant italic">Amoxicillin Trihydrate</td>
+<td class="px-5 py-3">
+<span class="px-2.5 py-1 rounded-full bg-primary-container/10 text-primary text-[11px] font-bold uppercase tracking-tight">Antibiotic</span>
+</td>
+<td class="px-5 py-3 text-body-sm text-on-surface-variant">Capsule, 500mg</td>
+<td class="px-5 py-3 text-body-sm text-on-surface-variant font-medium">Sandoz AG</td>
+<td class="px-5 py-3 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit_note</span>
+</button>
+<button class="p-2 text-error hover:bg-error/10 rounded-lg transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete_outline</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="bg-surface-container-low/30 hover:bg-surface-container transition-colors">
+<td class="px-5 py-3 text-center">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high border border-outline-variant flex items-center justify-center overflow-hidden">
+<img alt="Syrup bottle" class="w-full h-full object-cover" data-alt="A studio photograph of a brown medicinal syrup bottle with a clean white label. The bottle sits on a reflective white surface with bright, even lighting. The medical packaging looks modern and professional, using sky blue accents to match the enterprise UI color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ3LJnqvUP4MOwzPySfvvXp_7LAh3iTMZPnQntW77Klj2mU_Dx-ZwDdlxYNO_kzKUREn0grp9u-LoH8hY4VfLdUJu_TRqf9aHTb-8b2QPpQOhnVh4ZL-t58GXQIJiv1HT90UVjlBtCsUx7dbk-IDazlWQMkn2tkJoKGAKjRw3Zh_YoZUUAf-EmGK1be_-K95KugkFhjZwhV_CgU_UBlO1Wy04LHt-2MZK3gCVFMxqkwuicmjT1c5Nqmhr-cf2yPEQVC8olO1OW3LkK"/>
+</div>
+</td>
+<td class="px-5 py-3">
+<p class="text-body-sm font-semibold text-on-surface">Tylenol Extra Strength</p>
+<p class="text-[11px] text-primary font-medium">ID: PT-1102</p>
+</td>
+<td class="px-5 py-3 text-body-sm text-on-surface-variant italic">Acetaminophen</td>
+<td class="px-5 py-3">
+<span class="px-2.5 py-1 rounded-full bg-secondary-container/10 text-secondary text-[11px] font-bold uppercase tracking-tight">Analgesic</span>
+</td>
+<td class="px-5 py-3 text-body-sm text-on-surface-variant">Tablet, 650mg</td>
+<td class="px-5 py-3 text-body-sm text-on-surface-variant font-medium">Johnson &amp; Johnson</td>
+<td class="px-5 py-3 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit_note</span>
+</button>
+<button class="p-2 text-error hover:bg-error/10 rounded-lg transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete_outline</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-5 py-3 text-center">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high border border-outline-variant flex items-center justify-center overflow-hidden">
+<img alt="Pills" class="w-full h-full object-cover" data-alt="A professional pharmaceutical shot of various white pills arranged in a pattern on a sterile, light blue background. The focus is sharp, showcasing the precision of the manufacturing. The lighting is soft and shadowless, highlighting the clean, reliable nature of medical supplies." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1FHf7XZJEZksyqo-MomGUNlE7ui0iOsq_gPDDZvT9blfMVHD3LPkGtmDToqyg74BZ2klZCk_B2TKQvpylfiXvDDqxyHJaPVMFlEXKHNlMOY9BWjrOV8xFdyGMd77E-BARLyQlOxNloQW_g60k-NgstWOcZeuqd221LbFqRqSmf3BeiDDpIHSGTrTLbC34tSHDx4WZEYXylsEb7WtnNfEpBggCwOoB3vl3ZYrnfM-kiz1nlegVZRzWwS37-4Oo8GsJLL_0n_pAJi2m"/>
+</div>
+</td>
+<td class="px-5 py-3">
+<p class="text-body-sm font-semibold text-on-surface">Lipitor</p>
+<p class="text-[11px] text-primary font-medium">ID: PT-4431</p>
+</td>
+<td class="px-5 py-3 text-body-sm text-on-surface-variant italic">Atorvastatin Calcium</td>
+<td class="px-5 py-3">
+<span class="px-2.5 py-1 rounded-full bg-tertiary-container/10 text-tertiary text-[11px] font-bold uppercase tracking-tight">Cardiovascular</span>
+</td>
+<td class="px-5 py-3 text-body-sm text-on-surface-variant">Tablet, 20mg</td>
+<td class="px-5 py-3 text-body-sm text-on-surface-variant font-medium">Pfizer Inc.</td>
+<td class="px-5 py-3 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit_note</span>
+</button>
+<button class="p-2 text-error hover:bg-error/10 rounded-lg transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete_outline</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="bg-surface-container-low/30 hover:bg-surface-container transition-colors">
+<td class="px-5 py-3 text-center">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high border border-outline-variant flex items-center justify-center overflow-hidden">
+<img alt="Cream tube" class="w-full h-full object-cover" data-alt="A minimalist clinical shot of a medical ointment tube. The tube is white with professional typography and silver caps. It is set against a clean, neutral background with bright studio lighting that eliminates harsh shadows, reflecting a professional healthcare branding aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfEXeAbE1_g-8BcZKSexnDEFi-H09rok1YEfRlqFNn9SS9RK4EC3H1_whWcRyV9qLCEOpCUmsnhAH5jnyExxq4yIIhp04RHQ7lMaCTvJgf1T-bSpI0XLK1dquZY-t8R6R2tFle_HDjkSt5bFVea5JJAlgcL_gbQafB-wPjyFCLL2XYH_rW4-VkjWHkKk8NYUv32gX1VlVMWtYLCuEbS3lod20meFhRNSA2EqDZWvOv59CkmkvIoa-8Qlav7ljRUlGvbR7UKUpjH9fD"/>
+</div>
+</td>
+<td class="px-5 py-3">
+<p class="text-body-sm font-semibold text-on-surface">Hydrocortisone Cream</p>
+<p class="text-[11px] text-primary font-medium">ID: PT-9908</p>
+</td>
+<td class="px-5 py-3 text-body-sm text-on-surface-variant italic">Hydrocortisone</td>
+<td class="px-5 py-3">
+<span class="px-2.5 py-1 rounded-full bg-secondary-container/10 text-secondary text-[11px] font-bold uppercase tracking-tight">Dermatological</span>
+</td>
+<td class="px-5 py-3 text-body-sm text-on-surface-variant">Topical, 1%</td>
+<td class="px-5 py-3 text-body-sm text-on-surface-variant font-medium">GlaxoSmithKline</td>
+<td class="px-5 py-3 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit_note</span>
+</button>
+<button class="p-2 text-error hover:bg-error/10 rounded-lg transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete_outline</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-auto px-5 py-4 border-t border-outline-variant flex items-center justify-between bg-surface-container-lowest">
+<p class="text-label-sm text-on-surface-variant">Showing <span class="font-bold text-on-surface">1 - 4</span> of 1,248 drugs</p>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container transition-colors disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-on-primary text-label-sm font-bold">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container text-label-sm font-medium transition-colors">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container text-label-sm font-medium transition-colors">3</button>
+<span class="text-on-surface-variant px-1">...</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container text-label-sm font-medium transition-colors">312</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="p-5 bg-surface-container-lowest border border-outline-variant rounded-xl flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant uppercase tracking-wider">Total SKUs</p>
+<p class="text-display-md font-display-md text-on-surface">1,248</p>
+</div>
+</div>
+<div class="p-5 bg-surface-container-lowest border border-outline-variant rounded-xl flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">update</span>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant uppercase tracking-wider">Last Updated</p>
+<p class="text-display-md font-display-md text-on-surface">Today</p>
+</div>
+</div>
+<div class="p-5 bg-gradient-to-br from-primary-container/20 to-secondary-container/20 border border-primary/20 rounded-xl flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-white flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<p class="text-label-sm text-primary font-bold uppercase tracking-wider">AI Insights</p>
+<p class="text-body-sm text-on-surface-variant">3 new drug approvals pending review from FDA feed.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+</body></html>
