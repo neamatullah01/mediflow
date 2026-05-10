@@ -3,6 +3,13 @@ import { ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { BlogService } from "@/services/blog.service";
 
+// Array of premium fallback images
+const defaultImages = [
+  "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=800",
+  "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800",
+  "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800",
+];
+
 export async function BlogPreviewSection() {
   // Fetch dynamic data from your backend
   const blogPosts = await BlogService.getLatestPosts(3);
@@ -18,8 +25,7 @@ export async function BlogPreviewSection() {
             title: "The Future of AI in Drug Interaction Prevention",
             excerpt:
               "How large language models are closing the gap in complex pharmaceutical safety protocols...",
-            coverImage:
-              "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=800",
+            coverImage: defaultImages[0],
             slug: "future-of-ai-drug-interactions",
           },
           {
@@ -29,8 +35,7 @@ export async function BlogPreviewSection() {
             title: "Optimizing Inventory for Rural Pharmacies",
             excerpt:
               "Leveraging predictive analytics to solve the logistical challenges of remote healthcare delivery...",
-            coverImage:
-              "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800",
+            coverImage: defaultImages[1],
             slug: "optimizing-inventory-rural",
           },
           {
@@ -40,8 +45,7 @@ export async function BlogPreviewSection() {
             title: "Regulatory Compliance in the Digital Age",
             excerpt:
               "Understanding the evolving landscape of digital prescription audits and data privacy laws...",
-            coverImage:
-              "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800",
+            coverImage: defaultImages[2],
             slug: "regulatory-compliance-digital",
           },
         ];
@@ -65,7 +69,7 @@ export async function BlogPreviewSection() {
 
         {/* 3-Column Responsive Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {displayPosts.slice(0, 3).map((post) => (
+          {displayPosts.slice(0, 3).map((post, index) => (
             <Link
               key={post.id}
               href={`/blog/${post.slug}`}
@@ -74,7 +78,11 @@ export async function BlogPreviewSection() {
               <Card className="flex flex-col h-full rounded-xl overflow-hidden border border-border/40 bg-card shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 p-0">
                 <div className="relative w-full aspect-video overflow-hidden shrink-0 m-0 p-0">
                   <img
-                    src={post.coverImage || "/images/placeholder-blog.jpg"}
+                    // Check if coverImage exists, if not, map to one of the 3 default images using the index
+                    src={
+                      post.coverImage ||
+                      defaultImages[index % defaultImages.length]
+                    }
                     alt={post.title}
                     className="block object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
                   />
