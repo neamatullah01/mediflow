@@ -1,6 +1,7 @@
 import { AIShowcaseSection } from "@/components/landing/AIShowcaseSection";
 import { BlogPreviewSection } from "@/components/landing/BlogPreviewSection";
 import { CategoriesSection } from "@/components/landing/CategoriesSection";
+import { FAQNewsletterSection } from "@/components/landing/FAQNewsletterSection";
 import { FeaturesSection } from "@/components/landing/FeaturesSection";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { TestimonialsSection } from "@/components/landing/TestimonialsSection";
@@ -14,7 +15,7 @@ export default function HomePage() {
       <AIShowcaseSection></AIShowcaseSection>
       <TestimonialsSection />
       <BlogPreviewSection />
-      {/* We will drop the Features, Categories, and AI Showcase sections here next */}
+      <FAQNewsletterSection />
     </div>
   );
 }

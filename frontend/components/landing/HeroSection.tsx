@@ -186,7 +186,7 @@ export function HeroSection() {
         </div>
 
         {/* Animated Stats Section */}
-        <div className="mt-20 pt-10 border-t grid grid-cols-2 gap-6 md:grid-cols-4 divide-x divide-border/50 text-center relative z-10">
+        <div className="mt-20 bg-primary/5 backdrop-blur-md shadow-2xl shadow-primary/5 border border-primary/10 rounded-3xl p-8 lg:p-12 grid grid-cols-2 gap-y-10 gap-x-6 md:grid-cols-4 md:divide-x divide-primary/10 text-center relative z-10">
           <div className="space-y-1 transform hover:-translate-y-1 transition-transform cursor-default">
             <h3 className="text-3xl md:text-4xl font-extrabold text-primary">
               <AnimatedNumber end={500} suffix="+" />
