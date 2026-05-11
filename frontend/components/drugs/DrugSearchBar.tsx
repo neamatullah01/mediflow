@@ -14,6 +14,8 @@ export function DrugSearchBar({ value, onChange }: Props) {
 
   // Debounce: propagate upward only after 500ms of no input
   useEffect(() => {
+    if (localValue === value) return; // Prevent unnecessary fires when parent resets
+
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       onChange(localValue);
@@ -21,7 +23,7 @@ export function DrugSearchBar({ value, onChange }: Props) {
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [localValue, onChange]);
+  }, [localValue, value, onChange]);
 
   // Keep local state in sync if parent resets
   useEffect(() => {

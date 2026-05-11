@@ -19,8 +19,7 @@ export const BlogService = {
    */
   getLatestPosts: async (limit: number = 3): Promise<BlogPost[]> => {
     try {
-      const baseUrl =
-        process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL;
       const res = await fetch(`${baseUrl}/blog?limit=${limit}&sort=desc`, {
         next: { revalidate: 3600 }, // Cache for 1 hour
       });
@@ -32,6 +31,23 @@ export const BlogService = {
     } catch (error) {
       console.error("BlogService.getLatestPosts Error:", error);
       return []; // Return empty array on failure to prevent page crashes
+    }
+  },
+  getAllPosts: async (category?: string): Promise<BlogPost[]> => {
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+      const url =
+        category && category !== "All"
+          ? `${baseUrl}/blog?category=${category}`
+          : `${baseUrl}/blog`;
+
+      const res = await fetch(url, { next: { revalidate: 60 } });
+      if (!res.ok) throw new Error("Failed to fetch blog");
+      const json = await res.json();
+      return json.data || [];
+    } catch (error) {
+      console.error(error);
+      return [];
     }
   },
 };

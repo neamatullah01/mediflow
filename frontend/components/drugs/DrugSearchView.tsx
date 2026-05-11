@@ -55,21 +55,21 @@ export function DrugSearchView() {
   }, [fetchDrugs]);
 
   // Reset to page 1 on filter/search change
-  const handleSearchChange = (val: string) => {
+  const handleSearchChange = useCallback((val: string) => {
     setSearch(val);
     setPage(1);
-  };
+  }, []);
 
-  const handleFilterChange = (updated: Partial<FilterState>) => {
+  const handleFilterChange = useCallback((updated: Partial<FilterState>) => {
     setFilters((prev) => ({ ...prev, ...updated }));
     setPage(1);
-  };
+  }, []);
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     setSearch("");
     setFilters(DEFAULT_FILTERS);
     setPage(1);
-  };
+  }, []);
 
   const isLoading = isPending || initialLoad;
   const { data: drugs, meta } = response;
@@ -81,7 +81,7 @@ export function DrugSearchView() {
 
       <div className="flex flex-col lg:flex-row gap-8 items-start">
         {/* ── Sidebar Filters ── */}
-        <aside className="w-full lg:w-64 xl:w-72 shrink-0 bg-card rounded-2xl border border-border/50 p-5 shadow-sm sticky top-24">
+        <aside className="w-full lg:w-64 xl:w-72 shrink-0 bg-card rounded-2xl border border-border/50 p-5 shadow-sm lg:sticky lg:top-24 lg:z-10">
           <DrugFilters
             filters={filters}
             onChange={handleFilterChange}
@@ -103,7 +103,7 @@ export function DrugSearchView() {
 
           {/* Loading skeletons */}
           {isLoading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
               {Array.from({ length: 12 }).map((_, i) => (
                 <DrugCardSkeleton key={i} />
               ))}
@@ -130,8 +130,8 @@ export function DrugSearchView() {
               </button>
             </div>
           ) : (
-            /* Drug grid — 4 cols 2xl, 3 lg, 2 sm, 1 mobile */
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-5">
+            /* Drug grid — 4 cols xl, 3 lg, 2 sm, 1 mobile */
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
               {drugs.map((drug: Drug, i: number) => (
                 <DrugCard key={drug.id} drug={drug} index={i} />
               ))}
