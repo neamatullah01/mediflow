@@ -419,7 +419,7 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 
 ---
 
-### 5.4 Admin Dashboard `/admin`
+### 5.4 Admin Dashboard `/dashboard`
 
 **Sidebar navigation (min 5 menu items — we have 7):**
 
@@ -433,7 +433,7 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 
 ---
 
-#### Admin Overview `/admin`
+#### Admin Overview `/dashboard`
 
 - **6 Stat cards:** Total pharmacies, Total pharmacists, Total drugs in catalogue, Total dispensing records this month, Active orders, New registrations this week
 - **Bar chart:** Pharmacies registered per month (last 6 months)
@@ -443,21 +443,21 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 
 ---
 
-#### Pharmacies `/admin/pharmacies`
+#### Pharmacies `/dashboard/pharmacies`
 
 - Table: Pharmacy name, License number, Address, Owner name, Status (ACTIVE/SUSPENDED), Registered date, Actions
 - Actions: View details, Suspend, Activate
 - Filter by status, search by name
 - Pagination
 
-#### Users `/admin/users`
+#### Users `/dashboard/users`
 
 - Table: Name, Email, Role, Pharmacy, Status (active/banned), Joined date, Actions
 - Actions: View, Suspend/Activate, Delete
 - Filter by role, status
 - Pagination
 
-#### Drug Database `/admin/drugs`
+#### Drug Database `/dashboard/drugs`
 
 - Full CRUD for the master drug catalogue
 - Table: Image, Name, Generic name, Category, Dosage form, Manufacturer, Actions
@@ -465,19 +465,19 @@ Publicly accessible detail page. **This is the "items detail" page for the conte
 - Search, filter by category, sort
 - Pagination
 
-#### Analytics `/admin/analytics`
+#### Analytics `/dashboard/analytics`
 
 - AI Data Analyzer feature embedded here
 - Charts: Top 20 most tracked drugs platform-wide, expiry rate trends, stockout frequency
 - "Generate AI Insight" button → calls AI API → displays AI-written summary of platform health
 
-#### Blog Manager `/admin/blog`
+#### Blog Manager `/dashboard/blog`
 
 - Table of all blog posts: title, status (published/draft), author, date, views, Actions
 - "Create Post" → rich text editor (React Quill / TipTap), title, excerpt, category, cover image
 - Edit, Delete, Publish/Unpublish toggle
 
-#### Settings `/admin/settings`
+#### Settings `/dashboard/settings`
 
 - Platform name and tagline
 - Low stock threshold default (days)
@@ -1316,33 +1316,32 @@ frontend/
 │   │   └── register/page.tsx
 │   ├── (dashboard)/
 │   │   ├── layout.tsx                  # Dashboard shell: sidebar + topnav
-│   │   ├── dashboard/
-│   │   │   ├── page.tsx                # Overview
-│   │   │   ├── inventory/
-│   │   │   │   ├── page.tsx
-│   │   │   │   └── forecast/page.tsx   # AI forecast page
-│   │   │   ├── dispensing/page.tsx
-│   │   │   ├── orders/
-│   │   │   │   ├── page.tsx
-│   │   │   │   └── [id]/page.tsx
-│   │   │   ├── interactions/
-│   │   │   │   └── page.tsx
-│   │   │   ├── ai-assistant/page.tsx
-│   │   │   └── profile/page.tsx
-│   ├── (admin)/
-│   │   ├── layout.tsx                  # Admin shell: sidebar + topnav
-│   │   ├── admin/
-│   │   │   ├── page.tsx                # Admin overview
-│   │   │   ├── pharmacies/page.tsx
-│   │   │   ├── users/page.tsx
-│   │   │   ├── drugs/
-│   │   │   │   ├── page.tsx
-│   │   │   │   └── new/page.tsx
-│   │   │   ├── analytics/page.tsx
-│   │   │   ├── blog/
-│   │   │   │   ├── page.tsx
-│   │   │   │   └── [id]/page.tsx
-│   │   │   └── settings/page.tsx
+│   │   ├── @admin/                     # Admin parallel route
+│   │   │   ├── dashboard/
+│   │   │   │   ├── page.tsx            # Admin overview
+│   │   │   │   ├── analytics/page.tsx
+│   │   │   │   ├── blog/
+│   │   │   │   │   ├── page.tsx
+│   │   │   │   │   └── [id]/page.tsx
+│   │   │   │   ├── drugs/
+│   │   │   │   │   ├── page.tsx
+│   │   │   │   │   └── new/page.tsx
+│   │   │   │   ├── pharmacies/page.tsx
+│   │   │   │   ├── settings/page.tsx
+│   │   │   │   └── users/page.tsx
+│   │   ├── @pharmacist/                # Pharmacist parallel route
+│   │   │   ├── dashboard/
+│   │   │   │   ├── page.tsx            # Overview
+│   │   │   │   ├── ai-assistant/page.tsx
+│   │   │   │   ├── dispensing/page.tsx
+│   │   │   │   ├── interactions/page.tsx
+│   │   │   │   ├── inventory/
+│   │   │   │   │   ├── page.tsx
+│   │   │   │   │   └── forecast/page.tsx
+│   │   │   │   ├── orders/
+│   │   │   │   │   ├── page.tsx
+│   │   │   │   │   └── [id]/page.tsx
+│   │   │   │   └── profile/page.tsx
 │   ├── api/
 │   │   └── auth/[...all]/route.ts      # Better Auth handler (catch-all route)
 │   ├── layout.tsx                      # Root layout (fonts, providers)
