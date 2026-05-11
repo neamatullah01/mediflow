@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Create a configured Axios instance
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -15,7 +15,11 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     // You can handle global 401 Unauthorized redirects here later
-    console.error("API Error:", error.response?.data?.message || error.message);
+
+    // We intentionally omit console.error here so Next.js doesn't
+    // hijack the screen with its development error overlay.
+    // The error is simply passed down to be caught by your UI components.
+
     return Promise.reject(error);
   },
 );
