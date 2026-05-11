@@ -33,7 +33,7 @@ export function Navbar() {
   // Public Links from PRD
   const publicLinks = [
     { name: "Home", href: "/" },
-    { name: "Features", href: "/#features" },
+    { name: "Features", href: "/features" },
     { name: "Drug Search", href: "/drugs" },
     { name: "Blog", href: "/blog" },
     { name: "Pricing", href: "/pricing" },

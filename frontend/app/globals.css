@@ -98,3 +98,20 @@
     @apply rounded-xl p-5 border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900;
   }
 }
+
+/* Global: all interactive elements should show pointer cursor */
+@layer base {
+  button,
+  [role="button"],
+  a,
+  select,
+  label[for],
+  summary {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [role="button"][aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+}
