@@ -23,9 +23,9 @@ interface StatBar {
 interface Feature {
   id: string;
   icon: React.ElementType;
-  color: string;       // Tailwind text color  (must be full class)
-  bgColor: string;     // Tailwind bg/10 color (must be full class)
-  barColor: string;    // Tailwind bg color for the progress fill
+  color: string; // Tailwind text color  (must be full class)
+  bgColor: string; // Tailwind bg/10 color (must be full class)
+  barColor: string; // Tailwind bg color for the progress fill
   borderColor: string;
   title: string;
   tagline: string;
@@ -215,8 +215,12 @@ function AnimatedBar({
   return (
     <div className="space-y-1.5">
       <div className="flex justify-between items-center text-xs">
-        <span className="font-medium text-foreground truncate pr-2">{label}</span>
-        <span className={`font-bold shrink-0 ${textColor}`}>{width > 0 ? value : 0}%</span>
+        <span className="font-medium text-foreground truncate pr-2">
+          {label}
+        </span>
+        <span className={`font-bold shrink-0 ${textColor}`}>
+          {width > 0 ? value : 0}%
+        </span>
       </div>
       <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
         <div
@@ -235,21 +239,30 @@ function FeatureVisualCard({ feature }: { feature: Feature }) {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
-      { threshold: 0.3 }
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true);
+      },
+      { threshold: 0.3 },
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <div ref={ref} className={`rounded-3xl border ${feature.borderColor} bg-background p-6 md:p-8 shadow-xl relative overflow-hidden`}>
+    <div
+      ref={ref}
+      className={`rounded-3xl border ${feature.borderColor} bg-background p-6 md:p-8 shadow-xl relative overflow-hidden`}
+    >
       {/* Ambient glow */}
-      <div className={`absolute -top-10 -right-10 w-48 h-48 ${feature.bgColor} rounded-full blur-[60px] pointer-events-none`} />
+      <div
+        className={`absolute -top-10 -right-10 w-48 h-48 ${feature.bgColor} rounded-full blur-[60px] pointer-events-none`}
+      />
 
       <div className="relative z-10 space-y-5">
         {/* Badge */}
-        <div className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${feature.bgColor} ${feature.color}`}>
+        <div
+          className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${feature.bgColor} ${feature.color}`}
+        >
           <feature.icon className="h-3.5 w-3.5" />
           {feature.title}
         </div>
@@ -311,7 +324,10 @@ export default function FeaturesPage() {
               </Button>
             </Link>
             <Link href="/drugs">
-              <Button variant="outline" className="w-full sm:w-auto h-12 px-8 rounded-xl font-semibold border-primary/20 hover:bg-primary/5">
+              <Button
+                variant="outline"
+                className="w-full sm:w-auto h-12 px-8 rounded-xl font-semibold border-primary/20 hover:bg-primary/5"
+              >
                 Explore Drug Search
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -330,13 +346,19 @@ export default function FeaturesPage() {
               className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center"
             >
               {/* Text Column — alternates side on lg */}
-              <div className={`space-y-6 ${index % 2 !== 0 ? "lg:order-2" : "lg:order-1"}`}>
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${feature.bgColor}`}>
+              <div
+                className={`space-y-6 ${index % 2 !== 0 ? "lg:order-2" : "lg:order-1"}`}
+              >
+                <div
+                  className={`w-14 h-14 rounded-2xl flex items-center justify-center ${feature.bgColor}`}
+                >
                   <feature.icon className={`h-7 w-7 ${feature.color}`} />
                 </div>
 
                 <div>
-                  <p className={`text-xs sm:text-sm font-bold uppercase tracking-widest mb-2 ${feature.color}`}>
+                  <p
+                    className={`text-xs sm:text-sm font-bold uppercase tracking-widest mb-2 ${feature.color}`}
+                  >
                     {feature.tagline}
                   </p>
                   <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground">
@@ -350,8 +372,13 @@ export default function FeaturesPage() {
 
                 <ul className="space-y-3">
                   {feature.bullets.map((bullet) => (
-                    <li key={bullet} className="flex items-start gap-3 text-sm text-foreground">
-                      <CheckCircle2 className={`h-5 w-5 mt-0.5 shrink-0 ${feature.color}`} />
+                    <li
+                      key={bullet}
+                      className="flex items-start gap-3 text-sm text-foreground"
+                    >
+                      <CheckCircle2
+                        className={`h-5 w-5 mt-0.5 shrink-0 ${feature.color}`}
+                      />
                       {bullet}
                     </li>
                   ))}
@@ -359,7 +386,9 @@ export default function FeaturesPage() {
               </div>
 
               {/* Visual Card Column */}
-              <div className={`${index % 2 !== 0 ? "lg:order-1" : "lg:order-2"}`}>
+              <div
+                className={`${index % 2 !== 0 ? "lg:order-1" : "lg:order-2"}`}
+              >
                 <FeatureVisualCard feature={feature} />
               </div>
             </div>
