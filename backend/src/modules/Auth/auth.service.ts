@@ -1,22 +1,27 @@
-import { Request } from 'express';
-import { auth } from '../../lib/auth';
-import { prisma } from '../../lib/prisma';
-import AppError from '../../errors/AppError';
-import type { RegisterPharmacistPayload, LoginPayload } from './auth.validation';
+import { Request } from "express";
+import { auth } from "../../lib/auth";
+import { prisma } from "../../lib/prisma";
+import AppError from "../../errors/AppError";
+import type {
+  RegisterPharmacistPayload,
+  LoginPayload,
+} from "./auth.validation";
 
-export const registerPharmacistIntoDB = async (payload: RegisterPharmacistPayload) => {
+export const registerPharmacistIntoDB = async (
+  payload: RegisterPharmacistPayload,
+) => {
   const existingUser = await prisma.user.findUnique({
     where: { email: payload.email },
   });
   if (existingUser) {
-    throw new AppError('Email already registered', 409);
+    throw new AppError("Email already registered", 409);
   }
 
   const existingPharmacy = await prisma.pharmacy.findUnique({
     where: { licenseNumber: payload.licenseNumber },
   });
   if (existingPharmacy) {
-    throw new AppError('License number already registered', 409);
+    throw new AppError("License number already registered", 409);
   }
 
   const response = await (auth.api.signUpEmail as any)({
@@ -31,13 +36,13 @@ export const registerPharmacistIntoDB = async (payload: RegisterPharmacistPayloa
   let result: any;
   let setCookieHeader: string | string[] | null = null;
 
-  if (response && typeof response.json === 'function') {
+  if (response && typeof response.json === "function") {
     const headers = response.headers;
-    if (typeof headers.getSetCookie === 'function') {
+    if (typeof headers.getSetCookie === "function") {
       const cookies = headers.getSetCookie();
       setCookieHeader = cookies.length === 1 ? cookies[0] : cookies;
     } else {
-      const raw = headers.get('set-cookie');
+      const raw = headers.get("set-cookie");
       if (raw) setCookieHeader = raw;
     }
     result = await response.json();
@@ -46,7 +51,7 @@ export const registerPharmacistIntoDB = async (payload: RegisterPharmacistPayloa
   }
 
   if (!result || !result.user) {
-    throw new AppError('Registration failed', 500);
+    throw new AppError("Registration failed", 500);
   }
 
   const { pharmacy, updatedUser } = await prisma.$transaction(async (tx) => {
@@ -87,26 +92,26 @@ export const loginUser = async (payload: LoginPayload) => {
   let result: any;
   let setCookieHeader: string | string[] | null = null;
 
-  if (response && typeof response.json === 'function') {
+  if (response && typeof response.json === "function") {
     const headers = response.headers;
-    if (typeof headers.getSetCookie === 'function') {
+    if (typeof headers.getSetCookie === "function") {
       const cookies = headers.getSetCookie();
       setCookieHeader = cookies.length === 1 ? cookies[0] : cookies;
     } else {
-      const raw = headers.get('set-cookie');
+      const raw = headers.get("set-cookie");
       if (raw) setCookieHeader = raw;
     }
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new AppError(errorData?.message || 'Invalid credentials', 401);
+      throw new AppError(errorData?.message || "Invalid credentials", 401);
     }
 
     result = await response.json();
   } else {
     result = response;
     if (!result || !result.user) {
-      throw new AppError('Invalid credentials', 401);
+      throw new AppError("Invalid credentials", 401);
     }
   }
 
@@ -116,7 +121,7 @@ export const loginUser = async (payload: LoginPayload) => {
   });
 
   if (!user) {
-    throw new AppError('User not found', 404);
+    throw new AppError("User not found", 404);
   }
 
   return {
@@ -134,13 +139,13 @@ export const logoutUser = async (req: Request) => {
 
   let setCookieHeader: string | string[] | null = null;
 
-  if (response && typeof response.headers !== 'undefined') {
+  if (response && typeof response.headers !== "undefined") {
     const headers = response.headers as any;
-    if (typeof headers.getSetCookie === 'function') {
+    if (typeof headers.getSetCookie === "function") {
       const cookies = headers.getSetCookie();
       setCookieHeader = cookies.length === 1 ? cookies[0] : cookies;
-    } else if (typeof headers.get === 'function') {
-      const raw = headers.get('set-cookie');
+    } else if (typeof headers.get === "function") {
+      const raw = headers.get("set-cookie");
       if (raw) setCookieHeader = raw;
     }
   }
@@ -154,7 +159,7 @@ export const refreshSession = async (req: Request) => {
   });
 
   if (!response || !response.session) {
-    throw new AppError('No active session to refresh', 401);
+    throw new AppError("No active session to refresh", 401);
   }
 
   return {
