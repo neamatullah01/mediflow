@@ -1,15 +1,5 @@
 import { api } from "@/lib/api";
-
-// Define the response type based on your PRD schema
-export interface BlogPost {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  coverImage: string | null;
-  category: string | null;
-  readTime: number;
-}
+import { BlogPost, BlogPostSlug } from "@/types/blog.types";
 
 export const BlogService = {
   /**
@@ -48,6 +38,27 @@ export const BlogService = {
     } catch (error) {
       console.error(error);
       return [];
+    }
+  },
+
+  getPostBySlug: async (slug: string): Promise<BlogPostSlug | null> => {
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+      // Assuming your backend has a GET /blog/:slug endpoint
+      const res = await fetch(`${baseUrl}/blog/${slug}`, {
+        next: { revalidate: 60 }, // Cache for 60 seconds
+      });
+
+      if (!res.ok) {
+        if (res.status === 404) return null;
+        throw new Error("Failed to fetch blog post");
+      }
+
+      const json = await res.json();
+      return json.data || null;
+    } catch (error) {
+      console.error(`BlogService.getPostBySlug Error:`, error);
+      return null;
     }
   },
 };

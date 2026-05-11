@@ -3,7 +3,16 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Bell, User, LogOut, LayoutDashboard, Settings, Activity } from "lucide-react";
+import {
+  Menu,
+  X,
+  Bell,
+  User,
+  LogOut,
+  LayoutDashboard,
+  Settings,
+  Activity,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -162,7 +171,7 @@ export function Navbar() {
             ) : (
               <>
                 <Link href="/login">
-                  <Button variant="ghost" className="font-semibold rounded-xl">
+                  <Button className="font-semibold hover:shadow-lg transition-all rounded-xl bg-black text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-slate-200">
                     Login
                   </Button>
                 </Link>
@@ -215,7 +224,10 @@ export function Navbar() {
                   href={session.user.role === "ADMIN" ? "/admin" : "/dashboard"}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <Button className="w-full justify-start rounded-xl" variant="outline">
+                  <Button
+                    className="w-full justify-start rounded-xl"
+                    variant="outline"
+                  >
                     <LayoutDashboard className="mr-2 h-4 w-4" /> Dashboard
                   </Button>
                 </Link>
