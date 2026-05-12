@@ -16,7 +16,6 @@ export async function getSession() {
       },
       cache: "no-store",
     });
-    console.log(res);
     if (!res.ok) {
       return { data: null, error: { message: "Not authenticated" } };
     }
