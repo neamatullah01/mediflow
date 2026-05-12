@@ -4,7 +4,7 @@ import { DashboardService } from "@/services/dashboard.service";
 export default async function DashboardCharts() {
   const dispensingData = await DashboardService.getDispensingActivity();
   const mixData = await DashboardService.getInventoryMix();
-  
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div className="lg:col-span-2 p-5 rounded-xl border border-gray-200 bg-white shadow-sm min-h-[350px] flex flex-col">
@@ -27,7 +27,9 @@ export default async function DashboardCharts() {
         <div className="flex-1 w-full h-full relative">
           <OverviewCharts type="pie" data={mixData} />
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none mb-12">
-            <span className="text-2xl font-bold text-gray-900">{mixData.length}</span>
+            <span className="text-2xl font-bold text-gray-900">
+              {mixData.length}
+            </span>
             <span className="text-xs text-gray-500 font-medium tracking-widest uppercase">
               Classes
             </span>

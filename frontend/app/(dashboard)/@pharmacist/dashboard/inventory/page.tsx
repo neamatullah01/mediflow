@@ -1,16 +1,69 @@
-export default function InventoryManagementPage() {
-  return (
-    <div className="p-6 space-y-6">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight">Inventory Management</h1>
-        <p className="text-muted-foreground">
-          Monitor and manage your pharmacy's medicine stock levels and expiry dates.
-        </p>
-      </div>
-      
-      <div className="mt-6 p-12 border-2 border-dashed rounded-lg flex items-center justify-center text-muted-foreground bg-slate-50/50">
-        Content for Inventory Management will be implemented here
-      </div>
-    </div>
-  );
+import { Metadata } from "next";
+import { cookies } from "next/headers";
+import InventoryClientView from "@/components/pharmacist/inventory/InventoryClientView";
+import type { InventoryResponse } from "@/types/inventory.types";
+
+// ─── SEO metadata ─────────────────────────────────────────────────────────────
+export const metadata: Metadata = {
+  title: "Inventory Management | MediFlow",
+  description:
+    "Monitor and manage your pharmacy's medicine stock levels, expiry dates, batch numbers, and supplier information in real time.",
+  robots: { index: false, follow: false }, // Dashboard pages are private
+};
+
+const BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+
+const FALLBACK: InventoryResponse = {
+  data: [],
+  meta: { total: 0, page: 1, limit: 20, totalPages: 0 },
+};
+
+// ─── Server-side initial data fetch ──────────────────────────────────────────
+async function fetchInitialInventory(): Promise<InventoryResponse> {
+  try {
+    const cookieStore = await cookies();
+    const res = await fetch(
+      `${BASE_URL}/inventory?page=1&limit=20&sortBy=createdAt&sortOrder=desc`,
+      {
+        headers: {
+          Cookie: cookieStore.toString(),
+        },
+        cache: "no-store",
+      }
+    );
+
+    if (!res.ok) return FALLBACK;
+
+    const json = await res.json();
+
+    // Normalize all possible backend response shapes:
+    //  Shape A: { data: InventoryItem[], meta: {} }          → already correct
+    //  Shape B: { data: { data: InventoryItem[], meta: {} } } → unwrap json.data
+    //  Shape C: { success: true, data: InventoryItem[], meta: {} } → top-level meta
+    const candidate = json?.data?.data !== undefined ? json.data : json;
+
+    if (Array.isArray(candidate?.data)) {
+      return {
+        data: candidate.data,
+        meta: candidate.meta ?? FALLBACK.meta,
+      };
+    }
+
+    // If data itself is an array (flat response)
+    if (Array.isArray(candidate)) {
+      return { data: candidate, meta: FALLBACK.meta };
+    }
+
+    return FALLBACK;
+  } catch {
+    return FALLBACK;
+  }
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+export default async function InventoryManagementPage() {
+  const initialData = await fetchInitialInventory();
+
+  return <InventoryClientView initialData={initialData} />;
 }

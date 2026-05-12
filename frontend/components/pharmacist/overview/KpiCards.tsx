@@ -17,11 +17,15 @@ export default async function KpiCards() {
           <div className="p-2 bg-sky-50 rounded-lg text-sky-500">
             <PackageSearch size={20} />
           </div>
-          <span className="text-xs font-semibold text-emerald-500">{stats.totalItemsChange}</span>
+          <span className="text-xs font-semibold text-emerald-500">
+            {stats.totalItemsChange}
+          </span>
         </div>
         <div>
           <p className="text-sm text-gray-500 font-medium">Total items</p>
-          <h3 className="text-2xl font-bold text-gray-900">{stats.totalItems.toLocaleString()}</h3>
+          <h3 className="text-2xl font-bold text-gray-900">
+            {stats.totalItems.toLocaleString()}
+          </h3>
         </div>
       </div>
 
@@ -35,7 +39,9 @@ export default async function KpiCards() {
         </div>
         <div>
           <p className="text-sm text-gray-600 font-medium">Low stock</p>
-          <h3 className="text-2xl font-bold text-[#EF4444]">{stats.lowStock}</h3>
+          <h3 className="text-2xl font-bold text-[#EF4444]">
+            {stats.lowStock}
+          </h3>
         </div>
       </div>
 
@@ -51,7 +57,9 @@ export default async function KpiCards() {
         </div>
         <div>
           <p className="text-sm text-gray-600 font-medium">Expiring soon</p>
-          <h3 className="text-2xl font-bold text-[#F59E0B]">{stats.expiringSoon}</h3>
+          <h3 className="text-2xl font-bold text-[#F59E0B]">
+            {stats.expiringSoon}
+          </h3>
         </div>
       </div>
 
@@ -65,7 +73,9 @@ export default async function KpiCards() {
         </div>
         <div>
           <p className="text-sm text-gray-500 font-medium">Total dispensed</p>
-          <h3 className="text-2xl font-bold text-gray-900">{stats.totalDispensed.toLocaleString()}</h3>
+          <h3 className="text-2xl font-bold text-gray-900">
+            {stats.totalDispensed.toLocaleString()}
+          </h3>
         </div>
       </div>
     </div>

@@ -8,9 +8,11 @@ interface TopDispensedItem {
 }
 
 export default async function TopDispensedWidget() {
-  const topDispensed: TopDispensedItem[] = await DashboardService.getTopDispensed();
+  const topDispensed: TopDispensedItem[] =
+    await DashboardService.getTopDispensed();
+
   // find max for scaling the progress bar
-  const maxUnits = Math.max(...topDispensed.map(d => d.qty), 250);
+  const maxUnits = Math.max(...topDispensed.map((d) => d.qty), 250);
 
   return (
     <div className="p-5 rounded-xl border border-gray-200 bg-white shadow-sm flex flex-col">

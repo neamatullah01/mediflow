@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+const BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
 
 // Cache the response so multiple server components calling this don't hit the backend multiple times
 import { cache } from "react";
@@ -28,16 +29,16 @@ const fetchDashboardStats = cache(async () => {
 export const DashboardService = {
   getPharmacistStats: async () => {
     const data = await fetchDashboardStats();
-    if (data?.kpiCards) {
+    if (data?.stats) {
       return {
-        totalItems: data.kpiCards.totalItems ?? 0,
-        totalItemsChange: data.kpiCards.totalItemsChange ?? "+0%",
-        lowStock: data.kpiCards.lowStock ?? 0,
-        expiringSoon: data.kpiCards.expiringSoon ?? 0,
-        totalDispensed: data.kpiCards.totalDispensed ?? 0,
+        totalItems: data.stats.totalItems ?? 0,
+        totalItemsChange: data.stats.totalItemsChange ?? "+0%",
+        lowStock: data.stats.lowStock ?? 0,
+        expiringSoon: data.stats.expiringSoon ?? 0,
+        totalDispensed: data.stats.totalDispensed ?? 0,
       };
     }
-    
+
     // Fallback if data is malformed
     return {
       totalItems: 0,
@@ -47,13 +48,13 @@ export const DashboardService = {
       totalDispensed: 0,
     };
   },
-  
+
   getDispensingActivity: async () => {
     const data = await fetchDashboardStats();
     if (data?.dispensingActivity) {
       return data.dispensingActivity;
     }
-    
+
     return [];
   },
 
@@ -62,7 +63,7 @@ export const DashboardService = {
     if (data?.inventoryMix) {
       return data.inventoryMix;
     }
-    
+
     return [];
   },
 
@@ -71,27 +72,29 @@ export const DashboardService = {
     if (data?.topDispensed) {
       return data.topDispensed;
     }
-    
+
     return [];
   },
-  
+
   getAlerts: async () => {
     // Keeping this mocked as it was not part of the dashboard-stats endpoint requirements
     return [
-      { 
-        id: "1", 
-        type: "stock", 
-        message: "Amoxicillin usage is projected to increase by 15% next week based on local seasonal health patterns. Recommend ordering 50 additional units.", 
-        urgency: "high", 
-        item: "Amoxicillin" 
+      {
+        id: "1",
+        type: "stock",
+        message:
+          "Amoxicillin usage is projected to increase by 15% next week based on local seasonal health patterns. Recommend ordering 50 additional units.",
+        urgency: "high",
+        item: "Amoxicillin",
       },
-      { 
-        id: "2", 
-        type: "expiry", 
-        message: "Three items in 'Dermatology' have had zero turnover in 90 days. AI suggests reducing base stock levels to free up capital.", 
-        urgency: "medium", 
-        item: "Dermatology" 
+      {
+        id: "2",
+        type: "expiry",
+        message:
+          "Three items in 'Dermatology' have had zero turnover in 90 days. AI suggests reducing base stock levels to free up capital.",
+        urgency: "medium",
+        item: "Dermatology",
       },
     ];
-  }
+  },
 };

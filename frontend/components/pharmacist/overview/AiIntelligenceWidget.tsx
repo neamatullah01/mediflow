@@ -15,16 +15,20 @@ export default async function AiIntelligenceWidget() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
         {alerts.map((alert, index) => (
-          <div 
-            key={alert.id} 
+          <div
+            key={alert.id}
             className={`p-4 rounded-xl bg-white border shadow-sm ${
-              alert.type === 'stock' ? 'border-sky-100' : 'border-emerald-100'
+              alert.type === "stock" ? "border-sky-100" : "border-emerald-100"
             }`}
           >
-            <h3 className={`text-sm font-semibold mb-2 ${
-              alert.type === 'stock' ? 'text-sky-600' : 'text-emerald-600'
-            }`}>
-              {alert.type === 'stock' ? 'Predictive Restock' : 'Inventory Optimization'}
+            <h3
+              className={`text-sm font-semibold mb-2 ${
+                alert.type === "stock" ? "text-sky-600" : "text-emerald-600"
+              }`}
+            >
+              {alert.type === "stock"
+                ? "Predictive Restock"
+                : "Inventory Optimization"}
             </h3>
             <p className="text-sm text-gray-600 leading-relaxed">
               {alert.message}
