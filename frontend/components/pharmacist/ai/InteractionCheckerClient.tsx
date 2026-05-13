@@ -14,21 +14,43 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { AiService, InteractionResult } from "@/services/ai.service";
+import { DrugService } from "@/services/drug.service";
 
 export default function InteractionCheckerClient() {
   const [inputValue, setInputValue] = useState("");
-  const [drugs, setDrugs] = useState<string[]>([
-    "Warfarin 5mg",
-    "Aspirin 81mg",
-    "Simvastatin 20mg",
-  ]);
+  const [drugs, setDrugs] = useState<string[]>([]);
   const [isChecking, setIsChecking] = useState(false);
   const [result, setResult] = useState<InteractionResult | null>(null);
   const [history, setHistory] = useState<any[]>([]);
+  
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
     AiService.getInteractionHistory().then(setHistory);
   }, []);
+
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (!inputValue.trim()) {
+        setSuggestions([]);
+        return;
+      }
+      setIsSearching(true);
+      try {
+        const res = await DrugService.getDrugs({ search: inputValue.trim(), limit: 5 });
+        setSuggestions(res.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsSearching(false);
+      }
+    };
+
+    const delay = setTimeout(fetchSuggestions, 300);
+    return () => clearTimeout(delay);
+  }, [inputValue]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" || e.key === ",") {
@@ -41,6 +63,7 @@ export default function InteractionCheckerClient() {
         }
         setDrugs([...drugs, val]);
         setInputValue("");
+        setShowSuggestions(false);
         setResult(null); // Reset results when drugs change
       }
     } else if (e.key === "Backspace" && !inputValue && drugs.length > 0) {
@@ -51,6 +74,21 @@ export default function InteractionCheckerClient() {
 
   const removeDrug = (indexToRemove: number) => {
     setDrugs(drugs.filter((_, index) => index !== indexToRemove));
+    setResult(null);
+  };
+
+  const addDrugFromSuggestion = (drugName: string) => {
+    if (drugs.includes(drugName)) {
+      toast.error("Medication already added.");
+      return;
+    }
+    if (drugs.length >= 5) {
+      toast.error("Maximum 5 drugs allowed per check.");
+      return;
+    }
+    setDrugs([...drugs, drugName]);
+    setInputValue("");
+    setShowSuggestions(false);
     setResult(null);
   };
 
@@ -96,8 +134,9 @@ export default function InteractionCheckerClient() {
         </label>
 
         {/* Custom Tag Input */}
-        <div className="flex flex-wrap items-center gap-2 w-full p-2.5 bg-white border border-gray-200 rounded-xl focus-within:ring-2 focus-within:ring-sky-500 transition-shadow min-h-[52px]">
-          {drugs.map((drug, index) => (
+        <div className="relative">
+          <div className="flex flex-wrap items-center gap-2 w-full p-2.5 bg-white border border-gray-200 rounded-xl focus-within:ring-2 focus-within:ring-sky-500 transition-shadow min-h-[52px]">
+            {drugs.map((drug, index) => (
             <span
               key={index}
               className="flex items-center gap-1.5 px-3 py-1.5 bg-sky-100 text-sky-800 text-sm font-medium rounded-lg"
@@ -114,7 +153,11 @@ export default function InteractionCheckerClient() {
           <input
             type="text"
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => {
+              setInputValue(e.target.value);
+              setShowSuggestions(true);
+            }}
+            onFocus={() => setShowSuggestions(true)}
             onKeyDown={handleKeyDown}
             placeholder={
               drugs.length === 0
@@ -123,6 +166,35 @@ export default function InteractionCheckerClient() {
             }
             className="flex-1 min-w-[150px] bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400 py-1"
           />
+          </div>
+
+          {/* Autocomplete Suggestions */}
+          {showSuggestions && (inputValue.trim().length > 0) && (
+            <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
+              {isSearching ? (
+                <div className="p-3 text-sm text-gray-500 flex items-center justify-center">
+                  <Loader2 size={16} className="animate-spin mr-2" /> Searching...
+                </div>
+              ) : suggestions.length > 0 ? (
+                <ul className="py-1">
+                  {suggestions.map((sugg) => (
+                    <li
+                      key={sugg.id}
+                      onClick={() => addDrugFromSuggestion(sugg.name)}
+                      className="px-4 py-2 hover:bg-sky-50 cursor-pointer text-sm text-gray-700 transition-colors"
+                    >
+                      <div className="font-medium text-gray-900">{sugg.name}</div>
+                      <div className="text-xs text-gray-500">{sugg.genericName} • {sugg.category}</div>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div className="p-3 text-sm text-gray-500 text-center">
+                  No medications found. Press Enter to add "{inputValue}" anyway.
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="mt-4 flex justify-end">
@@ -224,41 +296,34 @@ export default function InteractionCheckerClient() {
                   </h3>
                 </div>
                 <p className="text-sm text-gray-700 leading-relaxed mb-4">
-                  {result.ai_insight}
+                  {result.ai_insight || result.summary || "AI analysis based on provided medical profile."}
                 </p>
-                <div className="bg-sky-50 rounded-xl p-4">
-                  <p className="text-xs font-semibold text-[#0EA5E9] mb-1">
-                    Suggested Action:
-                  </p>
-                  <p className="text-sm text-gray-700 italic">
-                    "Review patient's most recent CBC and stool guaiac test
-                    results before finalizing dispensing."
-                  </p>
-                </div>
                 <button className="mt-4 text-sm font-medium text-sky-600 hover:text-sky-700 flex items-center gap-1 transition-colors">
                   View full AI analysis <ArrowRight size={14} />
                 </button>
               </div>
 
               {/* Drug Properties */}
-              <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
-                <h3 className="text-base font-bold text-gray-900 mb-4">
-                  Drug Properties
-                </h3>
-                <div className="space-y-3">
-                  {result.drug_properties?.map((prop, idx) => (
-                    <div
-                      key={idx}
-                      className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0 last:pb-0"
-                    >
-                      <span className="text-sm text-gray-600">{prop.name}</span>
-                      <span className="text-xs font-medium bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-md">
-                        {prop.class}
-                      </span>
-                    </div>
-                  ))}
+              {result.drug_properties && result.drug_properties.length > 0 && (
+                <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                  <h3 className="text-base font-bold text-gray-900 mb-4">
+                    Drug Properties
+                  </h3>
+                  <div className="space-y-3">
+                    {result.drug_properties.map((prop, idx) => (
+                      <div
+                        key={idx}
+                        className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0 last:pb-0"
+                      >
+                        <span className="text-sm text-gray-600">{prop.name}</span>
+                        <span className="text-xs font-medium bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-md">
+                          {prop.class}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
