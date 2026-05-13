@@ -21,8 +21,3 @@ export const navItems = [
   },
   { name: "AI Assistant", href: "/dashboard/ai-assistant", icon: Bot },
 ];
-
-export const secondaryNavItems = [
-  { name: "Profile", href: "/dashboard/profile", icon: User },
-  { name: "Settings", href: "/dashboard/settings", icon: Settings },
-];
