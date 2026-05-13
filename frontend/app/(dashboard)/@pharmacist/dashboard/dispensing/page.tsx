@@ -1,16 +1,27 @@
-export default function DispensingLogPage() {
+import DispensingTable from "@/components/pharmacist/dispensing/DispensingTable";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dispensing Log | MediFlow",
+  description:
+    "Record every medicine dispensed and maintain a clinical history.",
+};
+
+export default function DispensingPage() {
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight">Dispensing Log</h1>
-        <p className="text-muted-foreground">
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      {/* Header aligned with your PRD Screenshot */}
+      <div>
+        <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+          Dispensing Log
+        </h1>
+        <p className="text-sm text-gray-500 mt-1">
           Record every medicine dispensed and maintain a clinical history.
         </p>
       </div>
-      
-      <div className="mt-6 p-12 border-2 border-dashed rounded-lg flex items-center justify-center text-muted-foreground bg-slate-50/50">
-        Content for Dispensing Log will be implemented here
-      </div>
+
+      {/* Interactive Client Component */}
+      <DispensingTable />
     </div>
   );
 }
