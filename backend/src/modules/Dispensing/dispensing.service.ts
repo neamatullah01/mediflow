@@ -25,13 +25,24 @@ const getDispensingLogs = async (pharmacyId: string, query: DispensingQuery) => 
   const where: any = { pharmacyId };
 
   if (query.drugName) {
-    where.drug = { name: { contains: query.drugName, mode: 'insensitive' } };
+    where.drug = {
+      OR: [
+        { name: { contains: query.drugName, mode: 'insensitive' } },
+        { genericName: { contains: query.drugName, mode: 'insensitive' } },
+      ],
+    };
   }
 
   if (query.dateFrom || query.dateTo) {
     where.dispensedAt = {};
-    if (query.dateFrom) where.dispensedAt.gte = new Date(query.dateFrom);
-    if (query.dateTo) where.dispensedAt.lte = new Date(query.dateTo);
+    if (query.dateFrom) {
+      where.dispensedAt.gte = new Date(query.dateFrom);
+    }
+    if (query.dateTo) {
+      const toDate = new Date(query.dateTo);
+      toDate.setUTCHours(23, 59, 59, 999);
+      where.dispensedAt.lte = toDate;
+    }
   }
 
   const [logs, total] = await Promise.all([

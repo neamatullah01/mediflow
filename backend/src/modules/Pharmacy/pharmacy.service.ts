@@ -136,11 +136,141 @@ const updateStatus = async (id: string, payload: UpdateStatusPayload) => {
   return updated;
 };
 
+const getPharmacistDashboardStats = async (pharmacyId: string) => {
+  const thirtyDaysFromNow = new Date();
+  thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
+  sevenDaysAgo.setHours(0, 0, 0, 0);
+
+  const startOfMonth = new Date();
+  startOfMonth.setDate(1);
+  startOfMonth.setHours(0, 0, 0, 0);
+
+  const [
+    totalItems,
+    lowStock,
+    expiringSoon,
+    totalDispensedAgg,
+    recentLogs,
+    inventoryItems,
+    topDispensedAgg,
+  ] = await Promise.all([
+    prisma.inventoryItem.count({ where: { pharmacyId } }),
+    prisma.inventoryItem.count({
+      where: {
+        pharmacyId,
+        status: 'LOW_STOCK',
+      },
+    }),
+    prisma.inventoryItem.count({
+      where: {
+        pharmacyId,
+        expiryDate: { lte: thirtyDaysFromNow },
+      },
+    }),
+    prisma.dispensingLog.aggregate({
+      _sum: { quantityDispensed: true },
+      where: { pharmacyId, dispensedAt: { gte: today } },
+    }),
+    prisma.dispensingLog.findMany({
+      where: { pharmacyId, dispensedAt: { gte: sevenDaysAgo } },
+      select: { quantityDispensed: true, dispensedAt: true },
+    }),
+    prisma.inventoryItem.findMany({
+      where: { pharmacyId },
+      select: { drug: { select: { category: true } } },
+    }),
+    prisma.dispensingLog.groupBy({
+      by: ['drugId'],
+      _sum: { quantityDispensed: true },
+      where: { pharmacyId, dispensedAt: { gte: startOfMonth } },
+      orderBy: { _sum: { quantityDispensed: 'desc' } },
+      take: 5,
+    }),
+  ]);
+
+  // Process Dispensing Activity
+  const activityMap: Record<string, number> = {};
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(sevenDaysAgo);
+    d.setDate(d.getDate() + i);
+    const dayName = days[d.getDay()] as string;
+    activityMap[dayName] = 0;
+  }
+  recentLogs.forEach((log) => {
+    const dayName = days[new Date(log.dispensedAt).getDay()] as string;
+    if (activityMap[dayName] !== undefined) {
+      activityMap[dayName] += log.quantityDispensed;
+    }
+  });
+  const dispensingActivity = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(sevenDaysAgo);
+    d.setDate(d.getDate() + i);
+    const dayName = days[d.getDay()] as string;
+    dispensingActivity.push({ name: dayName, total: activityMap[dayName] || 0 });
+  }
+
+  // Process Inventory Mix
+  const categoryCounts: Record<string, number> = {};
+  inventoryItems.forEach((item) => {
+    const cat = item.drug.category;
+    categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+  });
+  const colors = [
+    '#0ea5e9',
+    '#f43f5e',
+    '#10b981',
+    '#f59e0b',
+    '#8b5cf6',
+    '#ec4899',
+    '#14b8a6',
+    '#f97316',
+  ];
+  const inventoryMix = Object.entries(categoryCounts).map(([name, value], i) => ({
+    name,
+    value,
+    color: colors[i % colors.length],
+  }));
+
+  // Process Top Dispensed
+  const drugIds = topDispensedAgg.map((d) => d.drugId);
+  const drugs = await prisma.drug.findMany({
+    where: { id: { in: drugIds } },
+    select: { id: true, name: true },
+  });
+  const drugMap = Object.fromEntries(drugs.map((d) => [d.id, d.name]));
+  const topDispensed = topDispensedAgg.map((d) => ({
+    id: d.drugId,
+    name: drugMap[d.drugId] || 'Unknown Drug',
+    qty: d._sum.quantityDispensed || 0,
+  }));
+
+  return {
+    stats: {
+      totalItems,
+      lowStock,
+      expiringSoon,
+      totalDispensed: totalDispensedAgg._sum.quantityDispensed || 0,
+    },
+    dispensingActivity,
+    inventoryMix,
+    topDispensed,
+  };
+};
+
 const pharmacyService = {
   getAllPharmacies,
   getPharmacyById,
   updatePharmacy,
   updateStatus,
+  getPharmacistDashboardStats,
 };
 
 export default pharmacyService;

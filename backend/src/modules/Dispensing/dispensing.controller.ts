@@ -16,14 +16,14 @@ const dispensingController = {
     const pharmacyId = req.user?.pharmacyId;
     if (!pharmacyId) throw new AppError('Pharmacy not associated with your account', 400);
 
-    const { page, limit, drugName, dateFrom, dateTo } = req.query;
+    const { page, limit, drugName, search, dateFrom, dateTo, startDate, endDate } = req.query;
 
     const result = await dispensingService.getDispensingLogs(pharmacyId, {
       page: page ? Number(page) : undefined,
       limit: limit ? Number(limit) : undefined,
-      drugName: drugName as string | undefined,
-      dateFrom: dateFrom as string | undefined,
-      dateTo: dateTo as string | undefined,
+      drugName: (drugName || search) as string | undefined,
+      dateFrom: (dateFrom || startDate) as string | undefined,
+      dateTo: (dateTo || endDate) as string | undefined,
     });
 
     sendResponse(res, {

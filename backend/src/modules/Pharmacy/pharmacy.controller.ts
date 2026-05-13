@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
+import AppError from '../../errors/AppError';
 import pharmacyService from './pharmacy.service';
 import {
   updatePharmacyValidationSchema,
@@ -66,6 +67,22 @@ const pharmacyController = {
       statusCode: 200,
       success: true,
       message: 'Pharmacy status updated',
+      data: result,
+    });
+  }),
+
+  getPharmacistDashboardStats: catchAsync(async (req: Request, res: Response) => {
+    const pharmacyId = req.user!.pharmacyId;
+    if (!pharmacyId) {
+      throw new AppError('User does not belong to any pharmacy', 400);
+    }
+    
+    const result = await pharmacyService.getPharmacistDashboardStats(pharmacyId);
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: 'Dashboard stats retrieved successfully',
       data: result,
     });
   }),
